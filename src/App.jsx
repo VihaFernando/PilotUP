@@ -204,25 +204,27 @@ const Navbar = () => {
             }
           `}
         >
-        {/* --- LOGO --- */}
-        <div
-          onClick={() => document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" })}
-          className="flex items-center gap-2.5 cursor-pointer group"
-        >
-          {/* Logo Icon */}
-          <div className="relative w-8 h-8 rounded-xl bg-black flex items-center justify-center shadow-lg shadow-black/30 group-hover:shadow-black/40 transition-shadow duration-300 overflow-hidden">
-            <img
-              src="/Logo-white.png"
-              alt="PilotUP Logo"
-              className="w-6 h-6 object-contain"
-            />
-          </div>
+          {/* --- LOGO --- */}
+          <div
+            onClick={() => document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" })}
+            className="flex items-center gap-2.5 cursor-pointer group"
+          >
+            {/* Mobile: Full black logo; Desktop: small rounded icon */}
+            <img src="/Logo-full-black.png" alt="PilotUP Logo" className="block md:hidden h-6 object-contain" />
 
-          {/* Logo Text (unchanged) */}
-          <span className="text-[15px] font-bold text-gray-900 tracking-tight hidden xs:block">
-            PilotUP
-          </span>
-        </div>
+            <div className="relative w-8 h-8 rounded-xl bg-black flex items-center justify-center shadow-lg shadow-black/30 group-hover:shadow-black/40 transition-shadow duration-300 overflow-hidden hidden md:flex">
+              <img
+                src="/Logo-white.png"
+                alt="PilotUP Logo"
+                className="w-6 h-6 object-contain"
+              />
+            </div>
+
+            {/* Logo Text (unchanged) */}
+            <span className="text-[15px] font-bold text-gray-900 tracking-tight hidden xs:block">
+              PilotUP
+            </span>
+          </div>
 
 
           {/* --- DESKTOP LINKS --- */}
@@ -555,7 +557,7 @@ const Hero = () => {
 
 const ValueProps = () => {
   return (
-    <section className="relative py-24 px-6 w-full max-w-[1280px] mx-auto overflow-hidden">
+    <section className="relative py-16 px-6 w-full max-w-[1280px] mx-auto overflow-hidden">
 
       {/* Background Decor (Optional subtle gradients) */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full z-0 pointer-events-none">
@@ -689,7 +691,7 @@ const ValueProps = () => {
 };
 const Comparison = () => {
   return (
-    <section id="features" className="relative py-24 px-6 w-full max-w-[1280px] mx-auto overflow-hidden">
+    <section id="features" className="relative px-6 w-full max-w-[1280px] mx-auto overflow-hidden">
 
       {/* Background Decor */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full z-0 pointer-events-none opacity-50">
@@ -973,7 +975,7 @@ const Pricing = () => {
 
 const IdentitySection = () => {
   return (
-    <section id="identity" className="relative py-24 px-6 bg-[#f1f1f1] w-full">
+    <section id="identity" className="relative py-5 px-6 bg-[#f1f1f1] w-full">
       <div className="max-w-[1100px] mx-auto">
 
         {/* Header */}
@@ -1493,7 +1495,7 @@ const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(0); // First one open by default for engagement
 
   return (
-    <section id="faq" className="relative py-24 px-6 w-full max-w-[1280px] mx-auto overflow-hidden">
+    <section id="faq" className="relative mb-20 px-6 w-full max-w-[1280px] mx-auto overflow-hidden">
 
       <div className="grid lg:grid-cols-12 gap-12 lg:gap-24 items-start">
 
@@ -1590,18 +1592,18 @@ const Footer = () => {
         {/* --- MAIN GRID --- */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 lg:gap-8 mb-16">
 
-        <div className="lg:col-span-2">
-          <div
-            onClick={() => document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" })}
-            className="flex items-center gap-2.5 mb-6 cursor-pointer group w-fit"
-          >
-            {/* Logo Image (Replaces blue square + SVG) */}
-            <img
-              src="/Logo-full-white.png"
-              alt="PilotUP Logo"
-              className="h-8 w-auto object-contain"
-            />
-          </div>
+          <div className="lg:col-span-2">
+            <div
+              onClick={() => document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" })}
+              className="flex items-center gap-2.5 mb-6 cursor-pointer group w-fit"
+            >
+              {/* Logo Image (Replaces blue square + SVG) */}
+              <img
+                src="/Logo-full-white.png"
+                alt="PilotUP Logo"
+                className="h-8 w-auto object-contain"
+              />
+            </div>
 
             <p className="text-gray-400 text-sm leading-relaxed max-w-xs mb-8">
               The AI workforce that plans, executes, and reports on complex workflows. Scale without the overhead.
