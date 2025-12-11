@@ -975,68 +975,70 @@ const Pricing = () => {
 
 const IdentitySection = () => {
   return (
-    <section id="identity" className="relative py-5 px-6 bg-[#f1f1f1] w-full">
+    <section id="identity" className="relative py-10 px-4 sm:px-6 bg-[#f1f1f1] w-full">
       <div className="max-w-[1100px] mx-auto">
-
+        
         {/* Header */}
-        <div className="text-center mb-24">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-gray-200 shadow-sm mb-6"
-          >
-            <Fingerprint className="w-4 h-4 text-gray-900" />
-            <span className="text-xs font-bold text-gray-600 uppercase tracking-wider">The Persona</span>
-          </motion.div>
-
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6 tracking-tight">
-            More than code. <br />
-            <span className="text-gray-400">A digital entity.</span>
-          </h2>
+        <div className="text-center mb-16 sm:mb-24">
+           <motion.div
+             initial={{ opacity: 0, y: 10 }}
+             whileInView={{ opacity: 1, y: 0 }}
+             viewport={{ once: true }}
+             className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-gray-200 shadow-sm mb-6"
+           >
+             <Fingerprint className="w-4 h-4 text-gray-900" />
+             <span className="text-xs font-bold text-gray-600 uppercase tracking-wider">The Persona</span>
+           </motion.div>
+           
+           <h2 className="text-3xl sm:text-5xl font-bold text-gray-900 mb-6 tracking-tight">
+             More than code. <br/>
+             <span className="text-gray-400">A digital entity.</span>
+           </h2>
         </div>
 
         {/* --- STACKING CARDS CONTAINER --- */}
-        <div className="flex flex-col gap-10 pb-24">
+        <div className="flex flex-col gap-6 sm:gap-10 pb-12 sm:pb-24">
 
           {/* === CARD 1: IDENTITY (THE ROBOT) === */}
-          <div className="sticky top-24 sm:top-28 z-10">
-            <div className="relative overflow-hidden rounded-[3rem] bg-[#F5F5F7] border border-gray-200 shadow-2xl shadow-black/5 min-h-[550px] flex flex-col md:flex-row items-center justify-between p-8 sm:p-14">
-
+          {/* Mobile: sticky top-20 (80px), Desktop: top-28 (112px) */}
+          <div className="sticky top-20 sm:top-28 z-10">
+            <div className="relative overflow-hidden rounded-[2rem] sm:rounded-[3rem] bg-[#F5F5F7] border border-gray-200 shadow-2xl shadow-black/5 min-h-fit md:min-h-[550px] flex flex-col md:flex-row items-center justify-between p-6 sm:p-14">
+              
               {/* Content */}
-              <div className="md:w-1/2 relative z-10 flex flex-col items-start text-left">
-                <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center text-2xl shadow-sm mb-6">
+              <div className="w-full md:w-1/2 relative z-10 flex flex-col items-start text-left mb-8 md:mb-0">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white flex items-center justify-center text-xl sm:text-2xl shadow-sm mb-4 sm:mb-6">
                   🤖
                 </div>
-                <h3 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 leading-tight">
-                  Real Identity. <br />
+                <h3 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight">
+                  Real Identity. <br/>
                   Real Responsibility.
                 </h3>
-                <p className="text-lg text-gray-500 leading-relaxed mb-8 max-w-sm">
+                <p className="text-sm sm:text-lg text-gray-500 leading-relaxed mb-6 sm:mb-8 max-w-sm">
                   Your agent isn't a script. It gets a corporate email, a Slack account, and a secure ID. It takes ownership of tasks so you don't have to.
                 </p>
-                <button className="px-6 py-3 rounded-full bg-white text-gray-900 font-semibold text-sm shadow-sm border border-gray-200 hover:scale-105 transition-transform">
+                <button className="px-5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-white text-gray-900 font-semibold text-xs sm:text-sm shadow-sm border border-gray-200 hover:scale-105 transition-transform">
                   Create Identity
                 </button>
               </div>
 
               {/* Visual */}
-              <div className="md:w-1/2 flex items-center justify-center mt-10 md:mt-0 relative">
-                <div className="w-[300px] sm:w-[380px] drop-shadow-2xl">
+              <div className="w-full md:w-1/2 flex items-center justify-center relative">
+                {/* Reduced width on mobile (w-[220px]) to fit screen */}
+                <div className="w-[220px] sm:w-[380px] drop-shadow-2xl">
                   <Lottie animationData={GreenRobot} loop autoplay />
                 </div>
-
-                {/* Floating Badge */}
-                <motion.div
+                
+                {/* Floating Badge - Scaled down on mobile */}
+                <motion.div 
                   initial={{ opacity: 0, scale: 0.8 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.5 }}
-                  className="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-3 border border-gray-100"
+                  className="absolute -bottom-4 -left-2 sm:-bottom-6 sm:-left-6 bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-xl flex items-center gap-2 sm:gap-3 border border-gray-100 scale-90 sm:scale-100 origin-bottom-left"
                 >
-                  <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-500 animate-pulse" />
                   <div>
-                    <div className="text-[10px] text-gray-400 font-bold uppercase">Status</div>
-                    <div className="text-sm font-bold text-gray-900">Online</div>
+                    <div className="text-[8px] sm:text-[10px] text-gray-400 font-bold uppercase">Status</div>
+                    <div className="text-xs sm:text-sm font-bold text-gray-900">Online</div>
                   </div>
                 </motion.div>
               </div>
@@ -1044,66 +1046,66 @@ const IdentitySection = () => {
           </div>
 
           {/* === CARD 2: COMMUNICATION (CHAT UI) === */}
-          <div className="sticky top-28 sm:top-32 z-20">
-            <div className="relative overflow-hidden rounded-[3rem] bg-white border border-gray-200 shadow-2xl shadow-black/5 min-h-[550px] flex flex-col md:flex-row items-center justify-between p-8 sm:p-14">
-
+          <div className="sticky top-24 sm:top-32 z-20">
+            <div className="relative overflow-hidden rounded-[2rem] sm:rounded-[3rem] bg-white border border-gray-200 shadow-2xl shadow-black/5 min-h-fit md:min-h-[550px] flex flex-col md:flex-row items-center justify-between p-6 sm:p-14">
+              
               {/* Content */}
-              <div className="md:w-1/2 relative z-10 flex flex-col items-start text-left order-2 md:order-1">
-                <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-6">
-                  <MessageSquare className="w-6 h-6" />
+              <div className="w-full md:w-1/2 relative z-10 flex flex-col items-start text-left order-2 md:order-1">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4 sm:mb-6">
+                  <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
-                <h3 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 leading-tight">
-                  Fluent in <br />
+                <h3 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight">
+                  Fluent in <br/>
                   Human & Business.
                 </h3>
-                <p className="text-lg text-gray-500 leading-relaxed mb-8 max-w-sm">
-                  Don't learn prompt engineering. Just talk. Call them, text them, or tag them in Slack. They understand context, nuance, and urgency.
+                <p className="text-sm sm:text-lg text-gray-500 leading-relaxed mb-0 md:mb-8 max-w-sm">
+                  Don't learn prompt engineering. Just talk. Call them, text them, or tag them in Slack. They understand context.
                 </p>
               </div>
 
               {/* Visual: Simulated Chat */}
-              <div className="md:w-1/2 w-full mt-10 md:mt-0 order-1 md:order-2 flex justify-center">
-                <div className="relative w-full max-w-[360px] flex flex-col gap-4">
+              <div className="w-full md:w-1/2 mt-8 md:mt-0 order-1 md:order-2 flex justify-center mb-6 md:mb-0">
+                <div className="relative w-full max-w-[360px] flex flex-col gap-3 sm:gap-4">
                   {/* Message 1 (User) */}
-                  <motion.div
+                  <motion.div 
                     initial={{ opacity: 0, x: 20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="self-end bg-blue-600 text-white p-4 rounded-2xl rounded-tr-sm shadow-lg max-w-[85%]"
+                    className="self-end bg-blue-600 text-white p-3 sm:p-4 rounded-2xl rounded-tr-sm shadow-lg max-w-[90%]"
                   >
-                    <p className="text-sm font-medium">Can you summarize the Q3 marketing report and email it to the team?</p>
+                    <p className="text-xs sm:text-sm font-medium">Summarize the Q3 marketing report?</p>
                   </motion.div>
 
                   {/* Message 2 (AI) */}
-                  <motion.div
+                  <motion.div 
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.6 }}
-                    className="self-start bg-gray-100 text-gray-800 p-4 rounded-2xl rounded-tl-sm max-w-[85%]"
+                    className="self-start bg-gray-100 text-gray-800 p-3 sm:p-4 rounded-2xl rounded-tl-sm max-w-[90%]"
                   >
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-4 h-4 rounded-full bg-gradient-to-tr from-green-400 to-emerald-600" />
-                      <span className="text-xs font-bold text-gray-500">PilotUP Agent</span>
-                    </div>
-                    <p className="text-sm">On it. Analyzing the Q3 data now. I'll have the draft in your inbox in 5 minutes.</p>
+                     <div className="flex items-center gap-2 mb-2">
+                       <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-gradient-to-tr from-green-400 to-emerald-600" />
+                       <span className="text-[10px] sm:text-xs font-bold text-gray-500">PilotUP Agent</span>
+                     </div>
+                    <p className="text-xs sm:text-sm">On it. Analyzing Q3 data. Draft in 5 mins.</p>
                   </motion.div>
 
                   {/* Voice Note Visual */}
-                  <motion.div
+                  <motion.div 
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.9 }}
-                    className="self-start flex items-center gap-3 bg-gray-100 px-4 py-3 rounded-full mt-2"
+                    className="self-start flex items-center gap-2 sm:gap-3 bg-gray-100 px-3 py-2 sm:px-4 sm:py-3 rounded-full mt-1"
                   >
-                    <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                      <Mic className="w-4 h-4 text-gray-600" />
+                    <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                      <Mic className="w-3 h-3 sm:w-4 sm:h-4 text-gray-600" />
                     </div>
-                    <div className="flex gap-1 h-3 items-center">
-                      {[1, 2, 3, 4, 2, 3, 1].map((h, i) => (
-                        <div key={i} className="w-1 bg-gray-400 rounded-full animate-pulse" style={{ height: `${h * 4}px` }} />
+                    <div className="flex gap-1 h-2 sm:h-3 items-center">
+                      {[1,2,3,4,2,3,1].map((h, i) => (
+                        <div key={i} className="w-0.5 sm:w-1 bg-gray-400 rounded-full animate-pulse" style={{ height: `${h * (window.innerWidth < 640 ? 3 : 4)}px`}} />
                       ))}
                     </div>
-                    <span className="text-xs font-bold text-gray-500 ml-2">0:14</span>
+                    <span className="text-[10px] sm:text-xs font-bold text-gray-500 ml-1 sm:ml-2">0:14</span>
                   </motion.div>
 
                 </div>
@@ -1113,28 +1115,28 @@ const IdentitySection = () => {
           </div>
 
           {/* === CARD 3: EXPERTISE (BLACK CARD) === */}
-          <div className="sticky top-32 sm:top-36 z-30">
-            <div className="relative overflow-hidden rounded-[3rem] bg-[#0A0A0A] border border-white/10 shadow-2xl shadow-black/20 min-h-[550px] flex flex-col md:flex-row items-center justify-between p-8 sm:p-14">
-
+          <div className="sticky top-28 sm:top-36 z-30">
+            <div className="relative overflow-hidden rounded-[2rem] sm:rounded-[3rem] bg-[#0A0A0A] border border-white/10 shadow-2xl shadow-black/20 min-h-fit md:min-h-[550px] flex flex-col md:flex-row items-center justify-between p-6 sm:p-14">
+              
               {/* Background Glow */}
-              <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-500/20 rounded-full blur-[120px] pointer-events-none" />
+              <div className="absolute top-0 right-0 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-indigo-500/20 rounded-full blur-[80px] sm:blur-[120px] pointer-events-none" />
 
               {/* Content */}
-              <div className="md:w-1/2 relative z-10 flex flex-col items-start text-left">
-                <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/10 text-white flex items-center justify-center mb-6">
-                  <Briefcase className="w-6 h-6" />
+              <div className="w-full md:w-1/2 relative z-10 flex flex-col items-start text-left mb-8 md:mb-0">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/10 border border-white/10 text-white flex items-center justify-center mb-4 sm:mb-6">
+                  <Briefcase className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
-                <h3 className="text-3xl sm:text-4xl font-bold text-white mb-4 leading-tight">
-                  Specialized <br />
+                <h3 className="text-2xl sm:text-4xl font-bold text-white mb-3 sm:mb-4 leading-tight">
+                  Specialized <br/>
                   Domain Expertise.
                 </h3>
-                <p className="text-lg text-gray-400 leading-relaxed mb-8 max-w-sm">
+                <p className="text-sm sm:text-lg text-gray-400 leading-relaxed mb-6 sm:mb-8 max-w-sm">
                   Don't hire a generalist. Select an agent pre-trained for Operations, HR, or Sales. Expert-level output from Day 1.
                 </p>
-
+                
                 <div className="flex flex-wrap gap-2">
                   {["Marketing", "Data Analysis", "HR", "Sales"].map((tag, i) => (
-                    <span key={i} className="px-3 py-1 rounded-full border border-white/10 text-xs text-gray-300">
+                    <span key={i} className="px-2.5 py-1 rounded-full border border-white/10 text-[10px] sm:text-xs text-gray-300">
                       {tag}
                     </span>
                   ))}
@@ -1142,30 +1144,31 @@ const IdentitySection = () => {
               </div>
 
               {/* Visual: Job Cards */}
-              <div className="md:w-1/2 w-full mt-10 md:mt-0 relative h-[300px]">
+              <div className="w-full md:w-1/2 mt-4 md:mt-0 relative h-[240px] sm:h-[300px]">
                 {/* Floating Cards Animation */}
-                {[
-                  { title: "Head of Growth", color: "bg-blue-500", icon: "🚀", top: "10%", left: "10%", delay: 0 },
-                  { title: "Support Lead", color: "bg-emerald-500", icon: "💬", top: "40%", left: "40%", delay: 0.2 },
-                  { title: "Data Analyst", color: "bg-purple-500", icon: "📊", top: "70%", left: "15%", delay: 0.4 }
-                ].map((card, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: card.delay, type: "spring" }}
-                    className="absolute w-48 p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center gap-3 shadow-xl"
-                    style={{ top: card.top, left: card.left }}
-                  >
-                    <div className={`w-10 h-10 rounded-full ${card.color} flex items-center justify-center text-lg shadow-lg`}>
-                      {card.icon}
-                    </div>
-                    <div>
-                      <div className="text-xs text-gray-400 font-medium uppercase">Role</div>
-                      <div className="text-sm font-bold text-white">{card.title}</div>
-                    </div>
-                  </motion.div>
-                ))}
+                 {[ 
+                   { title: "Head of Growth", color: "bg-blue-500", icon: "🚀", top: "5%", left: "5%", delay: 0 },
+                   { title: "Support Lead", color: "bg-emerald-500", icon: "💬", top: "35%", left: "35%", delay: 0.2 },
+                   { title: "Data Analyst", color: "bg-purple-500", icon: "📊", top: "65%", left: "10%", delay: 0.4 }
+                 ].map((card, i) => (
+                   <motion.div
+                     key={i}
+                     initial={{ opacity: 0, y: 50 }}
+                     whileInView={{ opacity: 1, y: 0 }}
+                     transition={{ delay: card.delay, type: "spring" }}
+                     // Made cards smaller (w-40 vs w-48) and padding smaller (p-3 vs p-4) for mobile
+                     className="absolute w-40 sm:w-48 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center gap-2 sm:gap-3 shadow-xl"
+                     style={{ top: card.top, left: card.left }}
+                   >
+                     <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full ${card.color} flex items-center justify-center text-sm sm:text-lg shadow-lg`}>
+                       {card.icon}
+                     </div>
+                     <div>
+                       <div className="text-[10px] sm:text-xs text-gray-400 font-medium uppercase">Role</div>
+                       <div className="text-xs sm:text-sm font-bold text-white">{card.title}</div>
+                     </div>
+                   </motion.div>
+                 ))}
               </div>
 
             </div>
