@@ -417,7 +417,7 @@ const Hero = () => {
             className="pt-6 sm:pt-8 w-full max-w-[340px] sm:max-w-[400px] lg:max-w-[440px]"
           >
             <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6 text-center lg:text-left pl-1">
-              Trusted by Innovators
+              Supported App Integrations
             </p>
 
             {/* THE FIX: 
