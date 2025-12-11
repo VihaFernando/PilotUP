@@ -1,0 +1,15 @@
+[build]
+  # Standard Vite build command
+  command = "npm run build"
+  # Vite outputs to 'dist' by default (Next.js uses .next)
+  publish = "dist"
+
+[dev]
+  command = "npm run dev"
+
+# CRITICAL: This allows React Router to handle page navigation
+# It sends all traffic to index.html so refreshing a page doesn't give a 404
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
