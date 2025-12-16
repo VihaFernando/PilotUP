@@ -489,169 +489,169 @@ const Hero = () => {
 
           {/* RIGHT COLUMN: Visuals */}
 
-        <div className="relative h-[380px] sm:h-[450px] lg:h-[600px] w-full flex items-center justify-center lg:justify-end order-2">
+          <div className="relative h-[380px] sm:h-[450px] lg:h-[600px] w-full flex items-center justify-center lg:justify-end order-2">
 
 
 
-          {/* Main Glass Card */}
+            {/* Main Glass Card */}
 
-          <motion.div
+            <motion.div
 
-            initial={{ opacity: 0, scale: 0.95, rotateY: 10 }}
+              initial={{ opacity: 0, scale: 0.95, rotateY: 10 }}
 
-            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+              animate={{ opacity: 1, scale: 1, rotateY: 0 }}
 
-            transition={{ duration: 0.8, ease: "easeOut" }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
 
-            className="relative w-full max-w-[300px] sm:max-w-[360px] h-[380px] sm:h-[460px] bg-white/40 backdrop-blur-2xl rounded-[2rem] shadow-[0_20px_50px_-10px_rgba(0,0,0,0.1)] border border-white/60 z-10 pb-8"
+              className="relative w-full max-w-[300px] sm:max-w-[360px] h-[380px] sm:h-[460px] bg-white/40 backdrop-blur-2xl rounded-[2rem] shadow-[0_20px_50px_-10px_rgba(0,0,0,0.1)] border border-white/60 z-10 pb-8"
 
-            style={{ transformStyle: 'preserve-3d' }}
+              style={{ transformStyle: 'preserve-3d' }}
 
-          >
+            >
 
-            {/* Inner Gradient Background for Card */}
+              {/* Inner Gradient Background for Card */}
 
-            <div className="absolute inset-2 sm:inset-3 bg-gradient-to-b from-white/80 to-white/40 rounded-[1.5rem] overflow-hidden border border-white/50 flex flex-col items-center pt-8 sm:pt-10 shadow-inner">
+              <div className="absolute inset-2 sm:inset-3 bg-gradient-to-b from-white/80 to-white/40 rounded-[1.5rem] overflow-hidden border border-white/50 flex flex-col items-center pt-8 sm:pt-10 shadow-inner">
 
 
 
-              {/* Robot Animation with Mouse Tracking */}
+                {/* Robot Animation with Mouse Tracking */}
 
-              <motion.div
+                <motion.div
 
-                className="relative w-[160px] sm:w-[220px] h-[160px] sm:h-[220px]"
+                  className="relative w-[160px] sm:w-[220px] h-[160px] sm:h-[220px]"
 
-                animate={{
+                  animate={{
 
-                  x: mousePos.x * 12,
+                    x: mousePos.x * 12,
 
-                  y: mousePos.y * 12,
+                    y: mousePos.y * 12,
 
-                }}
+                  }}
 
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
 
-              >
+                >
 
-                <div className="absolute inset-0 bg-gradient-to-tr from-blue-100/30 to-purple-100/30 blur-3xl rounded-full" />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-blue-100/30 to-purple-100/30 blur-3xl rounded-full" />
 
-                <div className="relative z-10 drop-shadow-[0_10px_20px_rgba(0,0,0,0.15)]">
+                  <div className="relative z-10 drop-shadow-[0_10px_20px_rgba(0,0,0,0.15)]">
 
-                  <Lottie animationData={GreenRobot} loop={true} />
+                    <Lottie animationData={GreenRobot} loop={true} />
+
+                  </div>
+
+                  {/* Shadow beneath robot */}
+
+                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-[20px] bg-black/10 rounded-full blur-xl" />
+
+                </motion.div>
+
+
+
+                {/* Minimal Text inside card */}
+
+                <div className="mt-4 sm:mt-8 text-center px-4 relative z-20">
+
+                  <h3 className="text-lg sm:text-2xl font-bold text-gray-900 mb-1">Hi, I'm Jack Doe</h3>
+
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-black border border-white/60 shadow-sm backdrop-blur-md">
+
+                    <span className="text-[9px] sm:text-[10px] text-white uppercase tracking-wide">A Software Engineer</span>
+
+                  </div>
 
                 </div>
 
-                {/* Shadow beneath robot */}
-
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-[20px] bg-black/10 rounded-full blur-xl" />
-
-              </motion.div>
 
 
+                {/* Scanning Line */}
 
-              {/* Minimal Text inside card */}
+                <motion.div
 
-              <div className="mt-4 sm:mt-8 text-center px-4 relative z-20">
+                  animate={{ top: ["5%", "95%", "5%"] }}
 
-                <h3 className="text-lg sm:text-2xl font-bold text-gray-900 mb-1">Hi, I'm Jack Doe</h3>
+                  transition={{ duration: 6, ease: "linear", repeat: Infinity }}
 
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-black border border-white/60 shadow-sm backdrop-blur-md">
+                  className="absolute left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-blue-400/30 to-transparent w-full z-10"
 
-                  <span className="text-[9px] sm:text-[10px] text-white uppercase tracking-wide">A Software Engineer</span>
-
-                </div>
+                />
 
               </div>
 
 
 
-              {/* Scanning Line */}
+              {/* --- FLOATING UI ELEMENTS --- */}
 
-              <motion.div
 
-                animate={{ top: ["5%", "95%", "5%"] }}
 
-                transition={{ duration: 6, ease: "linear", repeat: Infinity }}
+              <FloatingBadge
 
-                className="absolute left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-blue-400/30 to-transparent w-full z-10"
+                icon={CheckCircle2}
+
+                text="Task Done"
+
+                subtext="Research Complete"
+
+                delay={1.2}
+
+                x="-8%"
+
+                y="10%"
+
+                className="hidden sm:flex"
 
               />
 
-            </div>
+
+
+              <FloatingBadge
+
+                icon={BarChart3}
+
+                text="Growth"
+
+                subtext="+124% Efficiency"
+
+                delay={1.4}
+
+                x="72%"
+
+                y="30%"
+
+              />
 
 
 
-            {/* --- FLOATING UI ELEMENTS --- */}
+              <FloatingBadge
+
+                icon={Zap}
+
+                text="Action"
+
+                subtext="Executing Workflow"
+
+                delay={1.6}
+
+                x="-5%"
+
+                y="80%"
+
+              />
 
 
 
-            <FloatingBadge
+              {/* Decorative Sphere behind */}
 
-              icon={CheckCircle2}
+              <div className="absolute -z-10 top-20 -right-12 w-32 h-32 bg-blue-200/20 rounded-full blur-2xl animate-pulse" />
 
-              text="Task Done"
+            </motion.div>
 
-              subtext="Research Complete"
-
-              delay={1.2}
-
-              x="-8%"
-
-              y="10%"
-
-              className="hidden sm:flex"
-
-            />
-
-
-
-            <FloatingBadge
-
-              icon={BarChart3}
-
-              text="Growth"
-
-              subtext="+124% Efficiency"
-
-              delay={1.4}
-
-              x="72%"
-
-              y="30%"
-
-            />
-
-
-
-            <FloatingBadge
-
-              icon={Zap}
-
-              text="Action"
-
-              subtext="Executing Workflow"
-
-              delay={1.6}
-
-              x="-5%"
-
-              y="80%"
-
-            />
-
-
-
-            {/* Decorative Sphere behind */}
-
-            <div className="absolute -z-10 top-20 -right-12 w-32 h-32 bg-blue-200/20 rounded-full blur-2xl animate-pulse" />
-
-          </motion.div>
+          </div>
 
         </div>
 
-      </div>
-
-    </section>
+      </section>
     </>
   );
 };
@@ -755,103 +755,103 @@ const ValueProps = () => {
         </div>
 
         {/* --- WHY FOUNDERS LOVE PILOTUP --- */}
-<div className="max-w-7xl mx-auto px-6 py-20">
+        <div className="max-w-7xl mx-auto px-6 py-20">
 
-  {/* Heading */}
-  <div className="mb-14 text-center">
-    <h2 className="text-3xl font-bold text-gray-900">
-      Why Founders Would Love our <br className="hidden sm:block" />
-      AI-Powered Platform
-    </h2>
-  </div>
+          {/* Heading */}
+          <div className="mb-14 text-center">
+            <h2 className="text-3xl font-bold text-gray-900">
+              Why Founders Would Love our <br className="hidden sm:block" />
+              AI-Powered Platform
+            </h2>
+          </div>
 
-  {/* Cards */}
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-    {/* CARD 1 */}
-    <div>
-      <div className="rounded-2xl overflow-hidden bg-black mb-5">
-        <img
-          src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1200&auto=format&fit=crop"
-          alt="Hire experts"
-          className="w-full h-[200px] object-cover"
-        />
-      </div>
+            {/* CARD 1 */}
+            <div>
+              <div className="rounded-2xl overflow-hidden bg-black mb-5">
+                <img
+                  src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1200&auto=format&fit=crop"
+                  alt="Hire experts"
+                  className="w-full h-[200px] object-cover"
+                />
+              </div>
 
-      <h4 className="font-bold text-gray-900 mb-2">
-        Hire Experts, Pay Intern Rates
-      </h4>
+              <h4 className="font-bold text-gray-900 mb-2">
+                Hire Experts, Pay Intern Rates
+              </h4>
 
-      <p className="text-sm text-gray-500 leading-relaxed">
-        Build your employee from the ground up, tailored exactly to your needs.
-        No downtime, no distractions, just consistent execution. Reliable AI
-        employees handle complex tasks so you can focus on driving your business
-        forward.
-      </p>
-    </div>
+              <p className="text-sm text-gray-500 leading-relaxed">
+                Build your employee from the ground up, tailored exactly to your needs.
+                No downtime, no distractions, just consistent execution. Reliable AI
+                employees handle complex tasks so you can focus on driving your business
+                forward.
+              </p>
+            </div>
 
-    {/* CARD 2 */}
-    <div>
-      <div className="rounded-2xl overflow-hidden bg-black mb-5 flex items-center justify-center h-[200px]">
-        <img
-          src="https://raw.githubusercontent.com/devicons/devicon/master/icons/google/google-original.svg"
-          alt="Integrations"
-          className="hidden"
-        />
+            {/* CARD 2 */}
+            <div>
+              <div className="rounded-2xl overflow-hidden bg-black mb-5 flex items-center justify-center h-[200px]">
+                <img
+                  src="https://raw.githubusercontent.com/devicons/devicon/master/icons/google/google-original.svg"
+                  alt="Integrations"
+                  className="hidden"
+                />
 
-        {/* Integration logos collage */}
-        <div className="grid grid-cols-4 gap-6">
-          {[
-            "https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg",
-            "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg",
-            "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg",
-            "https://upload.wikimedia.org/wikipedia/commons/1/1f/Google_Drive_logo.png",
-            "https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg",
-            "https://upload.wikimedia.org/wikipedia/commons/4/45/Notion_app_logo.png",
-          ].map((logo, i) => (
-            <img
-              key={i}
-              src={logo}
-              alt="integration"
-              className="h-8 w-auto object-contain"
-            />
-          ))}
+                {/* Integration logos collage */}
+                <div className="grid grid-cols-4 gap-6">
+                  {[
+                    "https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg",
+                    "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg",
+                    "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg",
+                    "https://upload.wikimedia.org/wikipedia/commons/1/1f/Google_Drive_logo.png",
+                    "https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg",
+                    "https://upload.wikimedia.org/wikipedia/commons/4/45/Notion_app_logo.png",
+                  ].map((logo, i) => (
+                    <img
+                      key={i}
+                      src={logo}
+                      alt="integration"
+                      className="h-8 w-auto object-contain"
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <h4 className="font-bold text-gray-900 mb-2">
+                Seamless Integration
+              </h4>
+
+              <p className="text-sm text-gray-500 leading-relaxed">
+                Connect your AI employee to the tools you already use — no changes
+                required. From project management to communication platforms, it fits
+                right into your existing workflow and starts working immediately.
+              </p>
+            </div>
+
+            {/* CARD 3 */}
+            <div>
+              <div className="rounded-2xl overflow-hidden bg-black mb-5">
+                <img
+                  src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1200&auto=format&fit=crop"
+                  alt="24/7 availability"
+                  className="w-full h-[200px] object-cover"
+                />
+              </div>
+
+              <h4 className="font-bold text-gray-900 mb-2">
+                24/7 Availability
+              </h4>
+
+              <p className="text-sm text-gray-500 leading-relaxed">
+                Always on, always working. Your AI employee operates 24/7 without
+                breaks or downtime. Progress continues even when you’re offline.
+              </p>
+            </div>
+
+          </div>
         </div>
-      </div>
-
-      <h4 className="font-bold text-gray-900 mb-2">
-        Seamless Integration
-      </h4>
-
-      <p className="text-sm text-gray-500 leading-relaxed">
-        Connect your AI employee to the tools you already use — no changes
-        required. From project management to communication platforms, it fits
-        right into your existing workflow and starts working immediately.
-      </p>
-    </div>
-
-    {/* CARD 3 */}
-    <div>
-      <div className="rounded-2xl overflow-hidden bg-black mb-5">
-        <img
-          src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1200&auto=format&fit=crop"
-          alt="24/7 availability"
-          className="w-full h-[200px] object-cover"
-        />
-      </div>
-
-      <h4 className="font-bold text-gray-900 mb-2">
-        24/7 Availability
-      </h4>
-
-      <p className="text-sm text-gray-500 leading-relaxed">
-        Always on, always working. Your AI employee operates 24/7 without
-        breaks or downtime. Progress continues even when you’re offline.
-      </p>
-    </div>
-
-  </div>
-</div>
 
 
       </div>
@@ -1832,11 +1832,9 @@ const Footer = () => {
           <div className="relative left-1/2 -translate-x-1/2 w-screen flex justify-center select-none pointer-events-none">
             <span
               className="
-                text-[20vw] md:text-[16vw] lg:text-[11vw]
                 font-semibold
                 tracking-[-0.03em]
                 leading-none
-                text-[18vw] md:text-[14vw] lg:text-[11vw]
                 scale-[1.05]
                 inline-block
                 bg-gradient-to-b
@@ -1845,6 +1843,16 @@ const Footer = () => {
                 to-transparent
                 bg-clip-text
                 text-transparent
+
+                /* MOBILE — very small */
+                text-[14vw]
+
+                /* TABLET */
+                sm:text-[18vw]
+
+                /* DESKTOP — EXACT SAME AS NOW */
+                md:text-[16vw]
+                lg:text-[14vw]
               "
             >
               PilotUP.io
