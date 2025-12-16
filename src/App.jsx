@@ -1832,11 +1832,11 @@ const Footer = () => {
           <div className="relative left-1/2 -translate-x-1/2 w-screen flex justify-center select-none pointer-events-none">
             <span
               className="
-                text-[20vw] md:text-[16vw] lg:text-[12vw]
+                text-[20vw] md:text-[16vw] lg:text-[11vw]
                 font-semibold
                 tracking-[-0.03em]
                 leading-none
-                text-[18vw] md:text-[14vw] lg:text-[12vw]
+                text-[18vw] md:text-[14vw] lg:text-[11vw]
                 scale-[1.05]
                 inline-block
                 bg-gradient-to-b
