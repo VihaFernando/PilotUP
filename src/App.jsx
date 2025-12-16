@@ -1836,7 +1836,7 @@ const Footer = () => {
                 font-semibold
                 tracking-[-0.03em]
                 leading-none
-                text-[18vw] md:text-[14vw] lg:text-[13vw]
+                text-[18vw] md:text-[14vw] lg:text-[12vw]
                 scale-[1.05]
                 inline-block
                 bg-gradient-to-b
