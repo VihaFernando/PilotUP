@@ -8,7 +8,7 @@ export default {
     extend: {
       fontFamily: {
         // Ensures your imported fonts are prioritized
-        sans: ['"Plus Jakarta Sans"', '"Google Sans"', 'sans-serif'],
+        sans: ['Poppins', '"Plus Jakarta Sans"', '"Google Sans"', 'system-ui', 'sans-serif'],
       },
       animation: {
         // The organic moving background blobs
