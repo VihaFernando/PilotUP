@@ -1334,17 +1334,15 @@ const IdentitySection = () => {
 
 const Join = () => {
   return (
-    // FIX 1: Adjusted vertical padding (py-16 for mobile, py-24 for desktop)
-    <section id="join" className="relative py-16 lg:py-24 px-6 w-full max-w-[1280px] mx-auto overflow-hidden">
+    <section id="join" className="relative py-24 px-6 w-full max-w-[1280px] mx-auto overflow-hidden">
 
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-b from-blue-50 to-transparent rounded-full blur-[120px] -z-10 opacity-60" />
 
-      {/* FIX 2: Reduced grid gap on mobile (gap-10) to prevent huge spacing between text and stats */}
-      <div className="grid lg:grid-cols-2 gap-10 lg:gap-20 items-center">
+      <div className="grid lg:grid-cols-2 gap-20 items-center">
 
         {/* --- LEFT: CTA & FORM --- */}
-        <div className="text-center lg:text-left flex flex-col items-center lg:items-start">
+        <div>
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -1359,8 +1357,7 @@ const Join = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            // FIX 3: Added text-3xl for better scaling on very small screens
-            className="text-3xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 tracking-tight leading-[1.1]"
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 tracking-tight leading-[1.1]"
           >
             Hire your first
             <br />
@@ -1388,50 +1385,48 @@ const Join = () => {
             transition={{ delay: 0.2 }}
             className="relative flex items-center w-full max-w-md p-1.5 bg-white border border-gray-200 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.04)] focus-within:shadow-[0_8px_30px_rgba(59,130,246,0.15)] focus-within:border-blue-300 transition-all duration-300"
           >
-            {/* FIX 4: Added min-w-0 to allow input to shrink on small screens */}
             <input
               type="email"
               placeholder="Enter your work email..."
-              className="flex-grow min-w-0 px-4 sm:px-6 py-3 text-base text-gray-900 placeholder:text-gray-400 bg-transparent outline-none rounded-full"
+              className="flex-grow px-6 py-3 text-base text-gray-900 placeholder:text-gray-400 bg-transparent outline-none rounded-full"
             />
-            <button className="group flex-shrink-0 flex items-center justify-center w-12 h-12 sm:w-auto sm:px-6 sm:h-12 bg-gray-900 text-white rounded-full hover:bg-black transition-all duration-300 shadow-lg shadow-gray-900/20 hover:scale-105 active:scale-95">
+            <button className="group flex items-center justify-center w-12 h-12 sm:w-auto sm:px-6 sm:h-12 bg-gray-900 text-white rounded-full hover:bg-black transition-all duration-300 shadow-lg shadow-gray-900/20 hover:scale-105 active:scale-95">
               <span className="hidden sm:block font-semibold mr-2">Join Waitlist</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
           </motion.div>
 
-          <p className="mt-4 text-xs text-gray-400 lg:ml-6 w-full lg:w-auto text-center lg:text-left">
+          <p className="mt-4 text-xs text-gray-400 ml-6">
             <CheckCircle2 className="w-3 h-3 inline-block mr-1 text-emerald-500" />
             No credit card required
           </p>
         </div>
 
         {/* --- RIGHT: STATS WIDGETS --- */}
-        <div className="relative w-full">
+        <div className="relative">
           {/* Decor */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-indigo-100/50 to-blue-50/50 rounded-full blur-[100px] -z-10" />
 
-          {/* Grid Layout: Stacks on mobile, Side-by-side on tablet+ */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full max-w-[500px] mx-auto sm:ml-auto">
 
             {/* Column 1 */}
             <div className="flex flex-col gap-5 sm:mt-12">
               <motion.div
                 whileHover={{ y: -5 }}
-                className="p-6 sm:p-8 rounded-[2rem] bg-white border border-gray-100 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.08)]"
+                className="p-8 rounded-[2rem] bg-white border border-gray-100 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.08)]"
               >
                 <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center mb-4 text-blue-600">
                   <CheckCircle2 className="w-6 h-6" />
                 </div>
-                <div className="text-3xl sm:text-4xl font-bold text-gray-900 mb-1">2K+</div>
+                <div className="text-4xl font-bold text-gray-900 mb-1">2K+</div>
                 <div className="text-sm font-medium text-gray-500">Founders on the waitlist</div>
               </motion.div>
 
               <motion.div
                 whileHover={{ y: -5 }}
-                className="p-6 sm:p-8 rounded-[2rem] bg-gray-900 text-white shadow-[0_20px_40px_-10px_rgba(17,24,39,0.3)]"
+                className="p-8 rounded-[2rem] bg-gray-900 text-white shadow-[0_20px_40px_-10px_rgba(17,24,39,0.3)]"
               >
-                <div className="text-3xl sm:text-4xl font-bold mb-1 text-emerald-400">96%</div>
+                <div className="text-4xl font-bold mb-1 text-emerald-400">96%</div>
                 <div className="text-sm font-medium text-gray-400">Satisfaction rating</div>
                 <div className="mt-4 h-1.5 w-full bg-gray-800 rounded-full overflow-hidden">
                   <div className="h-full w-[96%] bg-emerald-400 rounded-full" />
@@ -1443,15 +1438,15 @@ const Join = () => {
             <div className="flex flex-col gap-5">
               <motion.div
                 whileHover={{ y: -5 }}
-                className="p-6 sm:p-8 rounded-[2rem] bg-gradient-to-br from-indigo-600 to-blue-600 text-white shadow-[0_20px_40px_-10px_rgba(79,70,229,0.3)]"
+                className="p-8 rounded-[2rem] bg-gradient-to-br from-indigo-600 to-blue-600 text-white shadow-[0_20px_40px_-10px_rgba(79,70,229,0.3)]"
               >
-                <div className="text-3xl sm:text-4xl font-bold mb-1">48k</div>
+                <div className="text-4xl font-bold mb-1">48k</div>
                 <div className="text-sm font-medium text-blue-100">Tasks automated daily</div>
               </motion.div>
 
               <motion.div
                 whileHover={{ y: -5 }}
-                className="p-6 sm:p-8 rounded-[2rem] bg-white border border-gray-100 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.08)]"
+                className="p-8 rounded-[2rem] bg-white border border-gray-100 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.08)]"
               >
                 <div className="flex -space-x-3 mb-4">
                   {[1, 2, 3].map(i => (
@@ -1522,7 +1517,7 @@ const Reviews = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 tracking-tight leading-[1.2]"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 tracking-tight leading-[1.2]"
             >
               Don't just take <br className="hidden sm:block" />
               our word for it.
@@ -1547,33 +1542,32 @@ const Reviews = () => {
         </div>
 
         {/* --- MAIN LAYOUT: STATS FIXED + TESTIMONIALS CAROUSEL --- */}
-        <div className="grid lg:grid-cols-2 gap-6 sm:gap-6 md:gap-8 lg:gap-10 items-start lg:items-center">
+        <div className="grid lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-10 items-start lg:items-center">
 
           {/* LEFT: STATS CARD (FIXED) */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            // FIX: Changed h-[240px] to min-h-[280px] h-auto for mobile to prevent overflow
-            className="w-full min-h-[280px] h-auto sm:h-[320px] lg:h-[380px] p-6 sm:p-6 md:p-8 lg:p-10 rounded-2xl sm:rounded-3xl lg:rounded-[2.5rem] bg-lime-400 flex flex-col justify-between text-gray-900 shadow-[0_20px_40px_-10px_rgba(163,230,53,0.4)] relative overflow-hidden"
+            className="w-full h-[240px] sm:h-[280px] md:h-[320px] lg:h-[380px] p-5 sm:p-6 md:p-8 lg:p-10 rounded-2xl sm:rounded-3xl lg:rounded-[2.5rem] bg-lime-400 flex flex-col justify-between text-gray-900 shadow-[0_20px_40px_-10px_rgba(163,230,53,0.4)] relative overflow-hidden"
           >
             {/* Decor */}
             <div className="absolute top-[-20%] right-[-20%] w-40 h-40 sm:w-60 sm:h-60 bg-white/20 rounded-full blur-3xl" />
 
-            <div className="relative z-10">
-              <p className="text-xs sm:text-sm font-bold uppercase tracking-widest opacity-80 mb-2">Facts & Numbers</p>
-              <h3 className="text-2xl sm:text-2xl md:text-2xl lg:text-3xl font-bold leading-snug">Scale faster<br />with less.</h3>
+            <div>
+              <p className="text-xs sm:text-sm font-bold uppercase tracking-widest opacity-80 mb-1 sm:mb-2">Facts & Numbers</p>
+              <h3 className="text-xl sm:text-2xl md:text-2xl lg:text-3xl font-bold leading-snug">Scale faster<br />with less.</h3>
             </div>
 
-            <div className="relative z-10 pt-8 sm:pt-0">
+            <div>
               <div className="flex items-baseline gap-1 mb-2">
-                <span className="text-5xl sm:text-5xl md:text-5xl lg:text-6xl font-extrabold tracking-tight">40<span className="text-3xl sm:text-3xl lg:text-4xl">%</span></span>
+                <span className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-extrabold tracking-tight">40<span className="text-2xl sm:text-3xl lg:text-4xl">%</span></span>
               </div>
-              <p className="font-medium text-sm leading-snug max-w-[220px]">
+              <p className="font-medium text-xs sm:text-sm leading-snug max-w-[180px] sm:max-w-[220px]">
                 Average reduction in operational overhead for our beta users.
               </p>
 
-              <div className="mt-6 flex items-center gap-2 sm:gap-3 bg-white/20 backdrop-blur-sm p-2 sm:p-3 rounded-xl sm:rounded-2xl w-fit">
+              <div className="mt-4 sm:mt-6 flex items-center gap-2 sm:gap-3 bg-white/20 backdrop-blur-sm p-2 sm:p-3 rounded-xl sm:rounded-2xl w-fit">
                 <div className="bg-white p-1.5 sm:p-2 rounded-full">
                   <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4" />
                 </div>
@@ -1587,7 +1581,7 @@ const Reviews = () => {
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="relative w-full"
+            className="relative"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
           >
@@ -1598,31 +1592,30 @@ const Reviews = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5 }}
-                // FIX: Changed h-[240px] to min-h-[300px] h-auto for mobile to allow text wrapping
-                className="w-full min-h-[300px] h-auto sm:h-[320px] lg:h-[380px] p-6 sm:p-6 md:p-8 lg:p-10 rounded-2xl sm:rounded-3xl lg:rounded-[2.5rem] bg-white border border-gray-100 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] flex flex-col justify-between hover:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.08)] hover:border-gray-200 transition-all duration-300"
+                className="w-full h-[240px] sm:h-[280px] md:h-[320px] lg:h-[380px] p-5 sm:p-6 md:p-8 lg:p-10 rounded-2xl sm:rounded-3xl lg:rounded-[2.5rem] bg-white border border-gray-100 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] flex flex-col justify-between hover:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.08)] hover:border-gray-200 transition-all duration-300"
               >
                 <div>
-                  <div className="flex gap-1 mb-4 sm:mb-4 md:mb-6">
+                  <div className="flex gap-1 mb-3 sm:mb-4 md:mb-6">
                     {[...Array(5)].map((_, starI) => (
-                      <Star key={starI} className="w-4 h-4 sm:w-4 sm:h-4 md:w-5 md:h-5 fill-orange-400 text-orange-400" />
+                      <Star key={starI} className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 fill-orange-400 text-orange-400" />
                     ))}
                   </div>
 
-                  <Quote className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-gray-200 mb-3 sm:mb-3 md:mb-4 fill-gray-50" />
+                  <Quote className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-gray-200 mb-2 sm:mb-3 md:mb-4 fill-gray-50" />
 
-                  <p className="text-base sm:text-base md:text-lg lg:text-xl text-gray-900 font-medium leading-relaxed">
+                  <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-900 font-medium leading-relaxed">
                     "{currentTestimonial.text}"
                   </p>
                 </div>
 
-                <div className="flex items-center gap-3 pt-6 border-t border-gray-50 mt-4 sm:mt-0">
+                <div className="flex items-center gap-3 pt-4 sm:pt-6 border-t border-gray-50">
                   <div className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center font-bold text-sm sm:text-base md:text-lg bg-gradient-to-br from-blue-500 to-blue-600 text-white shrink-0">
                     {currentTestimonial.name[0]}
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-1.5">
-                      <h4 className="font-bold text-gray-900 text-sm sm:text-sm md:text-base truncate">{currentTestimonial.name}</h4>
-                      <BadgeCheck className="w-3.5 h-3.5 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 text-blue-500 fill-blue-50 shrink-0" />
+                      <h4 className="font-bold text-gray-900 text-xs sm:text-sm md:text-base truncate">{currentTestimonial.name}</h4>
+                      <BadgeCheck className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 text-blue-500 fill-blue-50 shrink-0" />
                     </div>
                     <p className="text-xs text-gray-400 font-medium truncate">{currentTestimonial.role}</p>
                   </div>
@@ -1631,7 +1624,7 @@ const Reviews = () => {
             </AnimatePresence>
 
             {/* Slide Indicators */}
-            <div className="flex justify-center gap-1.5 sm:gap-2 mt-6">
+            <div className="flex justify-center gap-1.5 sm:gap-2 mt-4 sm:mt-6">
               {TESTIMONIALS.map((_, idx) => (
                 <motion.button
                   key={idx}
@@ -1652,6 +1645,7 @@ const Reviews = () => {
     </section>
   );
 };
+
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(0); // First one open by default for engagement
 
