@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   Menu, Check, ChevronDown, Users, Zap, LayoutDashboard, Briefcase, Shield,
   Star, Quote, BadgeCheck, X, Plus, Minus, MessageCircle, CheckCircle2, BarChart3, Mail,
-  ArrowRight, ArrowLeft, PlayCircle, ShieldCheck, Clock, BrainCircuit, Frown, Smile,
+  ArrowRight, ArrowLeft, PlayCircle, ShieldCheck, Clock, BrainCircuit,
   Globe2, Sparkles, MessageSquare, TrendingUp, Instagram, Linkedin, Github, Globe, ArrowUpRight, ChevronUp, Fingerprint, Mic
 } from 'lucide-react';
 
@@ -183,15 +183,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div
-        className={`
-          fixed left-0 right-0 z-50
-          flex justify-center px-4 pointer-events-none
-          transition-all duration-300 ease-out
-          ${scrolled ? "top-6" : "top-[72px]"}
-        `}
-      >
-
+      <div className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
         <motion.nav
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -333,326 +325,233 @@ const Navbar = () => {
 const Hero = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
-
-
   useEffect(() => {
-
     const handleMouseMove = (e) => {
-
       // Calculate normalized position (-1 to 1)
-
       const x = (e.clientX / window.innerWidth - 0.5) * 2;
-
       const y = (e.clientY / window.innerHeight - 0.5) * 2;
-
       setMousePos({ x, y });
-
     };
 
-
-
     window.addEventListener("mousemove", handleMouseMove);
-
     return () => window.removeEventListener("mousemove", handleMouseMove);
-
   }, []);
+
   return (
-    <>
-      {/* 🔴 TOP ANNOUNCEMENT BAR */}
-      <div className="w-full bg-red-600 text-white text-sm font-medium py-2 px-4 text-center">
-        Be among the first 100 and receive{" "}
-        <span className="font-semibold">$100,000</span> in bonus credits.{" "}
-        <a href="#" className="underline font-semibold hover:text-white/90">
-          Join Now
-        </a>
-      </div>
+    // FIX 1: Added pt-32 for mobile (clears fixed navbar) and justify-center for vertical centering
+    <section id="hero" className="relative w-full min-h-[100dvh] flex flex-col lg:flex-row items-center justify-center overflow-hidden font-sans text-gray-900 pt-32 pb-12 lg:py-0">
 
-      {/* HERO SECTION */}
-      <section
-        id="hero"
-        className="relative w-full min-h-[calc(100dvh-40px)] flex items-center justify-center overflow-hidden pt-28 pb-20 bg-[#fdfdfd]"
-      >
-        <Background />
+      <Background />
 
-        {/* MAIN CONTAINER */}
-        <div className="relative z-10 w-full max-w-[1280px] px-6 md:px-10 grid lg:grid-cols-2 gap-16 items-center">
+      {/* Main Container */}
+      <div className="relative z-10 w-full max-w-[1280px] px-5 sm:px-8 md:px-12 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
-          {/* LEFT CONTENT */}
-          <div className="flex flex-col items-center lg:items-start text-center lg:text-left space-y-8">
+        {/* LEFT COLUMN: Text Content */}
+        <div className="flex flex-col items-center lg:items-start text-center lg:text-left space-y-6 sm:space-y-8 order-1">
 
-            {/* BADGE */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-gray-200 shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-              <span className="text-[11px] font-semibold text-red-600 tracking-wide">
-                Introducing PilotUP 1.0
-              </span>
-            </div>
+          {/* Badge */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 border border-blue-100/80 bg-white/70 backdrop-blur-sm px-3 py-1 rounded-full shadow-sm"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
+            </span>
+            <span
+              className="bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-600 bg-[length:200%_auto] bg-clip-text text-transparent text-[11px] sm:text-[12px] font-bold tracking-wide animate-glow-text-slow"
+            >
+              Introducing PilotUP 1.0
+            </span>
+          </motion.div>
 
-            {/* TITLE */}
-            <h1 className="text-[2.6rem] sm:text-5xl lg:text-[4rem] font-extrabold leading-[1.1] tracking-tight text-gray-900">
-              Your Business, <br />
-              <span className="text-gray-800">Running on Autopilot.</span>
-            </h1>
+          {/* Heading */}
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-[2.5rem] leading-[1.1] sm:text-5xl md:text-6xl lg:text-[4.2rem] font-extrabold tracking-tight text-gray-900"
+          >
+            Your Business, <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-br from-gray-900 via-gray-800 to-gray-600">
+              Running on Autopilot.
+            </span>
+          </motion.h1>
 
-            {/* SUBTEXT */}
-            <p className="text-gray-500 text-base lg:text-lg max-w-[520px] leading-relaxed">
-              Meet <span className="font-semibold text-gray-900">PilotUP</span>. Your AI team member
-              that plans, executes, and reports on complex workflows — so you can focus
-              on strategy, not busywork.
+          {/* Subtext */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-sm sm:text-base lg:text-lg text-gray-500 max-w-[480px] leading-relaxed font-medium mx-auto lg:mx-0"
+          >
+            Meet <span className="text-gray-900 font-bold">PilotUP</span>. The AI workforce that plans, executes, and reports on complex workflows so you can focus on strategy, not busywork.
+          </motion.p>
+
+          {/* Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="flex flex-col xs:flex-row gap-3 w-full xs:w-auto justify-center lg:justify-start"
+          >
+            <button className="group relative px-6 py-3 rounded-full bg-gray-900 text-white font-semibold text-[14px] shadow-lg shadow-gray-900/20 hover:shadow-xl hover:shadow-gray-900/30 hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2 overflow-hidden">
+              <span className="relative z-10">Start with PilotUP</span>
+              <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform" />
+              <div className="absolute inset-0 bg-gradient-to-r from-gray-800 to-gray-950 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </button>
+
+            <button className="px-6 py-3 rounded-full bg-white border border-gray-200 text-gray-700 font-semibold text-[14px] hover:bg-gray-50 hover:border-gray-300 transition-colors flex items-center justify-center gap-2 shadow-sm">
+              <PlayCircle className="w-4 h-4" />
+              See How It Works
+            </button>
+          </motion.div>
+
+          {/* --- FIXED: SEAMLESS INFINITE SCROLL LOGOS --- */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="pt-6 sm:pt-8 w-full max-w-[340px] sm:max-w-[400px] lg:max-w-[440px]"
+          >
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6 text-center lg:text-left pl-1">
+              Supported App Integrations
             </p>
 
-            {/* BUTTONS */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            {/* THE FIX: 
+                1. 'flex' container lets children sit side-by-side.
+                2. 'mask-linear-fade' (optional class) or the divs below handle the fade.
+            */}
+            <div className="relative w-full overflow-hidden flex select-none">
 
-              {/* PRIMARY */}
-              <button className="flex items-center gap-2 px-6 py-3 rounded-full bg-red-600 text-white font-semibold text-sm shadow-md hover:bg-red-700 transition">
-                Start with PilotUP
-                <ArrowRight className="w-4 h-4" />
-              </button>
+              {/* Fade Edges */}
+              <div className="pointer-events-none absolute top-0 left-0 h-full w-5 bg-gradient-to-r from-[#Fdfdfd] to-transparent z-10" />
+              <div className="pointer-events-none absolute top-0 right-0 h-full w-5 bg-gradient-to-l from-[#Fdfdfd] to-transparent z-10" />
 
-              {/* SECONDARY */}
-              <button className="flex items-center gap-2 px-6 py-3 rounded-full bg-white border border-gray-300 text-gray-800 font-semibold text-sm hover:bg-gray-50 transition">
-                <PlayCircle className="w-4 h-4" />
-                See How It Works
-              </button>
+              {/* SCROLL CONTAINER 1 
+                 - shrink-0: Prevents squishing
+                 - w-max: width is exactly the content width (prevents gaps)
+                 - gap-8 / pr-8: Crucial! The padding-right MUST match the gap to join smoothly with the next set.
+              */}
+              <div className="flex animate-infinite-scroll shrink-0 w-max items-center gap-8 pr-8 sm:gap-10 sm:pr-10">
+                {LOGOS.map((logo, idx) => (
+                  <div key={idx} className="flex items-center justify-center h-5 sm:h-6 w-auto">
+                    <img
+                      src={logo.src}
+                      alt={logo.name}
+                      className="h-full w-auto object-contain hover:scale-110 transition-transform duration-300"
+                    />
+                  </div>
+                ))}
+              </div>
 
+              {/* SCROLL CONTAINER 2 (Duplicate)
+                 - Immediately follows Container 1
+                 - aria-hidden="true" creates a duplicate for visual continuity only
+              */}
+              <div className="flex animate-infinite-scroll shrink-0 w-max items-center gap-8 pr-8 sm:gap-10 sm:pr-10" aria-hidden="true">
+                {LOGOS.map((logo, idx) => (
+                  <div key={idx} className="flex items-center justify-center h-5 sm:h-6 w-auto">
+                    <img
+                      src={logo.src}
+                      alt={logo.name}
+                      className="h-full w-auto object-contain hover:scale-110 transition-transform duration-300"
+                    />
+                  </div>
+                ))}
+              </div>
 
             </div>
-            {/* SUPPORTED APP INTEGRATIONS */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="pt-6 sm:pt-8 w-full max-w-[340px] sm:max-w-[400px] lg:max-w-[440px]"
-            >
-              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6 text-center lg:text-left pl-1">
-                Supported App Integrations
-              </p>
-
-              {/* THE FIX:
-      1. 'flex' container lets children sit side-by-side.
-      2. 'mask-linear-fade' (optional class) or the divs below handle the fade.
-  */}
-              <div className="relative w-full overflow-hidden flex select-none">
-
-                {/* Fade Edges */}
-                <div className="pointer-events-none absolute top-0 left-0 h-full w-5 bg-gradient-to-r from-[#Fdfdfd] to-transparent z-10" />
-                <div className="pointer-events-none absolute top-0 right-0 h-full w-5 bg-gradient-to-l from-[#Fdfdfd] to-transparent z-10" />
-
-                {/* SCROLL CONTAINER 1
-        - shrink-0: Prevents squishing
-        - w-max: width is exactly the content width (prevents gaps)
-        - gap-8 / pr-8: Crucial! The padding-right MUST match the gap to join smoothly with the next set.
-    */}
-                <div className="flex animate-infinite-scroll shrink-0 w-max items-center gap-8 pr-8 sm:gap-10 sm:pr-10">
-                  {LOGOS.map((logo, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-center justify-center h-5 sm:h-6 w-auto"
-                    >
-                      <img
-                        src={logo.src}
-                        alt={logo.name}
-                        className="h-full w-auto object-contain hover:scale-110 transition-transform duration-300"
-                      />
-                    </div>
-                  ))}
-                </div>
-
-                {/* SCROLL CONTAINER 2 (Duplicate)
-        - Immediately follows Container 1
-        - aria-hidden="true" creates a duplicate for visual continuity only
-    */}
-                <div
-                  className="flex animate-infinite-scroll shrink-0 w-max items-center gap-8 pr-8 sm:gap-10 sm:pr-10"
-                  aria-hidden="true"
-                >
-                  {LOGOS.map((logo, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-center justify-center h-5 sm:h-6 w-auto"
-                    >
-                      <img
-                        src={logo.src}
-                        alt={logo.name}
-                        className="h-full w-auto object-contain hover:scale-110 transition-transform duration-300"
-                      />
-                    </div>
-                  ))}
-                </div>
-
-              </div>
-            </motion.div>
-
-
-          </div>
-
-          {/* RIGHT COLUMN: Visuals */}
-
-          <div className="relative h-[380px] sm:h-[450px] lg:h-[600px] w-full flex items-center justify-center lg:justify-end order-2">
-
-
-
-            {/* Main Glass Card */}
-
-            <motion.div
-
-              initial={{ opacity: 0, scale: 0.95, rotateY: 10 }}
-
-              animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-
-              transition={{ duration: 0.8, ease: "easeOut" }}
-
-              className="relative w-full max-w-[300px] sm:max-w-[360px] h-[380px] sm:h-[460px] bg-white/40 backdrop-blur-2xl rounded-[2rem] shadow-[0_20px_50px_-10px_rgba(0,0,0,0.1)] border border-white/60 z-10 pb-8"
-
-              style={{ transformStyle: 'preserve-3d' }}
-
-            >
-
-              {/* Inner Gradient Background for Card */}
-
-              <div className="absolute inset-2 sm:inset-3 bg-gradient-to-b from-white/80 to-white/40 rounded-[1.5rem] overflow-hidden border border-white/50 flex flex-col items-center pt-8 sm:pt-10 shadow-inner">
-
-
-
-                {/* Robot Animation with Mouse Tracking */}
-
-                <motion.div
-
-                  className="relative w-[160px] sm:w-[220px] h-[160px] sm:h-[220px]"
-
-                  animate={{
-
-                    x: mousePos.x * 12,
-
-                    y: mousePos.y * 12,
-
-                  }}
-
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
-
-                >
-
-                  <div className="absolute inset-0 bg-gradient-to-tr from-blue-100/30 to-purple-100/30 blur-3xl rounded-full" />
-
-                  <div className="relative z-10 drop-shadow-[0_10px_20px_rgba(0,0,0,0.15)]">
-
-                    <Lottie animationData={GreenRobot} loop={true} />
-
-                  </div>
-
-                  {/* Shadow beneath robot */}
-
-                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-[20px] bg-black/10 rounded-full blur-xl" />
-
-                </motion.div>
-
-
-
-                {/* Minimal Text inside card */}
-
-                <div className="mt-4 sm:mt-8 text-center px-4 relative z-20">
-
-                  <h3 className="text-lg sm:text-2xl font-bold text-gray-900 mb-1">Hi, I'm Jack Doe</h3>
-
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-black border border-white/60 shadow-sm backdrop-blur-md">
-
-                    <span className="text-[9px] sm:text-[10px] text-white uppercase tracking-wide">A Software Engineer</span>
-
-                  </div>
-
-                </div>
-
-
-
-                {/* Scanning Line */}
-
-                <motion.div
-
-                  animate={{ top: ["5%", "95%", "5%"] }}
-
-                  transition={{ duration: 6, ease: "linear", repeat: Infinity }}
-
-                  className="absolute left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-blue-400/30 to-transparent w-full z-10"
-
-                />
-
-              </div>
-
-
-
-              {/* --- FLOATING UI ELEMENTS --- */}
-
-
-
-              <FloatingBadge
-
-                icon={CheckCircle2}
-
-                text="Task Done"
-
-                subtext="Research Complete"
-
-                delay={1.2}
-
-                x="-8%"
-
-                y="10%"
-
-                className="hidden sm:flex"
-
-              />
-
-
-
-              <FloatingBadge
-
-                icon={BarChart3}
-
-                text="Growth"
-
-                subtext="+124% Efficiency"
-
-                delay={1.4}
-
-                x="72%"
-
-                y="30%"
-
-              />
-
-
-
-              <FloatingBadge
-
-                icon={Zap}
-
-                text="Action"
-
-                subtext="Executing Workflow"
-
-                delay={1.6}
-
-                x="-5%"
-
-                y="80%"
-
-              />
-
-
-
-              {/* Decorative Sphere behind */}
-
-              <div className="absolute -z-10 top-20 -right-12 w-32 h-32 bg-blue-200/20 rounded-full blur-2xl animate-pulse" />
-
-            </motion.div>
-
-          </div>
+          </motion.div>
 
         </div>
 
-      </section>
-    </>
+        {/* RIGHT COLUMN: Visuals */}
+        <div className="relative h-[380px] sm:h-[450px] lg:h-[600px] w-full flex items-center justify-center lg:justify-end order-2">
+
+          {/* Main Glass Card */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, rotateY: 10 }}
+            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="relative w-full max-w-[300px] sm:max-w-[360px] h-[380px] sm:h-[460px] bg-white/40 backdrop-blur-2xl rounded-[2rem] shadow-[0_20px_50px_-10px_rgba(0,0,0,0.1)] border border-white/60 z-10 pb-8"
+            style={{ transformStyle: 'preserve-3d' }}
+          >
+            {/* Inner Gradient Background for Card */}
+            <div className="absolute inset-2 sm:inset-3 bg-gradient-to-b from-white/80 to-white/40 rounded-[1.5rem] overflow-hidden border border-white/50 flex flex-col items-center pt-8 sm:pt-10 shadow-inner">
+
+              {/* Robot Animation with Mouse Tracking */}
+              <motion.div
+                className="relative w-[160px] sm:w-[220px] h-[160px] sm:h-[220px]"
+                animate={{
+                  x: mousePos.x * 12,
+                  y: mousePos.y * 12,
+                }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-tr from-blue-100/30 to-purple-100/30 blur-3xl rounded-full" />
+                <div className="relative z-10 drop-shadow-[0_10px_20px_rgba(0,0,0,0.15)]">
+                  <Lottie animationData={GreenRobot} loop={true} />
+                </div>
+                {/* Shadow beneath robot */}
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-[20px] bg-black/10 rounded-full blur-xl" />
+              </motion.div>
+
+              {/* Minimal Text inside card */}
+              <div className="mt-4 sm:mt-8 text-center px-4 relative z-20">
+                <h3 className="text-lg sm:text-2xl font-bold text-gray-900 mb-1">PilotUP Agent</h3>
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/50 border border-white/60 shadow-sm backdrop-blur-md">
+                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-[9px] sm:text-[10px] font-bold text-gray-600 uppercase tracking-wide">Awaiting Command</span>
+                </div>
+              </div>
+
+              {/* Scanning Line */}
+              <motion.div
+                animate={{ top: ["5%", "95%", "5%"] }}
+                transition={{ duration: 6, ease: "linear", repeat: Infinity }}
+                className="absolute left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-blue-400/30 to-transparent w-full z-10"
+              />
+            </div>
+
+            {/* --- FLOATING UI ELEMENTS --- */}
+
+            <FloatingBadge
+              icon={CheckCircle2}
+              text="Task Done"
+              subtext="Research Complete"
+              delay={1.2}
+              x="-8%"
+              y="10%"
+              className="hidden sm:flex"
+            />
+
+            <FloatingBadge
+              icon={BarChart3}
+              text="Growth"
+              subtext="+124% Efficiency"
+              delay={1.4}
+              x="72%"
+              y="30%"
+            />
+
+            <FloatingBadge
+              icon={Zap}
+              text="Action"
+              subtext="Executing Workflow"
+              delay={1.6}
+              x="-5%"
+              y="80%"
+            />
+
+            {/* Decorative Sphere behind */}
+            <div className="absolute -z-10 top-20 -right-12 w-32 h-32 bg-blue-200/20 rounded-full blur-2xl animate-pulse" />
+          </motion.div>
+        </div>
+      </div>
+    </section>
   );
 };
 
@@ -754,200 +653,149 @@ const ValueProps = () => {
           ))}
         </div>
 
-        {/* --- WHY FOUNDERS LOVE PILOTUP --- */}
-        <div className="max-w-7xl mx-auto px-6 py-20">
-
-          {/* Heading */}
-          <div className="mb-14 text-center">
-            <h2 className="text-3xl font-bold text-gray-900">
-              Why Founders Would Love our <br className="hidden sm:block" />
-              AI-Powered Platform
-            </h2>
-          </div>
-
-          {/* Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-            {/* CARD 1 */}
-            <div>
-              <div className="rounded-2xl overflow-hidden bg-black mb-5">
-                <img
-                  src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1200&auto=format&fit=crop"
-                  alt="Hire experts"
-                  className="w-full h-[200px] object-cover"
-                />
-              </div>
-
-              <h4 className="font-bold text-gray-900 mb-2">
-                Hire Experts, Pay Intern Rates
-              </h4>
-
-              <p className="text-sm text-gray-500 leading-relaxed">
-                Build your employee from the ground up, tailored exactly to your needs.
-                No downtime, no distractions, just consistent execution. Reliable AI
-                employees handle complex tasks so you can focus on driving your business
-                forward.
-              </p>
-            </div>
-
-            {/* CARD 2 */}
-            <div>
-              <div className="rounded-2xl overflow-hidden bg-black mb-5 flex items-center justify-center h-[200px]">
-                <img
-                  src="https://raw.githubusercontent.com/devicons/devicon/master/icons/google/google-original.svg"
-                  alt="Integrations"
-                  className="hidden"
-                />
-
-                {/* Integration logos collage */}
-                <div className="grid grid-cols-4 gap-6">
-                  {[
-                    "https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg",
-                    "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg",
-                    "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg",
-                    "https://upload.wikimedia.org/wikipedia/commons/1/1f/Google_Drive_logo.png",
-                    "https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg",
-                    "https://upload.wikimedia.org/wikipedia/commons/4/45/Notion_app_logo.png",
-                  ].map((logo, i) => (
-                    <img
-                      key={i}
-                      src={logo}
-                      alt="integration"
-                      className="h-8 w-auto object-contain"
-                    />
-                  ))}
-                </div>
-              </div>
-
-              <h4 className="font-bold text-gray-900 mb-2">
-                Seamless Integration
-              </h4>
-
-              <p className="text-sm text-gray-500 leading-relaxed">
-                Connect your AI employee to the tools you already use — no changes
-                required. From project management to communication platforms, it fits
-                right into your existing workflow and starts working immediately.
-              </p>
-            </div>
-
-            {/* CARD 3 */}
-            <div>
-              <div className="rounded-2xl overflow-hidden bg-black mb-5">
-                <img
-                  src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1200&auto=format&fit=crop"
-                  alt="24/7 availability"
-                  className="w-full h-[200px] object-cover"
-                />
-              </div>
-
-              <h4 className="font-bold text-gray-900 mb-2">
-                24/7 Availability
-              </h4>
-
-              <p className="text-sm text-gray-500 leading-relaxed">
-                Always on, always working. Your AI employee operates 24/7 without
-                breaks or downtime. Progress continues even when you’re offline.
-              </p>
-            </div>
-
-          </div>
+        {/* --- FEATURE SPECS (Secondary Grid) --- */}
+        <div className="mb-12 text-center">
+          <h3 className="text-2xl font-bold text-gray-900">Everything you need to scale</h3>
         </div>
 
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {FEATURES_GRID.map((feature, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.05 }}
+              className="
+                flex items-start gap-4 
+                p-5 rounded-2xl 
+                bg-white border border-gray-100 
+                hover:border-blue-100 hover:shadow-lg hover:shadow-blue-500/5 
+                transition-all duration-300 cursor-default
+              "
+            >
+              <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center text-gray-700">
+                {feature.icon}
+              </div>
+              <div>
+                <h4 className="font-bold text-gray-900 text-[15px] mb-1">{feature.title}</h4>
+                <p className="text-[13px] text-gray-500 leading-relaxed">{feature.desc}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
 
       </div>
     </section>
   );
 };
-
 const Comparison = () => {
   return (
-    <section id="features" className="py-24 bg-white font-sans">
-      <div className="max-w-[1100px] mx-auto px-6">
+    <section id="features" className="relative px-6 w-full max-w-[1280px] mx-auto overflow-hidden">
 
+      {/* Background Decor */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full z-0 pointer-events-none opacity-50">
+        <div className="absolute top-0 right-[-10%] w-[500px] h-[500px] bg-blue-50/50 rounded-full blur-[100px]" />
+        <div className="absolute bottom-0 left-[-10%] w-[500px] h-[500px] bg-indigo-50/50 rounded-full blur-[100px]" />
+      </div>
+
+      <div className="relative z-10">
         {/* --- HEADER --- */}
         <div className="text-center mb-16">
-          {/* Small Pill Label */}
-          <div className="inline-block px-4 py-1.5 rounded-full border border-gray-200 bg-white mb-6">
-            <span className="text-[11px] font-bold text-gray-500 uppercase tracking-widest">
-              Level Up With PilotUP
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6 tracking-tight"
+          >
+            Standard Chatbots
+            <span className="mx-4 font-serif italic font-medium text-gray-400">vs</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-600">
+              PilotUP Agents
             </span>
-          </div>
-
-          {/* Main Heading */}
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-5 tracking-tight">
-            Them vs Us
-          </h2>
-
-          {/* Subheading */}
-          <p className="text-lg text-gray-500">
-            What makes us <span className="font-bold text-gray-900">different from the other AI tools</span> out there.
+          </motion.h2>
+          <p className="text-lg text-gray-500 max-w-2xl mx-auto">
+            Most AI tools wait for you to type. <br className="hidden sm:block" />
+            <span className="text-gray-900 font-medium">PilotUP works while you sleep.</span>
           </p>
         </div>
 
         {/* --- COMPARISON GRID --- */}
-        <div className="grid md:grid-cols-2 gap-6 items-stretch">
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-stretch max-w-5xl mx-auto">
 
-          {/* LEFT: OTHER AI TOOLS (Light Theme) */}
-          <div className="bg-[#f4f4f2] rounded-[2rem] p-8 sm:p-10 border border-gray-100/50">
-            <h3 className="text-2xl font-bold text-gray-900 text-center mb-10">Other AI Tools</h3>
+          {/* LEFT: THE OLD WAY (Recessed, Flat) */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="p-8 sm:p-10 rounded-[2.5rem] bg-gray-50/50 border-2 border-dashed border-gray-200 text-gray-500"
+          >
+            <div className="flex items-center gap-3 mb-8 opacity-70">
+              <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+                <Minus className="w-5 h-5 text-gray-500" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-700">Other AI Platforms</h3>
+            </div>
 
-            <div className="space-y-4">
+            <ul className="space-y-6">
               {[
                 "Just a chatbot waiting for prompts",
+                "One-off outputs with no memory",
+                "Cannot handle complex schedules",
                 "Requires constant supervision",
-                "Can't collaborate on third party application like a human would do",
-                "Designed for executing tasks. Not for running parts of your business",
-                "Feels more like a tool to use. Not teammates you can rely on.",
-                "Cannot communicate across channels like phone, email or slack"
+                "Isolated from your team's Slack/Email",
+                "Zero accountability for results"
               ].map((item, i) => (
-                <div key={i} className="flex items-center gap-4 bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
-                  {/* Sad Red Icon */}
-                  <div className="shrink-0">
-                    <div className="w-8 h-8 rounded-full bg-[#ff3b30] flex items-center justify-center">
-                      <Frown className="w-5 h-5 text-white" strokeWidth={2.5} />
-                    </div>
-                  </div>
-                  <span className="text-[14px] font-medium text-gray-700 leading-snug">
-                    {item}
-                  </span>
-                </div>
+                <li key={i} className="flex items-start gap-4">
+                  <X className="w-5 h-5 text-gray-300 shrink-0 mt-0.5" />
+                  <span className="text-[15px] font-medium leading-relaxed">{item}</span>
+                </li>
               ))}
+            </ul>
+          </motion.div>
+
+          {/* RIGHT: THE NEW WAY (Elevated, Glass, Glowing) */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="relative p-8 sm:p-10 rounded-[2.5rem] bg-white border border-indigo-100 shadow-[0_20px_50px_-12px_rgba(79,70,229,0.15)] overflow-hidden"
+          >
+            {/* Subtle Gradient Overlay */}
+            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-500" />
+
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-500 to-blue-500 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                <Check className="w-5 h-5 text-white" strokeWidth={3} />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900">PilotUP Agent</h3>
             </div>
-          </div>
 
-          {/* RIGHT: PILOTUP (Dark Theme) */}
-          <div className="bg-black rounded-[2rem] p-8 sm:p-10 text-white relative overflow-hidden">
-            <h3 className="text-2xl font-bold text-white text-center mb-10 relative z-10">PilotUP</h3>
-
-            <div className="space-y-4 relative z-10">
+            <ul className="space-y-6 relative z-10">
               {[
-                "AI Employees with Real Identities",
+                "Autonomous employee with a unique identity",
+                "Executes continuous workflows 24/7",
                 "Manages own schedule and deadlines",
-                "Works on any supported third party application just like human",
-                "Works on assigned tasks by its own",
-                "Proactively suggests improvements", // Replaced duplicate placeholder text
-                "Seamless cross-channel communication" // Replaced duplicate placeholder text
+                "Self-correcting and learns from feedback",
+                "Lives in Slack, Email, and Project Boards",
+                "Full reporting and performance analytics"
               ].map((item, i) => (
-                <div key={i} className="flex items-center gap-4 bg-[#1f1f1f] p-4 rounded-xl border border-white/5">
-                  {/* Happy Green Icon */}
-                  <div className="shrink-0">
-                    <div className="w-8 h-8 rounded-full bg-[#4cd964] flex items-center justify-center">
-                      <Smile className="w-5 h-5 text-black" strokeWidth={2.5} />
-                    </div>
+                <li key={i} className="flex items-start gap-4">
+                  <div className="w-5 h-5 rounded-full bg-indigo-50 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-3 h-3 text-indigo-600" strokeWidth={3} />
                   </div>
-                  <span className="text-[14px] font-medium text-white leading-snug">
-                    {item}
-                  </span>
-                </div>
+                  <span className="text-[15px] font-bold text-gray-800 leading-relaxed">{item}</span>
+                </li>
               ))}
-            </div>
+            </ul>
 
-            {/* Subtle Gradient Glow at bottom for depth */}
-            <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-gray-900 to-transparent opacity-50 pointer-events-none" />
-          </div>
+            {/* Decorative Glow */}
+            <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-indigo-50 rounded-full blur-3xl opacity-50 pointer-events-none" />
+          </motion.div>
 
         </div>
-
       </div>
     </section>
   );
@@ -1829,36 +1677,26 @@ const Footer = () => {
           </div>
 
           {/* WATERMARK — UNDER COPYRIGHT */}
-          <div className="relative left-1/2 -translate-x-1/2 w-screen flex justify-center select-none pointer-events-none">
-            <span
-              className="
-                font-semibold
-                tracking-[-0.03em]
-                leading-none
-                scale-[1.05]
-                inline-block
-                bg-gradient-to-b
-                from-[#ffffff66]
-                via-[#ffffff33]
-                to-transparent
-                bg-clip-text
-                text-transparent
-
-                /* MOBILE — very small */
-                text-[14vw]
-
-                /* TABLET */
-                sm:text-[18vw]
-
-                /* DESKTOP — EXACT SAME AS NOW */
-                md:text-[16vw]
-                lg:text-[14vw]
-              "
-            >
-              PilotUP.io
-            </span>
-
-          </div>
+<div className="relative left-1/2 -translate-x-1/2 w-screen flex justify-center select-none pointer-events-none">
+  <span
+    className="
+      max-w-[100vw]
+      text-[20vw] md:text-[16vw] lg:text-[15vw]
+      font-bold
+      tracking-[-0.04em]
+      leading-none
+      text-center
+      bg-gradient-to-b
+      from-[#ffffff66]
+      via-[#ffffff33]
+      to-transparent
+      bg-clip-text
+      text-transparent
+    "
+  >
+    PilotUP.io
+  </span>
+</div>
 
 
         </div>
