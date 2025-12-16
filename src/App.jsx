@@ -977,23 +977,23 @@ const IdentitySection = () => {
   return (
     <section id="identity" className="relative py-10 px-4 sm:px-6 bg-[#f1f1f1] w-full">
       <div className="max-w-[1100px] mx-auto">
-
+        
         {/* Header */}
         <div className="text-center mb-16 sm:mb-24">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-gray-200 shadow-sm mb-6"
-          >
-            <Fingerprint className="w-4 h-4 text-gray-900" />
-            <span className="text-xs font-bold text-gray-600 uppercase tracking-wider">The Persona</span>
-          </motion.div>
-
-          <h2 className="text-3xl sm:text-5xl font-bold text-gray-900 mb-6 tracking-tight">
-            More than code. <br />
-            <span className="text-gray-400">A digital entity.</span>
-          </h2>
+           <motion.div
+             initial={{ opacity: 0, y: 10 }}
+             whileInView={{ opacity: 1, y: 0 }}
+             viewport={{ once: true }}
+             className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-gray-200 shadow-sm mb-6"
+           >
+             <Fingerprint className="w-4 h-4 text-gray-900" />
+             <span className="text-xs font-bold text-gray-600 uppercase tracking-wider">The Persona</span>
+           </motion.div>
+           
+           <h2 className="text-3xl sm:text-5xl font-bold text-gray-900 mb-6 tracking-tight">
+             More than code. <br/>
+             <span className="text-gray-400">A digital entity.</span>
+           </h2>
         </div>
 
         {/* --- STACKING CARDS CONTAINER --- */}
@@ -1003,14 +1003,14 @@ const IdentitySection = () => {
           {/* Mobile: sticky top-20 (80px), Desktop: top-28 (112px) */}
           <div className="sticky top-20 sm:top-28 z-10">
             <div className="relative overflow-hidden rounded-[2rem] sm:rounded-[3rem] bg-[#F5F5F7] border border-gray-200 shadow-2xl shadow-black/5 min-h-fit md:min-h-[550px] flex flex-col md:flex-row items-center justify-between p-6 sm:p-14">
-
+              
               {/* Content */}
               <div className="w-full md:w-1/2 relative z-10 flex flex-col items-start text-left mb-8 md:mb-0">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white flex items-center justify-center text-xl sm:text-2xl shadow-sm mb-4 sm:mb-6">
                   🤖
                 </div>
                 <h3 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight">
-                  Real Identity. <br />
+                  Real Identity. <br/>
                   Real Responsibility.
                 </h3>
                 <p className="text-sm sm:text-lg text-gray-500 leading-relaxed mb-6 sm:mb-8 max-w-sm">
@@ -1027,9 +1027,9 @@ const IdentitySection = () => {
                 <div className="w-[220px] sm:w-[380px] drop-shadow-2xl">
                   <Lottie animationData={GreenRobot} loop autoplay />
                 </div>
-
+                
                 {/* Floating Badge - Scaled down on mobile */}
-                <motion.div
+                <motion.div 
                   initial={{ opacity: 0, scale: 0.8 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.5 }}
@@ -1048,14 +1048,14 @@ const IdentitySection = () => {
           {/* === CARD 2: COMMUNICATION (CHAT UI) === */}
           <div className="sticky top-24 sm:top-32 z-20">
             <div className="relative overflow-hidden rounded-[2rem] sm:rounded-[3rem] bg-white border border-gray-200 shadow-2xl shadow-black/5 min-h-fit md:min-h-[550px] flex flex-col md:flex-row items-center justify-between p-6 sm:p-14">
-
+              
               {/* Content */}
               <div className="w-full md:w-1/2 relative z-10 flex flex-col items-start text-left order-2 md:order-1">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4 sm:mb-6">
                   <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
                 <h3 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight">
-                  Fluent in <br />
+                  Fluent in <br/>
                   Human & Business.
                 </h3>
                 <p className="text-sm sm:text-lg text-gray-500 leading-relaxed mb-0 md:mb-8 max-w-sm">
@@ -1067,7 +1067,7 @@ const IdentitySection = () => {
               <div className="w-full md:w-1/2 mt-8 md:mt-0 order-1 md:order-2 flex justify-center mb-6 md:mb-0">
                 <div className="relative w-full max-w-[360px] flex flex-col gap-3 sm:gap-4">
                   {/* Message 1 (User) */}
-                  <motion.div
+                  <motion.div 
                     initial={{ opacity: 0, x: 20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.2 }}
@@ -1077,21 +1077,21 @@ const IdentitySection = () => {
                   </motion.div>
 
                   {/* Message 2 (AI) */}
-                  <motion.div
+                  <motion.div 
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.6 }}
                     className="self-start bg-gray-100 text-gray-800 p-3 sm:p-4 rounded-2xl rounded-tl-sm max-w-[90%]"
                   >
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-gradient-to-tr from-green-400 to-emerald-600" />
-                      <span className="text-[10px] sm:text-xs font-bold text-gray-500">PilotUP Agent</span>
-                    </div>
+                     <div className="flex items-center gap-2 mb-2">
+                       <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-gradient-to-tr from-green-400 to-emerald-600" />
+                       <span className="text-[10px] sm:text-xs font-bold text-gray-500">PilotUP Agent</span>
+                     </div>
                     <p className="text-xs sm:text-sm">On it. Analyzing Q3 data. Draft in 5 mins.</p>
                   </motion.div>
 
                   {/* Voice Note Visual */}
-                  <motion.div
+                  <motion.div 
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.9 }}
@@ -1101,8 +1101,8 @@ const IdentitySection = () => {
                       <Mic className="w-3 h-3 sm:w-4 sm:h-4 text-gray-600" />
                     </div>
                     <div className="flex gap-1 h-2 sm:h-3 items-center">
-                      {[1, 2, 3, 4, 2, 3, 1].map((h, i) => (
-                        <div key={i} className="w-0.5 sm:w-1 bg-gray-400 rounded-full animate-pulse" style={{ height: `${h * (window.innerWidth < 640 ? 3 : 4)}px` }} />
+                      {[1,2,3,4,2,3,1].map((h, i) => (
+                        <div key={i} className="w-0.5 sm:w-1 bg-gray-400 rounded-full animate-pulse" style={{ height: `${h * (window.innerWidth < 640 ? 3 : 4)}px`}} />
                       ))}
                     </div>
                     <span className="text-[10px] sm:text-xs font-bold text-gray-500 ml-1 sm:ml-2">0:14</span>
@@ -1117,7 +1117,7 @@ const IdentitySection = () => {
           {/* === CARD 3: EXPERTISE (BLACK CARD) === */}
           <div className="sticky top-28 sm:top-36 z-30">
             <div className="relative overflow-hidden rounded-[2rem] sm:rounded-[3rem] bg-[#0A0A0A] border border-white/10 shadow-2xl shadow-black/20 min-h-fit md:min-h-[550px] flex flex-col md:flex-row items-center justify-between p-6 sm:p-14">
-
+              
               {/* Background Glow */}
               <div className="absolute top-0 right-0 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-indigo-500/20 rounded-full blur-[80px] sm:blur-[120px] pointer-events-none" />
 
@@ -1127,13 +1127,13 @@ const IdentitySection = () => {
                   <Briefcase className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
                 <h3 className="text-2xl sm:text-4xl font-bold text-white mb-3 sm:mb-4 leading-tight">
-                  Specialized <br />
+                  Specialized <br/>
                   Domain Expertise.
                 </h3>
                 <p className="text-sm sm:text-lg text-gray-400 leading-relaxed mb-6 sm:mb-8 max-w-sm">
                   Don't hire a generalist. Select an agent pre-trained for Operations, HR, or Sales. Expert-level output from Day 1.
                 </p>
-
+                
                 <div className="flex flex-wrap gap-2">
                   {["Marketing", "Data Analysis", "HR", "Sales"].map((tag, i) => (
                     <span key={i} className="px-2.5 py-1 rounded-full border border-white/10 text-[10px] sm:text-xs text-gray-300">
@@ -1146,29 +1146,29 @@ const IdentitySection = () => {
               {/* Visual: Job Cards */}
               <div className="w-full md:w-1/2 mt-4 md:mt-0 relative h-[240px] sm:h-[300px]">
                 {/* Floating Cards Animation */}
-                {[
-                  { title: "Head of Growth", color: "bg-blue-500", icon: "🚀", top: "5%", left: "5%", delay: 0 },
-                  { title: "Support Lead", color: "bg-emerald-500", icon: "💬", top: "35%", left: "35%", delay: 0.2 },
-                  { title: "Data Analyst", color: "bg-purple-500", icon: "📊", top: "65%", left: "10%", delay: 0.4 }
-                ].map((card, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: card.delay, type: "spring" }}
-                    // Made cards smaller (w-40 vs w-48) and padding smaller (p-3 vs p-4) for mobile
-                    className="absolute w-40 sm:w-48 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center gap-2 sm:gap-3 shadow-xl"
-                    style={{ top: card.top, left: card.left }}
-                  >
-                    <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full ${card.color} flex items-center justify-center text-sm sm:text-lg shadow-lg`}>
-                      {card.icon}
-                    </div>
-                    <div>
-                      <div className="text-[10px] sm:text-xs text-gray-400 font-medium uppercase">Role</div>
-                      <div className="text-xs sm:text-sm font-bold text-white">{card.title}</div>
-                    </div>
-                  </motion.div>
-                ))}
+                 {[ 
+                   { title: "Head of Growth", color: "bg-blue-500", icon: "🚀", top: "5%", left: "5%", delay: 0 },
+                   { title: "Support Lead", color: "bg-emerald-500", icon: "💬", top: "35%", left: "35%", delay: 0.2 },
+                   { title: "Data Analyst", color: "bg-purple-500", icon: "📊", top: "65%", left: "10%", delay: 0.4 }
+                 ].map((card, i) => (
+                   <motion.div
+                     key={i}
+                     initial={{ opacity: 0, y: 50 }}
+                     whileInView={{ opacity: 1, y: 0 }}
+                     transition={{ delay: card.delay, type: "spring" }}
+                     // Made cards smaller (w-40 vs w-48) and padding smaller (p-3 vs p-4) for mobile
+                     className="absolute w-40 sm:w-48 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center gap-2 sm:gap-3 shadow-xl"
+                     style={{ top: card.top, left: card.left }}
+                   >
+                     <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full ${card.color} flex items-center justify-center text-sm sm:text-lg shadow-lg`}>
+                       {card.icon}
+                     </div>
+                     <div>
+                       <div className="text-[10px] sm:text-xs text-gray-400 font-medium uppercase">Role</div>
+                       <div className="text-xs sm:text-sm font-bold text-white">{card.title}</div>
+                     </div>
+                   </motion.div>
+                 ))}
               </div>
 
             </div>
@@ -1668,37 +1668,12 @@ const Footer = () => {
 
         </div>
 
-        {/* --- BOTTOM SECTION --- */}
-        <div className="mt-16 border-t border-white/10 pt-6 overflow-hidden">
+        {/* --- BOTTOM BAR --- */}
+        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
 
-          {/* COPYRIGHT */}
-          <div className="text-gray-500 text-xs mb-10">
+          <div className="text-gray-500 text-xs">
             © {currentYear} PilotUP Inc. All rights reserved.
           </div>
-
-          {/* WATERMARK — UNDER COPYRIGHT */}
-<div className="relative left-1/2 -translate-x-1/2 w-screen flex justify-center select-none pointer-events-none">
-  <span
-    className="
-      max-w-[100vw]
-      text-[20vw] md:text-[16vw] lg:text-[15vw]
-      font-bold
-      tracking-[-0.04em]
-      leading-none
-      text-center
-      bg-gradient-to-b
-      from-[#ffffff66]
-      via-[#ffffff33]
-      to-transparent
-      bg-clip-text
-      text-transparent
-    "
-  >
-    PilotUP.io
-  </span>
-</div>
-
-
         </div>
       </div>
     </footer>
