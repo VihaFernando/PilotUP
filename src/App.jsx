@@ -128,6 +128,8 @@ const TESTIMONIALS = [
   }
 ];
 
+const REVIEW_SCROLL_INTERVAL = 3600;
+
 // --- HELPER COMPONENTS (GRID) ---
 
 const Background = () => (
@@ -1058,16 +1060,16 @@ const Pricing = () => {
           </div>
 
           {/* TIER 2: GROWTH (Highlight) */}
-          <div className="relative flex flex-col p-8 rounded-[2.5rem] bg-gray-900 text-white shadow-2xl shadow-indigo-500/20 transform md:-translate-y-4">
+          <div className="relative flex flex-col p-8 rounded-[2.5rem] bg-[#090909] text-white shadow-2xl shadow-indigo-500/20 transform md:-translate-y-4">
             {/* Highlight Badge */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              <span className="flex items-center gap-1 px-4 py-1.5 rounded-full bg-gradient-to-r from-indigo-500 to-blue-500 text-white text-xs font-bold uppercase tracking-wider shadow-lg">
+              <span className="flex items-center gap-1 px-4 py-1.5 rounded-full bg-[#E21339] text-white text-xs font-bold tracking-wider shadow-lg">
                 <Sparkles className="w-3 h-3 fill-white" /> Recommended
               </span>
             </div>
 
             <div className="mb-6 mt-2">
-              <span className="px-3 py-1 rounded-full bg-gray-800 text-indigo-300 text-xs font-bold uppercase tracking-wider">
+              <span className="px-3 py-1 rounded-full bg-gray-800 text-white text-xs font-bold uppercase tracking-wider">
                 Growth
               </span>
             </div>
@@ -1089,8 +1091,8 @@ const Pricing = () => {
                 "Credit Top-Up Bundles"
               ].map((feature, i) => (
                 <li key={i} className="flex items-center gap-3 text-sm text-gray-300">
-                  <div className="w-5 h-5 rounded-full bg-indigo-500/20 flex items-center justify-center shrink-0">
-                    <Check className="w-3 h-3 text-indigo-400" strokeWidth={3} />
+                  <div className="w-5 h-5 rounded-full bg-[#E21339]/20 flex items-center justify-center shrink-0">
+                    <Check className="w-3 h-3 text-[#E21339]" strokeWidth={3} />
                   </div>
                   {feature}
                 </li>
@@ -1105,7 +1107,7 @@ const Pricing = () => {
           {/* TIER 3: ENTERPRISE */}
           <div className="flex flex-col p-8 rounded-[2.5rem] bg-white border border-gray-200 hover:border-gray-300 transition-colors">
             <div className="mb-6">
-              <span className="px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-xs font-bold uppercase tracking-wider">
+              <span className="px-3 py-1 rounded-full bg-[#ffe5e7] text-[#E21339] border border-[#E21339]/30 text-xs font-bold uppercase tracking-wider">
                 Scale
               </span>
             </div>
@@ -1486,185 +1488,173 @@ const Join = () => {
   );
 };
 
+const CARD_HEIGHT = 200; 
+const GAP = 20; 
+
 const Reviews = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
+  const [index, setIndex] = useState(0);
 
-  // Auto-scroll logic
   useEffect(() => {
-    if (isPaused) return;
     const interval = setInterval(() => {
-      handleNext();
-    }, 6000);
+      setIndex((prev) => (prev + 1) % TESTIMONIALS.length);
+    }, 4000);
     return () => clearInterval(interval);
-  }, [currentIndex, isPaused]);
-
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % TESTIMONIALS.length);
-  };
-
-  const handlePrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
-  };
-
-  const currentTestimonial = TESTIMONIALS[currentIndex];
+  }, []);
 
   return (
-    <section id="reviews" className="relative py-10 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 bg-[#Fdfdfd] overflow-hidden">
+    <section id="reviews" className="py-20 flex justify-center w-full">
+      <div className="w-[98%] lg:w-[96%] max-w-[1600px] bg-[#0A0A0A] rounded-[2.5rem] sm:rounded-[3rem] px-6 py-12 sm:px-12 sm:py-20 overflow-hidden relative border border-white/5 shadow-2xl">
+        
+        <div 
+          className="absolute inset-0 opacity-[0.1] pointer-events-none" 
+          style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '32px 32px' }}
+        />
 
-      {/* Background Decor */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1400px] h-full pointer-events-none">
-        <div className="absolute top-[20%] right-[-10%] w-[200px] h-[200px] sm:w-[500px] sm:h-[500px] bg-gray-100/50 rounded-full blur-[80px] sm:blur-[100px]" />
-        <div className="absolute bottom-[10%] left-[-10%] w-[200px] h-[200px] sm:w-[600px] sm:h-[600px] bg-blue-50/40 rounded-full blur-[80px] sm:blur-[100px]" />
-      </div>
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10">
 
-      <div className="max-w-[1280px] mx-auto relative z-10">
-
-        {/* --- HEADER --- */}
-        <div className="flex flex-col gap-5 sm:gap-8 md:gap-10 mb-8 sm:mb-12 md:mb-16">
-          <div className="max-w-2xl">
+          {/* LEFT SIDE */}
+          <div className="text-center lg:text-left max-w-2xl mx-auto lg:mx-0 lg:pl-10">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1 rounded-full bg-green-50 text-green-700 text-[10px] sm:text-xs font-bold uppercase tracking-wider mb-3 sm:mb-4 md:mb-6 border border-green-100"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs sm:text-sm font-bold uppercase tracking-widest text-gray-300 mb-8"
             >
-              <BadgeCheck className="w-3 h-3 sm:w-4 sm:h-4 fill-green-200 text-green-600 shrink-0" />
-              <span>Trusted by 5,900+ businesses</span>
+              <Star className="w-4 h-4 text-[#E21339] fill-[#E21339]" />
+              <span>Trusted by 5,000+ Teams</span>
             </motion.div>
 
-            <motion.h2
+            <motion.h2 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 tracking-tight leading-[1.15]"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 tracking-tight leading-[1.1]"
             >
-              Don't just take <br className="hidden sm:block" />
-              our word for it.
+              Real Results. <br className="hidden lg:block" />
+              Real Growth.
             </motion.h2>
+
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-base sm:text-xl text-gray-400 mb-10 leading-relaxed max-w-lg mx-auto lg:mx-0"
+            >
+              See how companies are automating their entire workflows with our AI employees. 
+              Efficiency isn't just a goal; it's the new standard.
+            </motion.p>
+
+            <motion.button
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-[#E21339] text-white font-bold text-base sm:text-lg hover:bg-[#c91032] transition-colors shadow-[0_10px_30px_-10px_rgba(226,19,57,0.4)]"
+            >
+              Read More
+            </motion.button>
           </div>
 
-          {/* --- NAVIGATION BUTTONS --- */}
-          {/* Hidden on very small screens to save space, relies on swipe/auto or dots */}
-          <div className="flex gap-2 sm:gap-3 md:gap-4">
-            <button
-              onClick={() => { handlePrev(); setIsPaused(true); }}
-              className="group w-9 h-9 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full border border-gray-200 bg-white flex items-center justify-center hover:bg-gray-900 hover:border-gray-900 hover:text-white transition-all duration-300 shadow-sm hover:shadow-lg active:scale-95"
-            >
-              <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 transition-transform group-hover:-translate-x-1" />
-            </button>
-            <button
-              onClick={() => { handleNext(); setIsPaused(true); }}
-              className="group w-9 h-9 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full border border-gray-200 bg-white flex items-center justify-center hover:bg-gray-900 hover:border-gray-900 hover:text-white transition-all duration-300 shadow-sm hover:shadow-lg active:scale-95"
-            >
-              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 transition-transform group-hover:translate-x-1" />
-            </button>
-          </div>
-        </div>
-
-        {/* --- MAIN LAYOUT --- */}
-        <div className="grid lg:grid-cols-2 gap-5 sm:gap-6 md:gap-8 lg:gap-10 items-stretch">
-
-          {/* LEFT: STATS CARD */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            // Changed: min-h instead of fixed h to fit text on small screens, but fixed height on lg
-            className="w-full min-h-[220px] sm:min-h-[280px] lg:h-[380px] p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl lg:rounded-[2.5rem] bg-lime-400 flex flex-col justify-between text-gray-900 shadow-[0_20px_40px_-10px_rgba(163,230,53,0.4)] relative overflow-hidden"
+          {/* RIGHT SIDE */}
+          <div
+            className="relative w-full max-w-xl mx-auto lg:ml-auto"
+            style={{ height: (CARD_HEIGHT + GAP) * 2 + 80 }}
           >
-            {/* Decor */}
-            <div className="absolute top-[-20%] right-[-20%] w-32 h-32 sm:w-60 sm:h-60 bg-white/20 rounded-full blur-3xl" />
+            <AnimatePresence initial={false} mode="popLayout">
+              {[0, 1, 2].map((offset) => {
+                const itemIndex = (index + offset) % TESTIMONIALS.length;
+                const testimonial = TESTIMONIALS[itemIndex];
 
-            <div className="relative z-10">
-              <p className="text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-widest opacity-80 mb-1 sm:mb-2">Facts & Numbers</p>
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold leading-snug">Scale faster<br />with less.</h3>
-            </div>
+                let yPos = 0;
+                let opacity = 1;
+                let scale = 1;
+                let zIndex = 3 - offset;
+                let blur = "0px";
 
-            <div className="relative z-10 pt-6 sm:pt-0">
-              <div className="flex items-baseline gap-1 mb-1 sm:mb-2">
-                <span className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-extrabold tracking-tight">40<span className="text-2xl sm:text-3xl lg:text-4xl">%</span></span>
-              </div>
-              <p className="font-medium text-xs sm:text-sm leading-relaxed max-w-[200px] sm:max-w-[240px]">
-                Average reduction in operational overhead for our beta users.
-              </p>
+                if (offset === 0) {
+                  yPos = 0;
+                } else if (offset === 1) {
+                  yPos = CARD_HEIGHT + GAP;
+                  opacity = 0.8;
+                } else {
+                  // NO FADE-OUT FOR LAST CARD
+                  yPos = (CARD_HEIGHT + GAP) * 2;
+                  opacity = 0.8;
+                  scale = 1;
+                  blur = "0px";
+                }
 
-              <div className="mt-4 sm:mt-6 flex items-center gap-2 sm:gap-3 bg-white/20 backdrop-blur-sm p-2 rounded-xl w-fit">
-                <div className="bg-white p-1.5 rounded-full">
-                  <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4" />
-                </div>
-                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wide">Real Impact</span>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* RIGHT: TESTIMONIALS CAROUSEL */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="relative w-full h-full flex flex-col"
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
-          >
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentIndex}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.4 }}
-                // Changed: min-h used to ensure box expands if text is long on mobile
-                className="w-full min-h-[240px] sm:min-h-[280px] lg:h-[380px] p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl lg:rounded-[2.5rem] bg-white border border-gray-100 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex gap-1 mb-3 sm:mb-6">
-                    {[...Array(5)].map((_, starI) => (
-                      <Star key={starI} className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 fill-orange-400 text-orange-400" />
-                    ))}
-                  </div>
-
-                  <Quote className="w-6 h-6 sm:w-8 sm:h-8 text-gray-200 mb-2 sm:mb-4 fill-gray-50" />
-
-                  <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-900 font-medium leading-relaxed">
-                    "{currentTestimonial.text}"
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-3 pt-5 sm:pt-6 border-t border-gray-50 mt-4 sm:mt-0">
-                  <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center font-bold text-sm sm:text-lg bg-gradient-to-br from-blue-500 to-blue-600 text-white shrink-0">
-                    {currentTestimonial.name[0]}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-1.5">
-                      <h4 className="font-bold text-gray-900 text-xs sm:text-sm md:text-base truncate">{currentTestimonial.name}</h4>
-                      <BadgeCheck className="w-3 h-3 sm:w-4 sm:h-4 text-blue-500 fill-blue-50 shrink-0" />
+                return (
+                  <motion.div
+                    key={testimonial.name}
+                    layout
+                    initial={{ opacity: 0, y: yPos + 60, scale: 0.9 }}
+                    animate={{
+                      opacity,
+                      scale,
+                      y: yPos,
+                      zIndex,
+                      filter: `blur(${blur})`,
+                    }}
+                    exit={{ opacity: 0, scale: 0.9, y: -40, transition: { duration: 0.4 } }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 160,
+                      damping: 20,
+                      mass: 1,
+                    }}
+                    className={`absolute left-0 right-0 p-8 rounded-3xl border backdrop-blur-md flex flex-col justify-between
+                      ${
+                        offset === 0
+                          ? "bg-[#18181b] border-[#E21339]/30 shadow-2xl z-30"
+                          : "bg-[#121212] border-white/5 z-10"
+                      }
+                    `}
+                    style={{ height: CARD_HEIGHT }}
+                  >
+                    <div>
+                      <p
+                        className={`text-[15px] sm:text-[16px] leading-relaxed font-medium line-clamp-3
+                        ${offset === 0 ? "text-gray-100" : "text-gray-500"}
+                      `}
+                      >
+                        "{testimonial.text}"
+                      </p>
                     </div>
-                    <p className="text-[11px] sm:text-xs text-gray-400 font-medium truncate">{currentTestimonial.role}</p>
-                  </div>
-                </div>
-              </motion.div>
+
+                    <div className="flex items-center gap-4 mt-auto">
+                      <div
+                        className={`w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-sm shadow-inner ${testimonial.color}`}
+                      >
+                        {testimonial.initial}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4
+                          className={`text-sm font-bold truncate ${
+                            offset === 0 ? "text-white" : "text-gray-400"
+                          }`}
+                        >
+                          {testimonial.name}
+                        </h4>
+                        <p className="text-xs text-gray-600 font-bold uppercase tracking-wide truncate">
+                          {testimonial.role}
+                        </p>
+                      </div>
+
+                      {offset === 0 && (
+                        <div className="bg-[#E21339]/10 p-1.5 rounded-full">
+                          <BadgeCheck className="w-5 h-5 text-[#E21339]" />
+                        </div>
+                      )}
+                    </div>
+                  </motion.div>
+                );
+              })}
             </AnimatePresence>
-
-            {/* Slide Indicators */}
-            <div className="flex justify-center gap-1.5 sm:gap-2 mt-4 sm:mt-6">
-              {TESTIMONIALS.map((_, idx) => (
-                <motion.button
-                  key={idx}
-                  onClick={() => { setCurrentIndex(idx); setIsPaused(true); }}
-                  animate={{
-                    width: idx === currentIndex ? 24 : 6, // Smaller indicators on mobile
-                    backgroundColor: idx === currentIndex ? "#1f2937" : "#d1d5db"
-                  }}
-                  transition={{ duration: 0.3 }}
-                  className="h-1.5 sm:h-2 rounded-full transition-all cursor-pointer"
-                />
-              ))}
-            </div>
-          </motion.div>
-
+          </div>
         </div>
-      </div>
+      </div>  
     </section>
   );
 };
@@ -1977,6 +1967,36 @@ export default function App() {
           }
           .animate-marquee {
             animation: marquee 40s linear infinite;
+          }
+          .reviews-dot-grid {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+            background-size: 18px 18px;
+            opacity: 0.45;
+            mix-blend-mode: screen;
+          }
+          .review-scroll-track {
+            display: flex;
+            flex-direction: column;
+            gap: var(--review-card-gap);
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+            animation: reviewsScroll var(--review-scroll-duration) linear infinite;
+          }
+          .review-card {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+          }
+          .review-card-active {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 30px 40px -25px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08);
+            transform: scale(1.01);
+          }
+          @keyframes reviewsScroll {
+            0% {
+              transform: translateY(0);
+            }
+            100% {
+              transform: translateY(calc(-1 * var(--review-cycle-height)));
+            }
           }
         `}</style>
     </div>
