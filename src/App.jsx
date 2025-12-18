@@ -170,7 +170,7 @@ const FloatingBadge = ({ icon: Icon, text, subtext, delay, x, y, className }) =>
 
 // --- CORE COMPONENTS ---
 
-const Navbar = () => {
+const Navbar = ({ showAnnouncement = true }) => {
   const [openMenu, setOpenMenu] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -188,7 +188,7 @@ const Navbar = () => {
           fixed left-0 right-0 z-50
           flex justify-center px-4 pointer-events-none
           transition-all duration-300 ease-out
-          ${scrolled ? "top-6" : "top-[72px]"}
+          ${scrolled || !showAnnouncement ? "top-6" : "top-[72px]"}
         `}
       >
 
@@ -330,9 +330,8 @@ const Navbar = () => {
 
 
 
-const Hero = () => {
+const Hero = ({ showAnnouncement, onCloseAnnouncement }) => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [showAnnouncement, setShowAnnouncement] = useState(true);
 
 
 
@@ -361,8 +360,8 @@ const Hero = () => {
     <>
       {/* 🔴 TOP ANNOUNCEMENT BAR */}
       {showAnnouncement && (
-        <div className="relative w-full bg-red-600 text-white text-sm font-medium py-2 px-4 text-center flex items-center justify-center">
-          <span>
+        <div className="relative w-full bg-red-600 text-white text-xs sm:text-sm font-medium py-1.5 sm:py-2 px-3 sm:px-4 text-center flex items-center justify-center">
+          <span className="leading-tight">
             Be among the first 100 and receive {" "}
             <span className="font-semibold">$100,000</span> in bonus credits. {" "}
             <a href="#" className="underline font-semibold hover:text-white/90">
@@ -372,8 +371,8 @@ const Hero = () => {
           <button
             type="button"
             aria-label="Close announcement"
-            onClick={() => setShowAnnouncement(false)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/15 transition"
+            onClick={onCloseAnnouncement}
+            className="absolute right-2.5 sm:right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/15 transition"
           >
             <X className="w-4 h-4" />
           </button>
@@ -1727,8 +1726,8 @@ const FAQ = () => {
               <motion.div
                 layout
                 className={`relative z-20 flex justify-between items-center gap-6 p-6 sm:p-8 rounded-[2rem] transition-colors duration-300 ${isOpen
-                    ? "bg-[#0A0A0A] shadow-2xl"
-                    : "bg-transparent hover:bg-gray-50 border-b border-gray-100 rounded-none sm:rounded-xl"
+                  ? "bg-[#0A0A0A] shadow-2xl"
+                  : "bg-transparent hover:bg-gray-50 border-b border-gray-100 rounded-none sm:rounded-xl"
                   }`}
               >
                 <motion.h3
@@ -1947,10 +1946,15 @@ const BackToTop = () => {
 };
 
 export default function App() {
+  const [showAnnouncement, setShowAnnouncement] = useState(true);
+
   return (
     <div className="min-h-screen bg-[#f1f1f1] text-gray-900 font-sans selection:bg-red-500/20">
-      <Navbar />
-      <Hero />
+      <Navbar showAnnouncement={showAnnouncement} />
+      <Hero
+        showAnnouncement={showAnnouncement}
+        onCloseAnnouncement={() => setShowAnnouncement(false)}
+      />
       <ValueProps />
       <IdentitySection />
       <Comparison />
