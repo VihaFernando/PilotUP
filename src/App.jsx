@@ -704,12 +704,17 @@ const ValueProps = () => {
             How PilotUP
             <br className="hidden sm:block" />
             <span className="relative inline-block mx-2 sm:mx-3 z-10">
-              {/* Authentic Serif Highlight */}
-              <span className="relative z-10 font-serif italic font-medium text-gray-900">
+              <span
+                className="relative z-10 text-5xl sm:text-6xl lg:text-7xl font-black"
+                style={{
+                  color: "#E21339",
+                  fontFamily: "Caveat, cursive",
+                  letterSpacing: "0.03em",
+                  textShadow: "0 0 6px rgba(226, 19, 57, 0.35)"
+                }}
+              >
                 Turbocharges
               </span>
-              {/* Yellow Underline/Highlight */}
-              <span className="absolute bottom-1 left-0 w-full h-3 bg-yellow-300/40 -rotate-1 -z-10 rounded-sm" />
             </span>
             Your Business
           </motion.h2>
