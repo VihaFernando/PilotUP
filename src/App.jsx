@@ -332,6 +332,7 @@ const Navbar = () => {
 
 const Hero = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [showAnnouncement, setShowAnnouncement] = useState(true);
 
 
 
@@ -359,13 +360,25 @@ const Hero = () => {
   return (
     <>
       {/* 🔴 TOP ANNOUNCEMENT BAR */}
-      <div className="w-full bg-red-600 text-white text-sm font-medium py-2 px-4 text-center">
-        Be among the first 100 and receive{" "}
-        <span className="font-semibold">$100,000</span> in bonus credits.{" "}
-        <a href="#" className="underline font-semibold hover:text-white/90">
-          Join Now
-        </a>
-      </div>
+      {showAnnouncement && (
+        <div className="relative w-full bg-red-600 text-white text-sm font-medium py-2 px-4 text-center flex items-center justify-center">
+          <span>
+            Be among the first 100 and receive {" "}
+            <span className="font-semibold">$100,000</span> in bonus credits. {" "}
+            <a href="#" className="underline font-semibold hover:text-white/90">
+              Join Now
+            </a>
+          </span>
+          <button
+            type="button"
+            aria-label="Close announcement"
+            onClick={() => setShowAnnouncement(false)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/15 transition"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
 
       {/* HERO SECTION */}
       <section
@@ -1657,7 +1670,7 @@ const FAQ = () => {
 
   return (
     <section id="faq" className="relative py-24 px-6 w-full max-w-5xl mx-auto">
-      
+
       {/* --- HEADER --- */}
       <div className="text-center max-w-3xl mx-auto mb-16">
         <motion.div
@@ -1703,9 +1716,8 @@ const FAQ = () => {
               layout
               initial={false}
               onClick={() => setOpenIndex(isOpen ? null : idx)}
-              className={`relative overflow-hidden cursor-pointer group ${
-                isOpen ? "z-10" : "z-0"
-              }`}
+              className={`relative overflow-hidden cursor-pointer group ${isOpen ? "z-10" : "z-0"
+                }`}
             >
               {/* THE QUESTION CARD 
                 - This stays on top (z-20)
@@ -1714,17 +1726,15 @@ const FAQ = () => {
               */}
               <motion.div
                 layout
-                className={`relative z-20 flex justify-between items-center gap-6 p-6 sm:p-8 rounded-[2rem] transition-colors duration-300 ${
-                  isOpen 
-                    ? "bg-[#0A0A0A] shadow-2xl" 
+                className={`relative z-20 flex justify-between items-center gap-6 p-6 sm:p-8 rounded-[2rem] transition-colors duration-300 ${isOpen
+                    ? "bg-[#0A0A0A] shadow-2xl"
                     : "bg-transparent hover:bg-gray-50 border-b border-gray-100 rounded-none sm:rounded-xl"
-                }`}
-              >
-                <motion.h3 
-                  layout="position"
-                  className={`text-lg sm:text-xl font-bold leading-snug flex-1 transition-colors duration-300 ${
-                    isOpen ? "text-[#E21339]" : "text-gray-900"
                   }`}
+              >
+                <motion.h3
+                  layout="position"
+                  className={`text-lg sm:text-xl font-bold leading-snug flex-1 transition-colors duration-300 ${isOpen ? "text-[#E21339]" : "text-gray-900"
+                    }`}
                 >
                   {faq.q}
                 </motion.h3>
@@ -1761,13 +1771,13 @@ const FAQ = () => {
                   >
                     {/* The gray background box */}
                     <div className="bg-[#F9FAFB] rounded-b-[2rem] -mt-6 pt-10 pb-8 px-6 sm:px-8 mx-2 border-x border-b border-gray-100/50">
-                       <motion.p 
+                      <motion.p
                         initial={{ y: -10, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         exit={{ y: -10, opacity: 0 }}
                         transition={{ duration: 0.3, delay: 0.1 }}
                         className="text-gray-500 text-sm sm:text-base leading-relaxed"
-                       >
+                      >
                         {faq.a}
                       </motion.p>
                     </div>
