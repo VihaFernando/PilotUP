@@ -1653,91 +1653,130 @@ const Reviews = () => {
 };
 
 const FAQ = () => {
-  const [openIndex, setOpenIndex] = useState(0); // First one open by default for engagement
+  const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section id="faq" className="relative mb-20 px-6 w-full max-w-[1280px] mx-auto overflow-hidden">
+    <section id="faq" className="relative py-24 px-6 w-full max-w-5xl mx-auto">
+      
+      {/* --- HEADER --- */}
+      <div className="text-center max-w-3xl mx-auto mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="inline-block mb-4 px-3 py-1 rounded-md bg-[#E21339]/10 text-[#E21339] text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em]"
+        >
+          Frequently Asked Questions
+        </motion.div>
 
-      <div className="grid lg:grid-cols-12 gap-12 lg:gap-24 items-start">
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 }}
+          className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6 tracking-tight leading-[1.1]"
+        >
+          Wondering About Something? <br />
+          Let's Clear Things Up!
+        </motion.h2>
 
-        {/* --- LEFT: HEADER (Sticky on Desktop) --- */}
-        <div className="lg:col-span-4 lg:sticky lg:top-32">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider mb-6">
-            <span className="w-2 h-2 rounded-full bg-blue-600" />
-            Support
-          </div>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+          className="text-lg text-gray-500 max-w-xl mx-auto"
+        >
+          We’ve gathered all the important info right here.
+          Explore our FAQs and find the answers you need.
+        </motion.p>
+      </div>
 
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6 tracking-tight leading-[1.1]">
-            Common <br />
-            questions.
-          </h2>
+      {/* --- ACCORDION LIST --- */}
+      <div className="flex flex-col gap-4">
+        {FAQS.map((faq, idx) => {
+          const isOpen = openIndex === idx;
 
-          <p className="text-lg text-gray-500 mb-8 leading-relaxed">
-            Everything you need to know about hiring your first digital workforce.
-          </p>
-
-          {/* Support CTA */}
-          <a href="#contact" className="group inline-flex items-center gap-3 text-sm font-semibold text-gray-900 hover:text-blue-600 transition-colors">
-            <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-blue-50 transition-colors">
-              <MessageCircle className="w-5 h-5 text-gray-600 group-hover:text-blue-600" />
-            </div>
-            <span>Chat with our team</span>
-          </a>
-        </div>
-
-        {/* --- RIGHT: ACCORDION --- */}
-        <div className="lg:col-span-8 flex flex-col gap-4">
-          {FAQS.map((faq, idx) => {
-            const isOpen = openIndex === idx;
-
-            return (
+          return (
+            <motion.div
+              key={idx}
+              layout
+              initial={false}
+              onClick={() => setOpenIndex(isOpen ? null : idx)}
+              className={`relative overflow-hidden cursor-pointer group ${
+                isOpen ? "z-10" : "z-0"
+              }`}
+            >
+              {/* THE QUESTION CARD 
+                - This stays on top (z-20)
+                - When open: Black background
+                - When closed: Transparent
+              */}
               <motion.div
-                key={idx}
-                initial={false}
-                onClick={() => setOpenIndex(isOpen ? null : idx)}
-                className={`
-                  cursor-pointer group relative
-                  p-6 sm:p-8 rounded-[2rem]
-                  border transition-all duration-300
-                  ${isOpen
-                    ? "bg-white border-blue-100 shadow-[0_10px_40px_-10px_rgba(59,130,246,0.1)]"
-                    : "bg-[#F9FAFB] border-transparent hover:bg-white hover:border-gray-200"
-                  }
-                `}
+                layout
+                className={`relative z-20 flex justify-between items-center gap-6 p-6 sm:p-8 rounded-[2rem] transition-colors duration-300 ${
+                  isOpen 
+                    ? "bg-[#0A0A0A] shadow-2xl" 
+                    : "bg-transparent hover:bg-gray-50 border-b border-gray-100 rounded-none sm:rounded-xl"
+                }`}
               >
-                <div className="flex justify-between items-start gap-4">
-                  <h3 className={`text-lg sm:text-xl font-bold transition-colors ${isOpen ? "text-blue-900" : "text-gray-900"}`}>
-                    {faq.q}
-                  </h3>
+                <motion.h3 
+                  layout="position"
+                  className={`text-lg sm:text-xl font-bold leading-snug flex-1 transition-colors duration-300 ${
+                    isOpen ? "text-[#E21339]" : "text-gray-900"
+                  }`}
+                >
+                  {faq.q}
+                </motion.h3>
 
-                  {/* Icon Wrapper */}
-                  <div className={`
-                    shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300
-                    ${isOpen ? "bg-blue-600 rotate-45" : "bg-gray-200 group-hover:bg-gray-300"}
-                  `}>
-                    <Plus className={`w-5 h-5 transition-colors ${isOpen ? "text-white" : "text-gray-500"}`} />
-                  </div>
+                <div className="shrink-0 relative w-6 h-6 flex items-center justify-center">
+                  <motion.div
+                    animate={{ rotate: isOpen ? 45 : 0, opacity: isOpen ? 0 : 1 }}
+                    className="absolute"
+                  >
+                    <Plus className="w-6 h-6 text-gray-400 group-hover:text-gray-900" />
+                  </motion.div>
+                  <motion.div
+                    animate={{ rotate: isOpen ? 0 : -45, opacity: isOpen ? 1 : 0 }}
+                    className="absolute"
+                  >
+                    <X className="w-5 h-5 text-[#E21339]" />
+                  </motion.div>
                 </div>
-
-                <AnimatePresence>
-                  {isOpen && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
-                      className="overflow-hidden"
-                    >
-                      <p className="pt-4 text-gray-500 leading-relaxed text-[15px] sm:text-base max-w-2xl">
-                        {faq.a}
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
               </motion.div>
-            );
-          })}
-        </div>
+
+              {/* THE ANSWER PANEL 
+                - Slides out from behind the question
+                - We use 'margin-top: -24px' on the container + padding-top to create the visual overlap 
+                - BUT we animate the inner content to ensure smoothness 
+              */}
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
+                    className="relative z-10 overflow-hidden"
+                  >
+                    {/* The gray background box */}
+                    <div className="bg-[#F9FAFB] rounded-b-[2rem] -mt-6 pt-10 pb-8 px-6 sm:px-8 mx-2 border-x border-b border-gray-100/50">
+                       <motion.p 
+                        initial={{ y: -10, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: -10, opacity: 0 }}
+                        transition={{ duration: 0.3, delay: 0.1 }}
+                        className="text-gray-500 text-sm sm:text-base leading-relaxed"
+                       >
+                        {faq.a}
+                      </motion.p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          );
+        })}
       </div>
     </section>
   );
