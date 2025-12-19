@@ -30,7 +30,11 @@ const CORE_VALUES = [
     subtitle: "Works Like a Human, Scales Like Software",
     description: "Why hire one by one? Deploy an entire AI team that integrates into your Slack, email, and project boards instantly.",
     colSpan: "md:col-span-2", // Bento: Wide card
-    gradient: "from-blue-500/10 to-indigo-500/10",
+    cardBg: "bg-blue-50",
+    borderColor: "border-blue-100/70",
+    hoverBorder: "hover:border-blue-200/80",
+    hoverShadow: "hover:shadow-[0_25px_70px_-35px_rgba(37,99,235,0.45)]",
+    gradient: "from-blue-400/30 to-blue-500/10",
     iconColor: "text-blue-600"
   },
   {
@@ -39,8 +43,12 @@ const CORE_VALUES = [
     subtitle: "Zero Downtime",
     description: "Replace inconsistent execution with 24/7 autonomy. No coffee breaks, just results.",
     colSpan: "md:col-span-1", // Bento: Square card
-    gradient: "from-amber-500/10 to-orange-500/10",
-    iconColor: "text-amber-600"
+    cardBg: "bg-emerald-50",
+    borderColor: "border-emerald-100/70",
+    hoverBorder: "hover:border-emerald-200/80",
+    hoverShadow: "hover:shadow-[0_25px_70px_-35px_rgba(16,185,129,0.45)]",
+    gradient: "from-emerald-400/30 to-emerald-500/10",
+    iconColor: "text-emerald-600"
   },
   {
     icon: LayoutDashboard,
@@ -48,8 +56,12 @@ const CORE_VALUES = [
     subtitle: "Autonomous Responsibility",
     description: "Agents don't just wait for commands. They plan, research, and execute workflows based on your goals.",
     colSpan: "md:col-span-3", // Bento: Full width
-    gradient: "from-emerald-500/10 to-green-500/10",
-    iconColor: "text-emerald-600"
+    cardBg: "bg-rose-50",
+    borderColor: "border-rose-100/70",
+    hoverBorder: "hover:border-rose-200/80",
+    hoverShadow: "hover:shadow-[0_25px_70px_-35px_rgba(244,63,94,0.45)]",
+    gradient: "from-rose-400/30 to-rose-500/10",
+    iconColor: "text-rose-600"
   }
 ];
 
@@ -671,6 +683,8 @@ const Hero = ({ showAnnouncement, onCloseAnnouncement }) => {
 };
 
 const ValueProps = () => {
+  const logoRows = [LOGOS.slice(0, 4), LOGOS.slice(4, 8)];
+
   return (
     <section className="relative py-16 px-6 w-full max-w-[1280px] mx-auto overflow-hidden">
 
@@ -745,11 +759,13 @@ const ValueProps = () => {
               className={`
                 ${item.colSpan}
                 group relative overflow-hidden
-                bg-[#F6F6F7] rounded-[2.5rem]
+                ${item.cardBg}
+                rounded-[2.5rem]
                 p-8 sm:p-10
-                border border-gray-200/50
-                hover:border-gray-300/80 hover:shadow-xl hover:shadow-gray-200/40
+                border ${item.borderColor}
                 transition-all duration-500 ease-out
+                ${item.hoverBorder}
+                ${item.hoverShadow}
               `}
             >
               {/* Hover Gradient Background */}
@@ -791,7 +807,7 @@ const ValueProps = () => {
             <div>
               <div className="rounded-2xl overflow-hidden bg-black mb-5">
                 <img
-                  src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1200&auto=format&fit=crop"
+                  src="handshake.png"
                   alt="Hire experts"
                   className="w-full h-[200px] object-cover"
                 />
@@ -811,29 +827,24 @@ const ValueProps = () => {
 
             {/* CARD 2 */}
             <div>
-              <div className="rounded-2xl overflow-hidden bg-black mb-5 flex items-center justify-center h-[200px]">
-                <img
-                  src="https://raw.githubusercontent.com/devicons/devicon/master/icons/google/google-original.svg"
-                  alt="Integrations"
-                  className="hidden"
-                />
-
-                {/* Integration logos collage */}
-                <div className="grid grid-cols-4 gap-6">
-                  {[
-                    "https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg",
-                    "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg",
-                    "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg",
-                    "https://upload.wikimedia.org/wikipedia/commons/1/1f/Google_Drive_logo.png",
-                    "https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg",
-                    "https://upload.wikimedia.org/wikipedia/commons/4/45/Notion_app_logo.png",
-                  ].map((logo, i) => (
-                    <img
-                      key={i}
-                      src={logo}
-                      alt="integration"
-                      className="h-8 w-auto object-contain"
-                    />
+              <div className="rounded-2xl overflow-hidden bg-black mb-5 relative h-[200px]">
+                <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-black/90" />
+                <div className="relative z-10 h-full px-6 py-6 flex flex-col justify-evenly">
+                  {logoRows.map((row, rowIdx) => (
+                    <div
+                      key={`row-${rowIdx}`}
+                      className="logo-marquee flex items-center gap-6"
+                      data-direction={rowIdx % 2 === 0 ? "normal" : "reverse"}
+                    >
+                      {[...row, ...row].map((logo, idx) => (
+                        <img
+                          key={`${logo.name}-${idx}`}
+                          src={logo.src}
+                          alt={logo.name}
+                          className="h-10 w-auto object-contain"
+                        />
+                      ))}
+                    </div>
                   ))}
                 </div>
               </div>
@@ -853,7 +864,7 @@ const ValueProps = () => {
             <div>
               <div className="rounded-2xl overflow-hidden bg-black mb-5">
                 <img
-                  src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1200&auto=format&fit=crop"
+                  src="handshake.png"
                   alt="24/7 availability"
                   className="w-full h-[200px] object-cover"
                 />
@@ -1149,22 +1160,32 @@ const IdentitySection = () => {
     <section id="identity" className="relative py-10 px-4 sm:px-6 bg-[#f1f1f1] w-full">
       <div className="max-w-[1100px] mx-auto">
 
-        {/* Header */}
-        <div className="text-center mb-16 sm:mb-24">
+        <div className="text-center mb-16 sm:mb-24 px-4">
+          {/* Pill Label */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-gray-200 shadow-sm mb-6"
+            className="inline-block mb-8"
           >
-            <Fingerprint className="w-4 h-4 text-gray-900" />
-            <span className="text-xs font-bold text-gray-600 uppercase tracking-wider">The Persona</span>
+            <div className="px-3 py-1 rounded-full border border-gray-200 bg-white shadow-[0_2px_8px_-3px_rgba(0,0,0,0.05)]">
+              <span className="text-[11px] sm:text-xs text-gray-800 uppercase tracking-[0.15em]">
+                What makes us stand out
+              </span>
+            </div>
           </motion.div>
 
-          <h2 className="text-3xl sm:text-5xl font-bold text-gray-900 mb-6 tracking-tight">
-            More than code. <br />
-            <span className="text-gray-400">A digital entity.</span>
-          </h2>
+          {/* Main Heading */}
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-3xl sm:text-4xl md:text-5xl font-semibold text-[#0F172A] tracking-tight leading-[1.15]"
+          >
+            This is not <span className="font-bold text-[#020617]">“JUST</span> <br />
+            <span className="font-extrabold text-[#020617]">ANOTHER AI TOOL”</span>
+          </motion.h2>
         </div>
 
         {/* --- STACKING CARDS CONTAINER --- */}
@@ -1292,8 +1313,8 @@ const IdentitySection = () => {
               {/* Background Glow */}
               <div className="absolute top-0 right-0 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-indigo-500/20 rounded-full blur-[80px] sm:blur-[120px] pointer-events-none" />
 
-              {/* Content */}
-              <div className="w-full md:w-1/2 relative z-10 flex flex-col items-start text-left mb-8 md:mb-0">
+              {/* --- LEFT: TEXT CONTENT --- */}
+              <div className="w-full md:w-1/2 relative z-10 flex flex-col items-start text-left mb-12 md:mb-0">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/10 border border-white/10 text-white flex items-center justify-center mb-4 sm:mb-6">
                   <Briefcase className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
@@ -1314,29 +1335,34 @@ const IdentitySection = () => {
                 </div>
               </div>
 
-              {/* Visual: Job Cards */}
-              <div className="w-full md:w-1/2 mt-4 md:mt-0 relative h-[240px] sm:h-[300px]">
-                {/* Floating Cards Animation */}
+              {/* --- RIGHT: FLOATING CARDS VISUAL --- */}
+              <div className="w-full md:w-1/2 relative h-[300px] sm:h-[350px]">
                 {[
-                  { title: "Head of Growth", color: "bg-blue-500", icon: "🚀", top: "5%", left: "5%", delay: 0 },
-                  { title: "Support Lead", color: "bg-emerald-500", icon: "💬", top: "35%", left: "35%", delay: 0.2 },
-                  { title: "Data Analyst", color: "bg-purple-500", icon: "📊", top: "65%", left: "10%", delay: 0.4 }
+                  { title: "HEAD OF GROWTH", top: "0%", left: "0%", delay: 0 },
+                  { title: "SOCIAL MEDIA MANAGER", top: "35%", left: "20%", delay: 0.2 }, // Shifted right
+                  { title: "DATA ANALYST", top: "70%", left: "5%", delay: 0.4 }
                 ].map((card, i) => (
                   <motion.div
                     key={i}
-                    initial={{ opacity: 0, y: 50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: card.delay, type: "spring" }}
-                    // Made cards smaller (w-40 vs w-48) and padding smaller (p-3 vs p-4) for mobile
-                    className="absolute w-40 sm:w-48 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center gap-2 sm:gap-3 shadow-xl"
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: card.delay, duration: 0.6, ease: "easeOut" }}
+                    className="absolute flex items-center gap-4 p-4 pr-8 rounded-2xl border border-white/65 bg-[#151515]/80 backdrop-blur-md shadow-2xl"
                     style={{ top: card.top, left: card.left }}
                   >
-                    <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full ${card.color} flex items-center justify-center text-sm sm:text-lg shadow-lg`}>
-                      {card.icon}
+                    {/* Icon: White circle with black check */}
+                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0">
+                      <Check className="w-5 h-5 text-black stroke-[3]" />
                     </div>
-                    <div>
-                      <div className="text-[10px] sm:text-xs text-gray-400 font-medium uppercase">Role</div>
-                      <div className="text-xs sm:text-sm font-bold text-white">{card.title}</div>
+
+                    {/* Text */}
+                    <div className="flex flex-col">
+                      <span className="text-sm sm:text-base font-bold text-white tracking-wide whitespace-nowrap">
+                        {card.title}
+                      </span>
+                      <span className="text-[10px] sm:text-[11px] text-gray-400 font-medium tracking-wider uppercase">
+                        Role Template
+                      </span>
                     </div>
                   </motion.div>
                 ))}
@@ -1488,8 +1514,8 @@ const Join = () => {
   );
 };
 
-const CARD_HEIGHT = 200; 
-const GAP = 20; 
+const CARD_HEIGHT = 200;
+const GAP = 20;
 
 const Reviews = () => {
   const [index, setIndex] = useState(0);
@@ -1504,9 +1530,9 @@ const Reviews = () => {
   return (
     <section id="reviews" className="py-20 flex justify-center w-full">
       <div className="w-[98%] lg:w-[96%] max-w-[1600px] bg-[#0A0A0A] rounded-[2.5rem] sm:rounded-[3rem] px-6 py-12 sm:px-12 sm:py-20 overflow-hidden relative border border-white/5 shadow-2xl">
-        
-        <div 
-          className="absolute inset-0 opacity-[0.1] pointer-events-none" 
+
+        <div
+          className="absolute inset-0 opacity-[0.1] pointer-events-none"
           style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '32px 32px' }}
         />
 
@@ -1524,7 +1550,7 @@ const Reviews = () => {
               <span>Trusted by 5,000+ Teams</span>
             </motion.div>
 
-            <motion.h2 
+            <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -1534,14 +1560,14 @@ const Reviews = () => {
               Real Growth.
             </motion.h2>
 
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
               className="text-base sm:text-xl text-gray-400 mb-10 leading-relaxed max-w-lg mx-auto lg:mx-0"
             >
-              See how companies are automating their entire workflows with our AI employees. 
+              See how companies are automating their entire workflows with our AI employees.
               Efficiency isn't just a goal; it's the new standard.
             </motion.p>
 
@@ -1557,104 +1583,106 @@ const Reviews = () => {
           </div>
 
           {/* RIGHT SIDE */}
-          <div
-            className="relative w-full max-w-xl mx-auto lg:ml-auto"
-            style={{ height: (CARD_HEIGHT + GAP) * 2 + 80 }}
-          >
-            <AnimatePresence initial={false} mode="popLayout">
-              {[0, 1, 2].map((offset) => {
-                const itemIndex = (index + offset) % TESTIMONIALS.length;
-                const testimonial = TESTIMONIALS[itemIndex];
+          <div className="lg:pb-20">
+            <div
+              className="relative w-full max-w-xl mx-auto lg:ml-auto"
+              style={{ height: (CARD_HEIGHT + GAP) * 2 + 80 }}
+            >
+              <AnimatePresence initial={false} mode="popLayout">
+                {[0, 1, 2].map((offset) => {
+                  const itemIndex = (index + offset) % TESTIMONIALS.length;
+                  const testimonial = TESTIMONIALS[itemIndex];
 
-                let yPos = 0;
-                let opacity = 1;
-                let scale = 1;
-                let zIndex = 3 - offset;
-                let blur = "0px";
+                  let yPos = 0;
+                  let opacity = 1;
+                  let scale = 1;
+                  let zIndex = 3 - offset;
+                  let blur = "0px";
 
-                if (offset === 0) {
-                  yPos = 0;
-                } else if (offset === 1) {
-                  yPos = CARD_HEIGHT + GAP;
-                  opacity = 0.8;
-                } else {
-                  // NO FADE-OUT FOR LAST CARD
-                  yPos = (CARD_HEIGHT + GAP) * 2;
-                  opacity = 0.8;
-                  scale = 1;
-                  blur = "0px";
-                }
+                  if (offset === 0) {
+                    yPos = 0;
+                  } else if (offset === 1) {
+                    yPos = CARD_HEIGHT + GAP;
+                    opacity = 0.8;
+                  } else {
+                    // NO FADE-OUT FOR LAST CARD
+                    yPos = (CARD_HEIGHT + GAP) * 2;
+                    opacity = 0.8;
+                    scale = 1;
+                    blur = "0px";
+                  }
 
-                return (
-                  <motion.div
-                    key={testimonial.name}
-                    layout
-                    initial={{ opacity: 0, y: yPos + 60, scale: 0.9 }}
-                    animate={{
-                      opacity,
-                      scale,
-                      y: yPos,
-                      zIndex,
-                      filter: `blur(${blur})`,
-                    }}
-                    exit={{ opacity: 0, scale: 0.9, y: -40, transition: { duration: 0.4 } }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 160,
-                      damping: 20,
-                      mass: 1,
-                    }}
-                    className={`absolute left-0 right-0 p-8 rounded-3xl border backdrop-blur-md flex flex-col justify-between
-                      ${
-                        offset === 0
+                  return (
+                    <motion.div
+                      key={testimonial.name}
+                      layout
+                      initial={{ opacity: 0, y: yPos + 60, scale: 0.9 }}
+                      animate={{
+                        opacity,
+                        scale,
+                        y: yPos,
+                        zIndex,
+                        filter: `blur(${blur})`,
+                      }}
+                      exit={{ opacity: 0, scale: 0.9, y: -40, transition: { duration: 0.4 } }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 160,
+                        damping: 20,
+                        mass: 1,
+                      }}
+                      className={`absolute left-0 right-0 p-8 rounded-3xl border backdrop-blur-md flex flex-col justify-between
+                        ${offset === 0
                           ? "bg-[#18181b] border-[#E21339]/30 shadow-2xl z-30"
                           : "bg-[#121212] border-white/5 z-10"
-                      }
-                    `}
-                    style={{ height: CARD_HEIGHT }}
-                  >
-                    <div>
-                      <p
-                        className={`text-[15px] sm:text-[16px] leading-relaxed font-medium line-clamp-3
-                        ${offset === 0 ? "text-gray-100" : "text-gray-500"}
+                        }
                       `}
-                      >
-                        "{testimonial.text}"
-                      </p>
-                    </div>
-
-                    <div className="flex items-center gap-4 mt-auto">
-                      <div
-                        className={`w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-sm shadow-inner ${testimonial.color}`}
-                      >
-                        {testimonial.initial}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h4
-                          className={`text-sm font-bold truncate ${
-                            offset === 0 ? "text-white" : "text-gray-400"
-                          }`}
+                      style={{ height: CARD_HEIGHT }}
+                    >
+                      <div>
+                        <p
+                          className={`text-[15px] sm:text-[16px] leading-relaxed font-medium line-clamp-3
+                          ${offset === 0 ? "text-gray-100" : "text-gray-500"}
+                        `}
                         >
-                          {testimonial.name}
-                        </h4>
-                        <p className="text-xs text-gray-600 font-bold uppercase tracking-wide truncate">
-                          {testimonial.role}
+                          "{testimonial.text}"
                         </p>
                       </div>
 
-                      {offset === 0 && (
-                        <div className="bg-[#E21339]/10 p-1.5 rounded-full">
-                          <BadgeCheck className="w-5 h-5 text-[#E21339]" />
+                      <div className="flex items-center gap-4 mt-auto">
+                        <div
+                          className={`w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-sm shadow-inner ${testimonial.color}`}
+                        >
+                          {testimonial.initial}
                         </div>
-                      )}
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
+                        <div className="flex-1 min-w-0">
+                          <h4
+                            className={`text-sm font-bold truncate ${offset === 0 ? "text-white" : "text-gray-400"
+                              }`}
+                          >
+                            {testimonial.name}
+                          </h4>
+                          <p className="text-xs text-gray-600 font-bold uppercase tracking-wide truncate">
+                            {testimonial.role}
+                          </p>
+                        </div>
+
+                        {offset === 0 && (
+                          <div className="bg-[#E21339]/10 p-1.5 rounded-full">
+                            <BadgeCheck className="w-5 h-5 text-[#E21339]" />
+                          </div>
+                        )}
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </AnimatePresence>
+
+            </div>
           </div>
         </div>
-      </div>  
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/90 via-black/60 to-transparent z-40" />
+      </div>
     </section>
   );
 };
@@ -1990,12 +2018,29 @@ export default function App() {
             box-shadow: 0 30px 40px -25px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08);
             transform: scale(1.01);
           }
+          .logo-marquee {
+            animation: scrollLogos 20s linear infinite;
+          }
+          .logo-marquee[data-direction="reverse"] {
+            animation-direction: reverse;
+          }
+          .logo-marquee img {
+            filter: saturate(1.2);
+          }
           @keyframes reviewsScroll {
             0% {
               transform: translateY(0);
             }
             100% {
               transform: translateY(calc(-1 * var(--review-cycle-height)));
+            }
+          }
+          @keyframes scrollLogos {
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(-50%);
             }
           }
         `}</style>
