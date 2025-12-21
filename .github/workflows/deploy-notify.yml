@@ -1,0 +1,19 @@
+name: Deploy Notification
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  notify-discord:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send deployment message to Discord
+        run: |
+          curl -H "Content-Type: application/json" \
+          -d '{
+            "content": "🚀 **Deployment!**\n\n Branch: **${{ github.ref_name }}**\n Author: **${{ github.actor }}**\n Commit message: `${{ github.event.head_commit.message }}`"
+          }' \
+          ${{ secrets.DISCORD_WEBHOOK_URL }}
