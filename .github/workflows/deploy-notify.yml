@@ -14,11 +14,11 @@ jobs:
 
       - name: Send deployment message to Discord
         run: |
-          COMMIT_MSG=$(git log -1 --pretty=%B)
+          COMMIT_MSG=$(git log -1 --pretty=%s)
 
           cat <<EOF > payload.json
           {
-            "content": "🚀 **Deployment!**\n\nBranch: **${{ github.ref_name }}**\nAuthor: **${{ github.actor }}**\nCommit message:\n\`\`\`\n$COMMIT_MSG\n\`\`\`"
+            "content": "🚀 **Deployment!**\n\nBranch: **${{ github.ref_name }}**\nAuthor: **${{ github.actor }}**\nCommit message: **$COMMIT_MSG**"
           }
           EOF
 
