@@ -10,15 +10,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v4
+
       - name: Send deployment message to Discord
         run: |
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+
           cat <<EOF > payload.json
           {
-            "content": "🚀 **Deployment!**\n\nBranch: **${{ github.ref_name }}**\nAuthor: **${{ github.actor }}**\nCommit message: `${{ github.event.head_commit.message }}`"
+            "content": "🚀 **Deployment!**\n\nBranch: **${{ github.ref_name }}**\nAuthor: **${{ github.actor }}**\nCommit message:\n\`\`\`\n$COMMIT_MSG\n\`\`\`"
           }
           EOF
 
           curl -X POST \
             -H "Content-Type: application/json" \
             --data @payload.json \
-            "${{ secrets.PILOTUP_WEB}}"
+            "${{ secrets.PILOTUP_WEB }}"
