@@ -12,8 +12,13 @@ jobs:
     steps:
       - name: Send deployment message to Discord
         run: |
-          curl -H "Content-Type: application/json" \
-          -d '{
-            "content": "🚀 **Deployment!**\n\n Branch: **${{ github.ref_name }}**\n Author: **${{ github.actor }}**\n Commit message: `${{ github.event.head_commit.message }}`"
-          }' \
-          ${{ secrets.DISCORD_WEBHOOK_URL }}
+          cat <<EOF > payload.json
+          {
+            "content": "🚀 **Deployment!**\n\nBranch: **${{ github.ref_name }}**\nAuthor: **${{ github.actor }}**\nCommit message: `${{ github.event.head_commit.message }}`"
+          }
+          EOF
+
+          curl -X POST \
+            -H "Content-Type: application/json" \
+            --data @payload.json \
+            "${{ secrets.DISCORD_WEBHOOK_URL }}"
