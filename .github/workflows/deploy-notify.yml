@@ -21,4 +21,4 @@ jobs:
           curl -X POST \
             -H "Content-Type: application/json" \
             --data @payload.json \
-            "${{ secrets.PILIOTUP_WEB }}"
+            "${{ secrets.PILOTUP_WEB}}"
