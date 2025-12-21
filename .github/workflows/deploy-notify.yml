@@ -21,4 +21,4 @@ jobs:
           curl -X POST \
             -H "Content-Type: application/json" \
             --data @payload.json \
-            "${{ secrets.DISCORD_WEBHOOK_URL }}"
+            "${{ secrets.PILIOTUP_WEB }}"
