@@ -234,7 +234,7 @@ const Navbar = ({ showAnnouncement = true }) => {
             {/* Mobile: Full black logo; Desktop: small rounded icon */}
             <img src="/Logo-full-black.png" alt="PilotUP Logo" className="block md:hidden h-6 object-contain" />
 
-            <div className="relative w-8 h-8 rounded-xl bg-black flex items-center justify-center shadow-lg shadow-black/30 group-hover:shadow-black/40 transition-shadow duration-300 overflow-hidden hidden md:flex">
+            <div className="relative w-8 h-8 rounded-xl bg-black flex items-center justify-center overflow-hidden hidden md:flex">
               <img
                 src="/Logo-white.png"
                 alt="PilotUP Logo"
@@ -250,12 +250,12 @@ const Navbar = ({ showAnnouncement = true }) => {
 
 
           {/* --- DESKTOP LINKS --- */}
-          <div className="hidden md:flex items-center gap-1 bg-gray-100/50 p-1 rounded-full border border-gray-200/50 mx-4">
+          <div className="hidden md:flex items-center gap-10 mx-2">
             {["Features", "Pricing", "Reviews"].map((link) => (
               <a
                 key={link}
                 href={`#${link.toLowerCase()}`}
-                className="px-4 py-1.5 text-[13px] font-medium text-gray-500 hover:text-gray-900 hover:bg-white hover:shadow-sm rounded-full transition-all duration-200"
+                className="text-[13px] font-medium text-gray-500 hover:text-gray-900 transition-colors duration-200"
               >
                 {link}
               </a>
@@ -272,8 +272,7 @@ const Navbar = ({ showAnnouncement = true }) => {
                 px-5 py-2.5
                 rounded-full
                 text-[13px] font-semibold
-                shadow-lg shadow-gray-900/10
-                hover:shadow-gray-900/20 hover:-translate-y-0.5
+                hover:-translate-y-0.5
                 transition-all duration-300
               "
             >
@@ -517,164 +516,77 @@ const Hero = ({ showAnnouncement, onCloseAnnouncement }) => {
 
           <div className="relative h-[380px] sm:h-[450px] lg:h-[600px] w-full flex items-center justify-center lg:justify-end order-2">
 
-
-
             {/* Main Glass Card */}
-
             <motion.div
-
               initial={{ opacity: 0, scale: 0.95, rotateY: 10 }}
-
               animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-
               transition={{ duration: 0.8, ease: "easeOut" }}
-
               className="relative w-full max-w-[300px] sm:max-w-[360px] h-[380px] sm:h-[460px] bg-white/40 backdrop-blur-2xl rounded-[2rem] shadow-[0_20px_50px_-10px_rgba(0,0,0,0.1)] border border-white/60 z-10 pb-8"
-
               style={{ transformStyle: 'preserve-3d' }}
-
             >
 
               {/* Inner Gradient Background for Card */}
+              <div className="absolute inset-2 sm:inset-3 bg-gradient-to-b from-white/80 to-white/40 rounded-[1.5rem] overflow-hidden border border-white/50 flex flex-col items-center shadow-inner">
 
-              <div className="absolute inset-2 sm:inset-3 bg-gradient-to-b from-white/80 to-white/40 rounded-[1.5rem] overflow-hidden border border-white/50 flex flex-col items-center pt-8 sm:pt-10 shadow-inner">
-
-
-
-                {/* Robot Animation with Mouse Tracking */}
-
+                {/* Hero Video with Mouse Tracking – bounded so it never touches text */}
+                {/* HERO VIDEO – full width bounded frame */}
+                {/* HERO VIDEO – no crop, no cut, full frame */}
                 <motion.div
-
-                  className="relative w-[160px] sm:w-[220px] h-[160px] sm:h-[220px]"
-
-                  animate={{
-
-                    x: mousePos.x * 12,
-
-                    y: mousePos.y * 12,
-
-                  }}
-
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
-
+                  className="relative w-full h-[310px] sm:h-[365px] overflow-hidden rounded-[1.5rem] bg-white px-1 py-3 flex items-center justify-center"
                 >
+                  <div className="absolute inset-0 bg-gradient-to-tr from-blue-100/30 to-purple-100/40 blur-[60px]" />
 
-                  <div className="absolute inset-0 bg-gradient-to-tr from-blue-100/30 to-purple-100/30 blur-3xl rounded-full" />
+                  {/* Main video – centered so top/bottom stay visible, more zoom */}
+                  <video
+                    src="/hero-video.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="relative z-10 w-full h-full object-contain object-center scale-125"
+                  />
 
-                  <div className="relative z-10 drop-shadow-[0_10px_20px_rgba(0,0,0,0.15)]">
+                  {/* Soft vignette for contrast */}
+                  <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-transparent to-white/70" />
 
-                    <Lottie animationData={GreenRobot} loop={true} />
-
-                  </div>
-
-                  {/* Shadow beneath robot */}
-
-                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-[20px] bg-black/10 rounded-full blur-xl" />
-
+                  {/* Bottom fade to blend with background */}
+                  <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-white pointer-events-none z-20" />
                 </motion.div>
 
 
 
                 {/* Minimal Text inside card */}
-
-                <div className="mt-4 sm:mt-8 text-center px-4 relative z-20">
-
-                  <h3 className="text-lg sm:text-2xl font-bold text-gray-900 mb-1">Hi, I'm Jack Doe</h3>
+                <div className="pt-1 sm:pt-1 mt-1 pb-3 sm:pb-5 text-center px-4 relative z-20">
+                  <h3 className="text-lg sm:text-2xl font-bold text-gray-900 mb-1">
+                    Hi, I'm Jack Doe
+                  </h3>
 
                   <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-black border border-white/60 shadow-sm backdrop-blur-md">
-
-                    <span className="text-[9px] sm:text-[10px] text-white uppercase tracking-wide">A Software Engineer</span>
-
+                    <span className="text-[9px] sm:text-[10px] text-white uppercase tracking-wide">
+                      A Software Engineer
+                    </span>
                   </div>
-
                 </div>
 
 
-
                 {/* Scanning Line */}
-
                 <motion.div
-
                   animate={{ top: ["5%", "95%", "5%"] }}
-
                   transition={{ duration: 6, ease: "linear", repeat: Infinity }}
-
                   className="absolute left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-blue-400/30 to-transparent w-full z-10"
-
                 />
-
               </div>
 
-
-
               {/* --- FLOATING UI ELEMENTS --- */}
-
-
-
-              <FloatingBadge
-
-                icon={CheckCircle2}
-
-                text="Task Done"
-
-                subtext="Research Complete"
-
-                delay={1.2}
-
-                x="-8%"
-
-                y="10%"
-
-                className="hidden sm:flex"
-
-              />
-
-
-
-              <FloatingBadge
-
-                icon={BarChart3}
-
-                text="Growth"
-
-                subtext="+124% Efficiency"
-
-                delay={1.4}
-
-                x="72%"
-
-                y="30%"
-
-              />
-
-
-
-              <FloatingBadge
-
-                icon={Zap}
-
-                text="Action"
-
-                subtext="Executing Workflow"
-
-                delay={1.6}
-
-                x="-5%"
-
-                y="80%"
-
-              />
-
-
+              <FloatingBadge icon={CheckCircle2} text="Task Done" subtext="Research Complete" delay={1.2} x="-8%" y="25%" className="hidden sm:flex" />
+              <FloatingBadge icon={BarChart3} text="Growth" subtext="+124% Efficiency" delay={1.4} x="72%" y="30%" />
+              <FloatingBadge icon={Zap} text="Action" subtext="Executing Workflow" delay={1.6} x="-5%" y="65%" />
 
               {/* Decorative Sphere behind */}
-
               <div className="absolute -z-10 top-20 -right-12 w-32 h-32 bg-blue-200/20 rounded-full blur-2xl animate-pulse" />
-
             </motion.div>
-
           </div>
-
         </div>
 
       </section>
