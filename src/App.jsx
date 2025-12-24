@@ -598,14 +598,7 @@ const ValueProps = () => {
   const logoRows = [LOGOS.slice(0, 4), LOGOS.slice(4, 8)];
 
   return (
-    <section className="relative py-16 px-6 w-full max-w-[1280px] mx-auto overflow-hidden">
-
-      {/* Background Decor (Optional subtle gradients) */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full z-0 pointer-events-none">
-        <div className="absolute top-40 left-[-20%] w-[600px] h-[600px] bg-gray-100/50 rounded-full blur-[100px]" />
-        <div className="absolute bottom-40 right-[-20%] w-[600px] h-[600px] bg-gray-100/50 rounded-full blur-[100px]" />
-      </div>
-
+    <section className="relative py-16 px-6 w-full max-w-[1280px] mx-auto overflow-hidden bg-[#fdfffc]">
       <div className="relative z-10">
 
         {/* --- HEADER SECTION --- */}
@@ -803,7 +796,7 @@ const ValueProps = () => {
 
 const Comparison = () => {
   return (
-    <section id="features" className="py-24 bg-white font-sans">
+    <section id="features" className="py-24 bg-[#fdfffc] font-sans">
       <div className="max-w-[1100px] mx-auto px-6">
 
         {/* --- HEADER --- */}
@@ -904,7 +897,7 @@ const Pricing = () => {
   const [isYearly, setIsYearly] = useState(false);
 
   return (
-    <section id="pricing" className="relative py-24 px-6 w-full max-w-[1280px] mx-auto overflow-hidden">
+    <section id="pricing" className="relative py-24 px-6 w-full max-w-[1280px] mx-auto overflow-hidden bg-[#fdfffc]">
       {/* Background Decor */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full z-0 pointer-events-none opacity-40">
         <div className="absolute top-20 left-20 w-96 h-96 bg-blue-50 rounded-full blur-[100px]" />
@@ -1069,7 +1062,7 @@ const Pricing = () => {
 
 const IdentitySection = () => {
   return (
-    <section id="identity" className="relative py-10 px-4 sm:px-6 bg-[#f1f1f1] w-full">
+    <section id="identity" className="relative py-10 px-4 sm:px-6 bg-[#fdfffc] w-full">
       <div className="max-w-[1100px] mx-auto">
 
         <div className="text-center mb-16 sm:mb-24 px-4">
@@ -1248,31 +1241,31 @@ const IdentitySection = () => {
               </div>
 
               {/* --- RIGHT: FLOATING CARDS VISUAL --- */}
-              <div className="w-full md:w-1/2 relative h-[300px] sm:h-[350px]">
+              <div className="w-full md:w-1/2 relative h-[300px] sm:h-[350px] flex items-center justify-center">
                 {[
                   { title: "HEAD OF GROWTH", top: "0%", left: "0%", delay: 0 },
                   { title: "SOCIAL MEDIA MANAGER", top: "35%", left: "20%", delay: 0.2 }, // Shifted right
-                  { title: "DATA ANALYST", top: "70%", left: "5%", delay: 0.4 }
+                  { title: "DATA ANALYST", top: "70%", left: "-8%", delay: 0.4 }
                 ].map((card, i) => (
                   <motion.div
                     key={i}
                     initial={{ opacity: 0, x: 20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: card.delay, duration: 0.6, ease: "easeOut" }}
-                    className="absolute flex items-center gap-4 p-4 pr-8 rounded-2xl border border-white/65 bg-[#151515]/80 backdrop-blur-md shadow-2xl"
+                    className="absolute flex items-center gap-3 sm:gap-4 p-3 sm:p-4 pr-4 sm:pr-8 rounded-2xl border border-white/65 bg-[#151515]/80 backdrop-blur-md shadow-2xl"
                     style={{ top: card.top, left: card.left }}
                   >
                     {/* Icon: White circle with black check */}
-                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0">
-                      <Check className="w-5 h-5 text-black stroke-[3]" />
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white flex items-center justify-center shrink-0">
+                      <Check className="w-4 h-4 sm:w-5 sm:h-5 text-black stroke-[3]" />
                     </div>
 
                     {/* Text */}
-                    <div className="flex flex-col">
-                      <span className="text-sm sm:text-base font-bold text-white tracking-wide whitespace-nowrap">
+                    <div className="flex flex-col min-w-0">
+                      <span className="text-xs sm:text-base font-bold text-white tracking-wide truncate">
                         {card.title}
                       </span>
-                      <span className="text-[10px] sm:text-[11px] text-gray-400 font-medium tracking-wider uppercase">
+                      <span className="text-[9px] sm:text-[11px] text-gray-400 font-medium tracking-wider uppercase">
                         Role Template
                       </span>
                     </div>
@@ -1294,7 +1287,7 @@ const Join = () => {
     <section id="join" className="relative py-12 sm:py-20 lg:py-24 px-4 sm:px-6 w-full max-w-[1280px] mx-auto overflow-hidden">
 
       {/* Background Decor - Scaled for mobile */}
-      <div className="absolute top-0 right-0 w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] bg-gradient-to-b from-blue-50 to-transparent rounded-full blur-[80px] sm:blur-[120px] -z-10 opacity-60" />
+      <div className="absolute top-0 right-0 w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] bg-gradient-to-b from-[#ffe5e7] to-transparent rounded-full blur-[80px] sm:blur-[120px] -z-10 opacity-60" />
 
       <div className="grid lg:grid-cols-2 gap-10 lg:gap-20 items-center">
 
@@ -1304,9 +1297,9 @@ const Join = () => {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 text-[10px] sm:text-xs font-bold uppercase tracking-wider mb-4 sm:mb-6"
+            className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#ffe5e7] text-[#E21339] text-[10px] sm:text-xs font-bold uppercase tracking-wider mb-4 sm:mb-6"
           >
-            <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-blue-600 animate-pulse" />
+            <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#E21339] animate-pulse" />
             Limited Beta Access
           </motion.div>
 
@@ -1318,7 +1311,7 @@ const Join = () => {
           >
             Hire your first
             <br className="hidden sm:block" />{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+            <span className="text-transparent bg-clip-text bg-#E21339 bg-gradient-to-r from-[#E21339] to-[#F0284A]">
               AI Employee.
             </span>
           </motion.h2>
@@ -1340,7 +1333,7 @@ const Join = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="relative flex items-center w-full max-w-md mx-auto lg:mx-0 p-1 bg-white border border-gray-200 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.04)] focus-within:shadow-[0_8px_30px_rgba(59,130,246,0.15)] focus-within:border-blue-300 transition-all duration-300"
+            className="relative flex items-center w-full max-w-md mx-auto lg:mx-0 p-1 bg-white border border-gray-200 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.04)] focus-within:shadow-[0_8px_30px_rgba(226,19,57,0.15)] focus-within:border-[#E21339] transition-all duration-300"
           >
             <input
               type="email"
@@ -1362,7 +1355,7 @@ const Join = () => {
         {/* --- RIGHT: STATS WIDGETS --- */}
         <div className="relative w-full max-w-[500px] mx-auto lg:ml-auto">
           {/* Decor */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-indigo-100/50 to-blue-50/50 rounded-full blur-[60px] sm:blur-[100px] -z-10" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-[#ffe5e7]/50 to-[#fca5ac]/50 rounded-full blur-[60px] sm:blur-[100px] -z-10" />
 
           {/* Grid Layout: 2 columns on mobile (compact), offset columns on desktop */}
           <div className="grid grid-cols-2 gap-3 sm:gap-5">
@@ -1373,7 +1366,7 @@ const Join = () => {
                 whileHover={{ y: -5 }}
                 className="p-4 sm:p-8 rounded-2xl sm:rounded-[2rem] bg-white border border-gray-100 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.08)] flex flex-col justify-between h-full"
               >
-                <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-xl bg-blue-50 flex items-center justify-center mb-2 sm:mb-4 text-blue-600">
+                <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-xl bg-[#ffe5e7] flex items-center justify-center mb-2 sm:mb-4 text-[#E21339]">
                   <CheckCircle2 className="w-4 h-4 sm:w-6 sm:h-6" />
                 </div>
                 <div>
@@ -1398,10 +1391,10 @@ const Join = () => {
             <div className="flex flex-col gap-3 sm:gap-5">
               <motion.div
                 whileHover={{ y: -5 }}
-                className="p-4 sm:p-8 rounded-2xl sm:rounded-[2rem] bg-gradient-to-br from-indigo-600 to-blue-600 text-white shadow-[0_10px_30px_-10px_rgba(79,70,229,0.3)] flex flex-col justify-center h-full"
+                className="p-4 sm:p-8 rounded-2xl sm:rounded-[2rem] bg-gradient-to-br from-[#E21339] to-[#F0284A] text-white shadow-[0_10px_30px_-10px_rgba(226,19,57,0.3)] flex flex-col justify-center h-full"
               >
                 <div className="text-2xl sm:text-4xl font-bold mb-1">48k</div>
-                <div className="text-[10px] sm:text-sm font-medium text-blue-100 leading-tight">Tasks automated daily</div>
+                <div className="text-[10px] sm:text-sm font-medium text-[#fca5ac] leading-tight">Tasks automated daily</div>
               </motion.div>
 
               <motion.div
@@ -1603,7 +1596,7 @@ const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section id="faq" className="relative py-24 px-6 w-full max-w-5xl mx-auto">
+    <section id="faq" className="relative py-24 px-6 w-full max-w-5xl mx-auto bg-[#fdfffc]">
 
       {/* --- HEADER --- */}
       <div className="text-center max-w-3xl mx-auto mb-16">
@@ -1667,7 +1660,7 @@ const FAQ = () => {
               >
                 <motion.h3
                   layout="position"
-                  className={`text-lg sm:text-xl font-bold leading-snug flex-1 transition-colors duration-300 ${isOpen ? "text-[#E21339]" : "text-gray-900"
+                  className={`text-lg sm:text-lg font-bold leading-snug flex-1 transition-colors duration-300 ${isOpen ? "text-white" : "text-gray-900"
                     }`}
                 >
                   {faq.q}
@@ -1884,7 +1877,7 @@ export default function App() {
   const [showAnnouncement, setShowAnnouncement] = useState(true);
 
   return (
-    <div className="min-h-screen bg-[#f1f1f1] text-gray-900 font-sans selection:bg-red-500/20">
+    <div className="min-h-screen bg-[#fdfffc] text-gray-900 font-sans selection:bg-red-500/20">
       <Navbar showAnnouncement={showAnnouncement} />
       <Hero
         showAnnouncement={showAnnouncement}
