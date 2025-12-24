@@ -1245,7 +1245,7 @@ const IdentitySection = () => {
                 {[
                   { title: "HEAD OF GROWTH", top: "0%", left: "0%", delay: 0 },
                   { title: "SOCIAL MEDIA MANAGER", top: "35%", left: "20%", delay: 0.2 }, // Shifted right
-                  { title: "DATA ANALYST", top: "70%", left: "-8%", delay: 0.4 }
+                  { title: "DATA ANALYST", top: "70%", left: "-2%", delay: 0.4 }
                 ].map((card, i) => (
                   <motion.div
                     key={i}
