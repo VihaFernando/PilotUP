@@ -1,14 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Menu, Check, ChevronDown, Users, Zap, LayoutDashboard, Briefcase, Shield,
   Star, Quote, BadgeCheck, X, Plus, Minus, MessageCircle, CheckCircle2, BarChart3, Mail,
   ArrowRight, ArrowLeft, PlayCircle, ShieldCheck, Clock, BrainCircuit, Frown, Smile,
-  Globe2, Sparkles, MessageSquare, TrendingUp, Instagram, Linkedin, Github, Globe, ArrowUpRight, ChevronUp, Fingerprint, Mic
+  Globe2, Sparkles, MessageSquare, TrendingUp, Instagram, Linkedin, Github, Globe, ArrowUpRight, ChevronUp, Fingerprint, Mic, LogOut, UserCircle
 } from 'lucide-react';
 
 import Lottie from "lottie-react";
 import GreenRobot from "./assets/GreenRobot.json";
+
+// Auth & Blog Imports
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+import Navbar from './components/Navbar';
+import Login from './pages/Login';
+import BlogFeed from './pages/BlogFeed';
+import BlogDetail from './pages/BlogDetail';
+import BlogAdmin from './pages/BlogAdmin';
 
 // --- DATA CONSTANTS ---
 
@@ -184,192 +194,15 @@ const FloatingBadge = ({ icon: Icon, text, subtext, delay, x, y, className }) =>
 
 // --- CORE COMPONENTS ---
 
-const Navbar = ({ showAnnouncement = true }) => {
-  const [openMenu, setOpenMenu] = useState(false);
+const NavbarWrapper = ({ showAnnouncement = true }) => {
   const [scrolled, setScrolled] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-
-  // Effect to handle navbar visibility based on scroll direction
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      // Handle basic scrolled state
-      setScrolled(currentScrollY > 20);
-
-      // Handle navbar visibility with improved logic
-      if (currentScrollY < 100) {
-        // Always show navbar near the top
-        setIsVisible(true);
-      } else {
-        // Only update visibility if there's significant scroll movement (reduces jitter)
-        const scrollDifference = Math.abs(currentScrollY - lastScrollY);
-        if (scrollDifference > 10) {
-          if (currentScrollY > lastScrollY + 10) {
-            // Scrolling down - hide navbar
-            setIsVisible(false);
-          } else if (currentScrollY < lastScrollY - 10) {
-            // Scrolling up - show navbar
-            setIsVisible(true);
-          }
-        }
-      }
-
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
 
   return (
-    <>
-      <div
-        className={`
-          fixed left-0 right-0 z-50
-          flex justify-center px-4 pointer-events-none
-          transition-all duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1)]
-          ${scrolled || !showAnnouncement ? "top-6" : "top-[72px]"}
-          ${isVisible
-            ? "translate-y-0 opacity-100"
-            : "-translate-y-[120%] opacity-0"
-          }
-        `}
-      >
-
-        <motion.nav
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className={`
-            pointer-events-auto
-            relative
-            flex items-center justify-between
-            w-full max-w-[580px] md:max-w-3xl
-            px-4 py-2.5 sm:pl-5 sm:pr-3
-            rounded-full
-            border border-gray-200/50
-            backdrop-blur-xl
-            transition-all duration-300
-            ${scrolled
-              ? "bg-white/80 shadow-[0_8px_30px_rgba(0,0,0,0.04)]"
-              : "bg-white/60 shadow-[0_4px_20px_rgba(0,0,0,0.02)]"
-            }
-          `}
-        >
-          {/* --- LOGO --- */}
-          <div
-            onClick={() => document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" })}
-            className="flex items-center gap-2.5 cursor-pointer group"
-          >
-            {/* Mobile: Full black logo; Desktop: small rounded icon */}
-            <img src="/Logo-full-black.png" alt="PilotUP Logo" className="block md:hidden h-6 object-contain" />
-
-            <div className="relative w-8 h-8 rounded-xl bg-black flex items-center justify-center overflow-hidden hidden md:flex">
-              <img
-                src="/Logo-white.png"
-                alt="PilotUP Logo"
-                className="w-6 h-6 object-contain"
-              />
-            </div>
-
-            {/* Logo Text (unchanged) */}
-            <span className="text-[15px] font-bold text-gray-900 tracking-tight hidden xs:block">
-              PilotUP
-            </span>
-          </div>
-
-
-          {/* --- DESKTOP LINKS --- */}
-          <div className="hidden md:flex items-center gap-10 mx-2">
-            {["Features", "Pricing", "Reviews"].map((link) => (
-              <a
-                key={link}
-                href={`#${link.toLowerCase()}`}
-                className="text-[13px] font-medium text-gray-500 hover:text-gray-900 transition-colors duration-200"
-              >
-                {link}
-              </a>
-            ))}
-          </div>
-
-          {/* --- ACTIONS --- */}
-          <div className="flex items-center gap-3">
-            {/* Desktop CTA */}
-            <button
-              className="
-                hidden md:flex items-center gap-2
-                bg-gray-900 text-white
-                px-5 py-2.5
-                rounded-full
-                text-[13px] font-semibold
-                hover:-translate-y-0.5
-                transition-all duration-300
-              "
-            >
-              Early Access
-              <ArrowRight className="w-3.5 h-3.5 opacity-70" />
-            </button>
-
-            {/* Mobile Toggle */}
-            <button
-              onClick={() => setOpenMenu(!openMenu)}
-              className="block md:hidden p-2 rounded-full hover:bg-gray-100 text-gray-600 transition-colors"
-            >
-              {openMenu ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
-          </div>
-        </motion.nav>
-      </div>
-
-      {/* --- MOBILE MENU (Floating Card) --- */}
-      <AnimatePresence>
-        {openMenu && (
-          <motion.div
-            initial={{ opacity: 0, y: -20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
-            className="
-              fixed top-24 left-4 right-4 z-40
-              bg-white/90 backdrop-blur-2xl
-              border border-white/50
-              shadow-[0_20px_40px_-10px_rgba(0,0,0,0.1)]
-              rounded-3xl
-              p-2
-              md:hidden
-            "
-          >
-            <div className="flex flex-col gap-1">
-              {["Features", "Pricing", "Reviews", "FAQ"].map((link) => (
-                <a
-                  key={link}
-                  href={`#${link.toLowerCase()}`}
-                  onClick={() => setOpenMenu(false)}
-                  className="px-5 py-4 text-[15px] font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-2xl transition-colors text-center"
-                >
-                  {link}
-                </a>
-              ))}
-              <div className="h-px bg-gray-100 my-1 mx-4" />
-              <button
-                className="
-                  w-full
-                  bg-gray-900 text-white
-                  py-3.5 rounded-2xl
-                  text-[15px] font-semibold
-                  shadow-xl shadow-gray-900/10
-                  active:scale-95 transition-transform
-                "
-              >
-                Get Early Access
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+    <Navbar
+      showAnnouncement={showAnnouncement}
+      scrolled={scrolled}
+      setScrolled={setScrolled}
+    />
   );
 };
 
@@ -1976,12 +1809,13 @@ const BackToTop = () => {
   );
 };
 
-export default function App() {
+// Home Page Component
+const HomePage = () => {
   const [showAnnouncement, setShowAnnouncement] = useState(true);
 
   return (
-    <div className="min-h-screen bg-[#fdfffc] text-gray-900 font-sans selection:bg-red-500/20">
-      <Navbar showAnnouncement={showAnnouncement} />
+    <>
+      <NavbarWrapper showAnnouncement={showAnnouncement} />
       <Hero
         showAnnouncement={showAnnouncement}
         onCloseAnnouncement={() => setShowAnnouncement(false)}
@@ -1996,63 +1830,95 @@ export default function App() {
       <CTASection />
       <Footer />
       <BackToTop />
+    </>
+  );
+};
 
-      <style jsx>{`
-          @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-100% / 4)); }
-          }
-          .animate-marquee {
-            animation: marquee 40s linear infinite;
-          }
-          .reviews-dot-grid {
-            background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-            background-size: 18px 18px;
-            opacity: 0.45;
-            mix-blend-mode: screen;
-          }
-          .review-scroll-track {
-            display: flex;
-            flex-direction: column;
-            gap: var(--review-card-gap);
-            padding-top: 1.5rem;
-            padding-bottom: 1.5rem;
-            animation: reviewsScroll var(--review-scroll-duration) linear infinite;
-          }
-          .review-card {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-          }
-          .review-card-active {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-            box-shadow: 0 30px 40px -25px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08);
-            transform: scale(1.01);
-          }
-          .logo-marquee {
-            animation: scrollLogos 20s linear infinite;
-          }
-          .logo-marquee[data-direction="reverse"] {
-            animation-direction: reverse;
-          }
-          .logo-marquee img {
-            filter: saturate(1.2);
-          }
-          @keyframes reviewsScroll {
-            0% {
-              transform: translateY(0);
-            }
-            100% {
-              transform: translateY(calc(-1 * var(--review-cycle-height)));
-            }
-          }
-          @keyframes scrollLogos {
-            0% {
-              transform: translateX(0);
-            }
-            100% {
-              transform: translateX(-50%);
-            }
-          }
-        `}</style>
-    </div>
+export default function App() {
+  return (
+    <AuthProvider>
+      <Router>
+        <div className="min-h-screen bg-[#fdfffc] text-gray-900 font-sans selection:bg-red-500/20">
+          <Routes>
+            {/* Home Page */}
+            <Route path="/" element={<HomePage />} />
+
+            {/* Blog Routes */}
+            <Route path="/blog" element={<BlogFeed />} />
+            <Route path="/blog/:slug" element={<BlogDetail />} />
+
+            {/* Auth Routes */}
+            <Route path="/login" element={<Login />} />
+
+            {/* Protected Admin Route */}
+            <Route
+              path="/blog/admin"
+              element={
+                <ProtectedRoute>
+                  <BlogAdmin />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+
+          <style jsx>{`
+              @keyframes marquee {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(calc(-100% / 4)); }
+              }
+              .animate-marquee {
+                animation: marquee 40s linear infinite;
+              }
+              .reviews-dot-grid {
+                background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+                background-size: 18px 18px;
+                opacity: 0.45;
+                mix-blend-mode: screen;
+              }
+              .review-scroll-track {
+                display: flex;
+                flex-direction: column;
+                gap: var(--review-card-gap);
+                padding-top: 1.5rem;
+                padding-bottom: 1.5rem;
+                animation: reviewsScroll var(--review-scroll-duration) linear infinite;
+              }
+              .review-card {
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+              }
+              .review-card-active {
+                border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+                box-shadow: 0 30px 40px -25px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08);
+                transform: scale(1.01);
+              }
+              .logo-marquee {
+                animation: scrollLogos 20s linear infinite;
+              }
+              .logo-marquee[data-direction="reverse"] {
+                animation-direction: reverse;
+              }
+              .logo-marquee img {
+                filter: saturate(1.2);
+              }
+              @keyframes reviewsScroll {
+                0% {
+                  transform: translateY(0);
+                }
+                100% {
+                  transform: translateY(calc(-1 * var(--review-cycle-height)));
+                }
+              }
+              @keyframes scrollLogos {
+                0% {
+                  transform: translateX(0);
+                }
+                100% {
+                  transform: translateX(-50%);
+                }
+              }
+            `}</style>
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
