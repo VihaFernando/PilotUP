@@ -187,13 +187,41 @@ const FloatingBadge = ({ icon: Icon, text, subtext, delay, x, y, className }) =>
 const Navbar = ({ showAnnouncement = true }) => {
   const [openMenu, setOpenMenu] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
-  // Effect to detect scroll for subtle styling changes (optional, but nice)
+  // Effect to handle navbar visibility based on scroll direction
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Handle basic scrolled state
+      setScrolled(currentScrollY > 20);
+
+      // Handle navbar visibility with improved logic
+      if (currentScrollY < 100) {
+        // Always show navbar near the top
+        setIsVisible(true);
+      } else {
+        // Only update visibility if there's significant scroll movement (reduces jitter)
+        const scrollDifference = Math.abs(currentScrollY - lastScrollY);
+        if (scrollDifference > 10) {
+          if (currentScrollY > lastScrollY + 10) {
+            // Scrolling down - hide navbar
+            setIsVisible(false);
+          } else if (currentScrollY < lastScrollY - 10) {
+            // Scrolling up - show navbar
+            setIsVisible(true);
+          }
+        }
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [lastScrollY]);
 
   return (
     <>
@@ -201,8 +229,12 @@ const Navbar = ({ showAnnouncement = true }) => {
         className={`
           fixed left-0 right-0 z-50
           flex justify-center px-4 pointer-events-none
-          transition-all duration-300 ease-out
+          transition-all duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1)]
           ${scrolled || !showAnnouncement ? "top-6" : "top-[72px]"}
+          ${isVisible
+            ? "translate-y-0 opacity-100"
+            : "-translate-y-[120%] opacity-0"
+          }
         `}
       >
 
