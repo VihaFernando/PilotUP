@@ -414,9 +414,9 @@ const Hero = ({ showAnnouncement, onCloseAnnouncement }) => {
             </div>
 
             {/* TITLE */}
-            <h1 className="text-[2.6rem] sm:text-5xl lg:text-[4rem] font-extrabold leading-[1.1] tracking-tight text-gray-900">
-              Your Business, <br />
-              <span className="text-gray-800">Running on Autopilot.</span>
+            <h1 className="text-[2.2rem] sm:text-5xl lg:text-[3.5rem] font-extrabold leading-[1.1] tracking-tight text-gray-900">
+              Build your own, <br />
+              <span className="text-gray-800">Ai employees to scale your business.</span>
             </h1>
 
             {/* SUBTEXT */}
@@ -1655,7 +1655,7 @@ const FAQ = () => {
                 layout
                 className={`relative z-20 flex justify-between items-center gap-6 p-6 sm:p-8 rounded-[2rem] transition-colors duration-300 ${isOpen
                   ? "bg-[#0A0A0A] shadow-2xl"
-                  : "bg-transparent hover:bg-gray-50 border-b border-gray-100 rounded-none sm:rounded-xl"
+                  : "bg-white/50 hover:bg-gray-50 border border-gray-200 shadow-sm"
                   }`}
               >
                 <motion.h3
@@ -1714,6 +1714,77 @@ const FAQ = () => {
             </motion.div>
           );
         })}
+      </div>
+    </section>
+  );
+};
+
+// CTA Section - "Your next hire isn't human"
+const CTASection = () => {
+  return (
+    <section className="relative w-full bg-gradient-to-b from-[#fdfffc] via-pink-50/70 via-20% to-rose-300/85 py-16 md:py-24 lg:py-32 px-6">
+      <div className="max-w-4xl mx-auto text-center">
+        {/* Small Label */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mb-4 md:mb-6 flex justify-center"
+        >
+          <span className="px-4 py-2 md:px-5 md:py-2.5 rounded-full bg-white text-gray-600 text-[10px] md:text-xs font-semibold tracking-[0.2em] uppercase shadow-sm">
+            SCALE WITH AI
+          </span>
+        </motion.div>
+
+        {/* Main Heading */}
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="text-3xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-4 md:mb-6 lg:mb-8 leading-tight"
+        >
+          Your next hire<br />isn't human
+        </motion.h2>
+
+        {/* Subtitle */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="text-sm md:text-base lg:text-lg text-gray-700 mb-8 md:mb-10 lg:mb-12 max-w-2xl mx-auto leading-relaxed px-4"
+        >
+          See how fast-growing businesses cut costs and<br className="hidden md:block" />
+          supercharge team productivity with PilotUP.
+        </motion.p>
+
+        {/* CTA Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
+        >
+          {/* Talk to Sales Button */}
+          <button
+            onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
+            className="px-6 py-2.5 md:px-8 md:py-4 rounded-full bg-white text-gray-900 font-semibold text-sm md:text-base hover:bg-gray-50 transition-all duration-200 shadow-md hover:shadow-lg w-full max-w-[200px] sm:w-auto sm:max-w-none"
+          >
+            Talk to Sales
+          </button>
+
+          {/* Start with PilotUP Button */}
+          <button
+            onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
+            className="px-6 py-2.5 md:px-8 md:py-4 rounded-full bg-gradient-to-r from-rose-500 to-pink-600 text-white font-semibold text-sm md:text-base hover:from-rose-600 hover:to-pink-700 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 w-full max-w-[200px] sm:w-auto sm:max-w-none group"
+          >
+            Start with PilotUP
+            <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform duration-200" />
+          </button>
+        </motion.div>
       </div>
     </section>
   );
@@ -1890,6 +1961,7 @@ export default function App() {
       <Reviews />
       <Join />
       <FAQ />
+      <CTASection />
       <Footer />
       <BackToTop />
 
