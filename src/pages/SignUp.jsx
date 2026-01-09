@@ -182,7 +182,7 @@ const SignUp = () => {
                             {/* Header */}
                             <div className="text-center mb-5 md:mb-8">
                                 <div className="inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-gradient-to-br from-gray-900 to-gray-800 mb-3 shadow-lg shadow-gray-200">
-                                    <img src="/Logo-white.png" alt="Logo" className="w-7 h-7 md:w-10 md:h-10 object-contain" />
+                                    <img src="/Logo-white.png" alt="Logo" className="w-9 h-9 md:w-12 md:h-12 object-contain" />
                                 </div>
                                 <h1 className="text-xl md:text-3xl font-bold tracking-tight mb-1 md:mb-2 text-[#1D1D1F]">Create Account</h1>
                                 <p className="text-gray-500 text-xs md:text-base">
