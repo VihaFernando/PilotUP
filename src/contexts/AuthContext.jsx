@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 
 const AuthContext = createContext({});
@@ -14,18 +14,23 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const sessionCheckInProgress = useRef(false); // Prevent duplicate checks
 
     useEffect(() => {
+        // Prevent multiple simultaneous session checks
+        if (sessionCheckInProgress.current) return;
+        sessionCheckInProgress.current = true;
+
         const getSession = async () => {
             try {
-                // Get current session - this is fast and cached
+                // getSession() is LOCAL - reads from localStorage, NO API call!
                 const { data: { session }, error: sessionError } = await supabase.auth.getSession();
 
                 if (sessionError) {
                     console.error('Session error:', sessionError);
                     setUser(null);
                 } else if (session?.user) {
-                    // Trust the session - it's already validated by Supabase
+                    // Trust the session - already validated by Supabase
                     setUser(session.user);
                 } else {
                     setUser(null);
@@ -35,14 +40,15 @@ export const AuthProvider = ({ children }) => {
                 setUser(null);
             } finally {
                 setLoading(false);
+                sessionCheckInProgress.current = false;
             }
         };
 
         getSession();
 
-        // Listen for auth changes
+        // onAuthStateChange listens to LOCAL events (no API calls)
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-            // Trust Supabase's auth state - no need to verify again
+            // This is a local event listener - NO API CALL
             setUser(session?.user ?? null);
         });
 
