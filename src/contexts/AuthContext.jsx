@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, useRef } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 
 const AuthContext = createContext({});
@@ -14,45 +14,30 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    const sessionCheckInProgress = useRef(false); // Prevent duplicate checks
 
     useEffect(() => {
-        // Prevent multiple simultaneous session checks
-        if (sessionCheckInProgress.current) return;
-        sessionCheckInProgress.current = true;
+        let isMounted = true;
 
-        const getSession = async () => {
-            try {
-                // getSession() is LOCAL - reads from localStorage, NO API call!
-                const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-
-                if (sessionError) {
-                    console.error('Session error:', sessionError);
-                    setUser(null);
-                } else if (session?.user) {
-                    // Trust the session - already validated by Supabase
-                    setUser(session.user);
-                } else {
-                    setUser(null);
-                }
-            } catch (error) {
-                console.error('Error getting session:', error);
-                setUser(null);
-            } finally {
-                setLoading(false);
-                sessionCheckInProgress.current = false;
-            }
-        };
-
-        getSession();
-
-        // onAuthStateChange listens to LOCAL events (no API calls)
+        // Set up listener first
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-            // This is a local event listener - NO API CALL
-            setUser(session?.user ?? null);
+            if (isMounted) {
+                setUser(session?.user ?? null);
+                setLoading(false);
+            }
         });
 
-        return () => subscription?.unsubscribe();
+        // Get initial session
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            if (isMounted) {
+                setUser(session?.user ?? null);
+                setLoading(false);
+            }
+        });
+
+        return () => {
+            isMounted = false;
+            subscription?.unsubscribe();
+        };
     }, []);
 
     const signInWithEmail = async (email, password) => {
@@ -94,8 +79,17 @@ export const AuthProvider = ({ children }) => {
     };
 
     const signOut = async () => {
-        const { error } = await supabase.auth.signOut();
-        if (error) throw error;
+        try {
+            const { error } = await supabase.auth.signOut();
+            if (error) throw error;
+            // Explicitly clear user state
+            setUser(null);
+            // Clear localStorage completely
+            localStorage.removeItem('pilot-up-auth');
+        } catch (err) {
+            console.error('Sign out error:', err);
+            throw err;
+        }
     };
 
     const value = {
