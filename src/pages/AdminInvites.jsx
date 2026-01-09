@@ -12,7 +12,8 @@ const AdminInvites = () => {
     const [showForm, setShowForm] = useState(false);
     const [formData, setFormData] = useState({
         email: '',
-        expiresIn: 7 // days
+        expiresIn: 7,
+        expiresUnit: 'days' // 'minutes', 'hours', 'days'
     });
     const [creating, setCreating] = useState(false);
     const [message, setMessage] = useState('');
@@ -50,7 +51,19 @@ const AdminInvites = () => {
         try {
             const token = generateInviteToken();
             const expiresAt = new Date();
-            expiresAt.setDate(expiresAt.getDate() + parseInt(formData.expiresIn));
+            const expiresValue = parseInt(formData.expiresIn);
+
+            // Add time based on unit
+            if (formData.expiresUnit === 'minutes') {
+                expiresAt.setMinutes(expiresAt.getMinutes() + expiresValue);
+            } else if (formData.expiresUnit === 'hours') {
+                expiresAt.setHours(expiresAt.getHours() + expiresValue);
+            } else if (formData.expiresUnit === 'days') {
+                expiresAt.setDate(expiresAt.getDate() + expiresValue);
+            }
+
+            // Convert to ISO string properly (keeps local timezone offset)
+            const isoString = expiresAt.toISOString();
 
             const { data, error } = await supabase
                 .from('admin_invites')
@@ -58,14 +71,14 @@ const AdminInvites = () => {
                     token,
                     created_by: user.id,
                     email: formData.email || null,
-                    expires_at: expiresAt.toISOString()
+                    expires_at: isoString
                 })
                 .select();
 
             if (error) throw error;
 
             setInvites([data[0], ...invites]);
-            setFormData({ email: '', expiresIn: 7 });
+            setFormData({ email: '', expiresIn: 7, expiresUnit: 'days' });
             setShowForm(false);
             setMessage('Invite created successfully!');
             setTimeout(() => setMessage(''), 3000);
@@ -157,7 +170,7 @@ const AdminInvites = () => {
                         onSubmit={handleCreateInvite}
                         className="mb-8 p-6 bg-white border border-gray-200 rounded-lg shadow-sm"
                     >
-                        <div className="grid md:grid-cols-2 gap-4 mb-6">
+                        <div className="grid md:grid-cols-3 gap-4 mb-6">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
                                     Email (Optional)
@@ -172,18 +185,28 @@ const AdminInvites = () => {
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Expires In (days)
+                                    Expires In
                                 </label>
-                                <select
+                                <input
+                                    type="number"
                                     value={formData.expiresIn}
                                     onChange={(e) => setFormData({ ...formData, expiresIn: e.target.value })}
+                                    min="1"
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    Unit
+                                </label>
+                                <select
+                                    value={formData.expiresUnit}
+                                    onChange={(e) => setFormData({ ...formData, expiresUnit: e.target.value })}
                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 >
-                                    <option value="1">1 day</option>
-                                    <option value="3">3 days</option>
-                                    <option value="7">7 days</option>
-                                    <option value="14">14 days</option>
-                                    <option value="30">30 days</option>
+                                    <option value="minutes">Minutes</option>
+                                    <option value="hours">Hours</option>
+                                    <option value="days">Days</option>
                                 </select>
                             </div>
                         </div>
@@ -229,8 +252,8 @@ const AdminInvites = () => {
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     className={`p-4 border rounded-lg transition ${used ? 'bg-gray-50 border-gray-200' :
-                                            expired ? 'bg-red-50 border-red-200' :
-                                                'bg-white border-gray-200 hover:border-gray-300'
+                                        expired ? 'bg-red-50 border-red-200' :
+                                            'bg-white border-gray-200 hover:border-gray-300'
                                         }`}
                                 >
                                     <div className="flex items-start justify-between mb-3">
