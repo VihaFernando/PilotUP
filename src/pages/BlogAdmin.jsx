@@ -190,6 +190,12 @@ const BlogAdmin = () => {
                     </div>
                     <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                         <button
+                            onClick={() => navigate('/admin/invites')}
+                            className="px-4 py-2.5 rounded-full border border-blue-200 text-blue-700 font-semibold hover:bg-blue-50 transition-all text-center text-sm md:text-base"
+                        >
+                            Manage Invites
+                        </button>
+                        <button
                             onClick={() => navigate('/blog')}
                             className="px-4 py-2.5 rounded-full border border-gray-200 text-gray-700 font-semibold hover:bg-gray-50 transition-all text-center text-sm md:text-base"
                         >

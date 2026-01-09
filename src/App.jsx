@@ -16,9 +16,11 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
+import SignUp from './pages/SignUp';
 import BlogFeed from './pages/BlogFeed';
 import BlogDetail from './pages/BlogDetail';
 import BlogAdmin from './pages/BlogAdmin';
+import AdminInvites from './pages/AdminInvites';
 
 // --- DATA CONSTANTS ---
 
@@ -1849,6 +1851,7 @@ export default function App() {
 
             {/* Auth Routes */}
             <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
 
             {/* Protected Admin Route */}
             <Route
@@ -1856,6 +1859,16 @@ export default function App() {
               element={
                 <ProtectedRoute>
                   <BlogAdmin />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Protected Admin Invites Route */}
+            <Route
+              path="/admin/invites"
+              element={
+                <ProtectedRoute>
+                  <AdminInvites />
                 </ProtectedRoute>
               }
             />

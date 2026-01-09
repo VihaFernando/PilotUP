@@ -1,17 +1,27 @@
-import { useState } from 'react';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { Mail, Lock, Chrome } from 'lucide-react';
+import { Mail, Lock, Chrome, CheckCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Login = () => {
-    const [isLogin, setIsLogin] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
 
-    const { user, signInWithEmail, signUpWithEmail, signInWithGoogle } = useAuth();
+    const { user, signInWithEmail, signInWithGoogle } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
+
+    // Check for success message from signup
+    useEffect(() => {
+        if (location.state?.message) {
+            setSuccessMessage(location.state.message);
+            setTimeout(() => setSuccessMessage(''), 5000);
+        }
+    }, [location.state]);
 
     if (user) {
         return <Navigate to="/blog/admin" replace />;
@@ -23,11 +33,7 @@ const Login = () => {
         setLoading(true);
 
         try {
-            if (isLogin) {
-                await signInWithEmail(email, password);
-            } else {
-                await signUpWithEmail(email, password);
-            }
+            await signInWithEmail(email, password);
             navigate('/blog/admin');
         } catch (err) {
             setError(err.message || 'Authentication failed');
@@ -55,20 +61,37 @@ const Login = () => {
                     <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-gray-900 to-gray-700 mb-4 shadow-lg">
                         <img src="/Logo-full-white.png" alt="Logo" className="w-12 h-12 object-contain" />
                     </div>
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                        {isLogin ? 'Welcome Back' : 'Create Account'}
-                    </h1>
-                    <p className="text-gray-500">
-                        {isLogin ? 'Sign in to manage your blog' : 'Sign up to start blogging'}
-                    </p>
+                    <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h1>
+                    <p className="text-gray-500">Sign in to manage your blog</p>
                 </div>
 
                 {/* Card */}
-                <div className="bg-white rounded-3xl shadow-xl border border-gray-200 p-8">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="bg-white rounded-3xl shadow-xl border border-gray-200 p-8"
+                >
+                    {/* Success Message */}
+                    {successMessage && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="mb-6 p-4 rounded-2xl bg-green-50 border border-green-200 text-green-700 text-sm flex items-start gap-3"
+                        >
+                            <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                            <p>{successMessage}</p>
+                        </motion.div>
+                    )}
+
+                    {/* Error Message */}
                     {error && (
-                        <div className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-sm">
+                        <motion.div
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-sm"
+                        >
                             {error}
-                        </div>
+                        </motion.div>
                     )}
 
                     {/* Google Sign In */}
@@ -133,26 +156,15 @@ const Login = () => {
                             disabled={loading}
                             className="w-full py-3.5 rounded-2xl bg-gray-900 text-white font-bold hover:bg-black transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
                         >
-                            {loading ? 'Please wait...' : isLogin ? 'Sign In' : 'Sign Up'}
+                            {loading ? 'Please wait...' : 'Sign In'}
                         </button>
                     </form>
 
-                    {/* Toggle */}
-                    <div className="mt-6 text-center">
-                        <button
-                            onClick={() => {
-                                setIsLogin(!isLogin);
-                                setError('');
-                            }}
-                            className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-                        >
-                            {isLogin ? "Don't have an account? " : 'Already have an account? '}
-                            <span className="font-semibold underline">
-                                {isLogin ? 'Sign Up' : 'Sign In'}
-                            </span>
-                        </button>
+                    {/* Info Message */}
+                    <div className="mt-6 p-4 rounded-lg bg-blue-50 border border-blue-200 text-blue-800 text-sm">
+                        <p>New admins can only sign up with an invite link from an existing admin.</p>
                     </div>
-                </div>
+                </motion.div>
 
                 {/* Back to Blog */}
                 <div className="text-center mt-6">
