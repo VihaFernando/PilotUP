@@ -79,7 +79,10 @@ const SignUp = () => {
 
             // Mark invite as used
             if (token && data?.user) {
-                await markInviteAsUsed(supabase, token, data.user.id);
+                const marked = await markInviteAsUsed(supabase, token, data.user.id);
+                if (!marked) {
+                    console.warn('Warning: Invite was not marked as used. User may reuse this link.');
+                }
             }
 
             setSuccess(true);
