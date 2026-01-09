@@ -55,11 +55,13 @@ export const AuthProvider = ({ children }) => {
     };
 
     const signInWithGoogle = async () => {
-        // Get the correct redirect URL based on environment
-        const baseUrl = import.meta.env.PROD
+        // Determine redirect URL based on current origin
+        const isProduction = window.location.hostname === 'pilotup.netlify.app';
+        const baseUrl = isProduction
             ? 'https://pilotup.netlify.app'
-            : 'http://localhost:3000';
+            : window.location.origin;
 
+        console.log('OAuth redirect URL:', baseUrl);
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider: 'google',
             options: {
