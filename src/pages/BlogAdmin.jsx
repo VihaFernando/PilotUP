@@ -180,24 +180,24 @@ const BlogAdmin = () => {
     }
 
     return (
-        <div className="min-h-screen bg-[#fdfffc] pt-28 pb-20 px-6">
+        <div className="min-h-screen bg-[#fdfffc] pt-24 pb-20 px-4 md:px-6">
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
-                <div className="flex items-center justify-between mb-12">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-0 mb-10 md:mb-12">
                     <div>
-                        <h1 className="text-4xl font-bold text-gray-900 mb-2">Blog Dashboard</h1>
-                        <p className="text-gray-500">Manage your blog posts</p>
+                        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Blog Dashboard</h1>
+                        <p className="text-gray-500 text-sm md:text-base">Manage your blog posts</p>
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                         <button
                             onClick={() => navigate('/blog')}
-                            className="px-4 py-2 rounded-full border border-gray-200 text-gray-700 font-semibold hover:bg-gray-50 transition-all"
+                            className="px-4 py-2.5 rounded-full border border-gray-200 text-gray-700 font-semibold hover:bg-gray-50 transition-all text-center text-sm md:text-base"
                         >
                             View Blog
                         </button>
                         <button
                             onClick={handleLogout}
-                            className="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 text-gray-700 font-semibold hover:bg-gray-50 transition-all"
+                            className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border border-gray-200 text-gray-700 font-semibold hover:bg-gray-50 transition-all text-sm md:text-base"
                         >
                             <LogOut className="w-4 h-4" />
                             Logout
@@ -207,7 +207,7 @@ const BlogAdmin = () => {
 
                 {/* Error Display */}
                 {error && !showEditor && (
-                    <div className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 flex items-center gap-3">
+                    <div className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 flex items-center gap-3 text-sm md:text-base">
                         <AlertCircle className="w-5 h-5 flex-shrink-0" />
                         <span>{error}</span>
                         <button onClick={() => setError('')} className="ml-auto">
@@ -223,10 +223,10 @@ const BlogAdmin = () => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -20 }}
-                            className="bg-white rounded-3xl border border-gray-200 p-8 mb-8 shadow-lg"
+                            className="bg-white rounded-3xl border border-gray-200 p-5 md:p-8 mb-8 shadow-lg"
                         >
                             <div className="flex items-center justify-between mb-6">
-                                <h2 className="text-2xl font-bold text-gray-900">
+                                <h2 className="text-xl md:text-2xl font-bold text-gray-900">
                                     {editingBlog ? 'Edit Blog Post' : 'New Blog Post'}
                                 </h2>
                                 <button
@@ -241,7 +241,7 @@ const BlogAdmin = () => {
                             </div>
 
                             {error && (
-                                <div className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 flex items-center gap-3">
+                                <div className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 flex items-center gap-3 text-sm">
                                     <AlertCircle className="w-5 h-5 flex-shrink-0" />
                                     <span>{error}</span>
                                 </div>
@@ -258,7 +258,7 @@ const BlogAdmin = () => {
                                         value={formData.title}
                                         onChange={(e) => handleTitleChange(e.target.value)}
                                         placeholder="Enter blog title..."
-                                        className="w-full px-4 py-3 rounded-2xl border border-gray-200 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10 outline-none transition-all text-lg font-semibold"
+                                        className="w-full px-4 py-3 rounded-2xl border border-gray-200 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10 outline-none transition-all text-base md:text-lg font-semibold"
                                     />
                                 </div>
 
@@ -289,7 +289,7 @@ const BlogAdmin = () => {
                                                 value={formData.cover_url}
                                                 onChange={(e) => setFormData({ ...formData, cover_url: e.target.value })}
                                                 placeholder="https://example.com/image.jpg"
-                                                className="w-full pl-12 pr-4 py-3 rounded-2xl border border-gray-200 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10 outline-none transition-all"
+                                                className="w-full pl-12 pr-4 py-3 rounded-2xl border border-gray-200 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10 outline-none transition-all text-sm md:text-base"
                                             />
                                         </div>
                                     </div>
@@ -298,7 +298,7 @@ const BlogAdmin = () => {
                                             <img
                                                 src={formData.cover_url}
                                                 alt="Cover preview"
-                                                className="w-full h-48 object-cover"
+                                                className="w-full h-40 md:h-48 object-cover"
                                                 onError={(e) => e.target.style.display = 'none'}
                                             />
                                         </div>
@@ -326,55 +326,55 @@ const BlogAdmin = () => {
                                                 ],
                                                 toolbar: 'undo redo | blocks | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image codesample | removeformat | code | help',
                                                 content_style: `
-                          body { 
-                            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; 
-                            font-size: 16px; 
-                            line-height: 1.6;
-                            padding: 20px;
-                          }
-                          h1, h2, h3, h4, h5, h6 { 
-                            font-weight: bold; 
-                            margin-top: 1.5em; 
-                            margin-bottom: 0.5em; 
-                          }
-                          img { 
-                            max-width: 100%; 
-                            height: auto; 
-                            border-radius: 12px; 
-                          }
-                          code { 
-                            background-color: #f3f4f6; 
-                            padding: 2px 6px; 
-                            border-radius: 4px; 
-                            font-family: 'SF Mono', Monaco, 'Courier New', monospace;
-                            font-size: 14px;
-                          }
-                          pre { 
-                            background-color: #1f2937; 
-                            color: #f9fafb; 
-                            padding: 16px; 
-                            border-radius: 8px; 
-                            overflow-x: auto;
-                            margin: 16px 0;
-                          }
-                          pre code {
-                            background-color: transparent;
-                            padding: 0;
-                            font-size: 14px;
-                            line-height: 1.5;
-                          }
-                          .mce-content-body .mce-content-body figure.wp-block-code {
-                            background-color: #1f2937;
-                            padding: 16px;
-                            border-radius: 8px;
-                            margin: 16px 0;
-                          }
-                          .mce-content-body .mce-content-body figure.wp-block-code figcaption {
-                            color: #9ca3af;
-                            font-size: 12px;
-                            margin-bottom: 8px;
-                          }
-                        `,
+                                                  body { 
+                                                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; 
+                                                    font-size: 16px; 
+                                                    line-height: 1.6;
+                                                    padding: 20px;
+                                                  }
+                                                  h1, h2, h3, h4, h5, h6 { 
+                                                    font-weight: bold; 
+                                                    margin-top: 1.5em; 
+                                                    margin-bottom: 0.5em; 
+                                                  }
+                                                  img { 
+                                                    max-width: 100%; 
+                                                    height: auto; 
+                                                    border-radius: 12px; 
+                                                  }
+                                                  code { 
+                                                    background-color: #f3f4f6; 
+                                                    padding: 2px 6px; 
+                                                    border-radius: 4px; 
+                                                    font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+                                                    font-size: 14px;
+                                                  }
+                                                  pre { 
+                                                    background-color: #1f2937; 
+                                                    color: #f9fafb; 
+                                                    padding: 16px; 
+                                                    border-radius: 8px; 
+                                                    overflow-x: auto;
+                                                    margin: 16px 0;
+                                                  }
+                                                  pre code {
+                                                    background-color: transparent;
+                                                    padding: 0;
+                                                    font-size: 14px;
+                                                    line-height: 1.5;
+                                                  }
+                                                  .mce-content-body .mce-content-body figure.wp-block-code {
+                                                    background-color: #1f2937;
+                                                    padding: 16px; 
+                                                    border-radius: 8px; 
+                                                    margin: 16px 0;
+                                                  }
+                                                  .mce-content-body .mce-content-body figure.wp-block-code figcaption {
+                                                    color: #9ca3af;
+                                                    font-size: 12px; 
+                                                    margin-bottom: 8px;
+                                                  }
+                                                `,
                                                 skin: 'oxide',
                                                 content_css: 'default',
                                             }}
@@ -383,20 +383,20 @@ const BlogAdmin = () => {
                                 </div>
 
                                 {/* Actions */}
-                                <div className="flex items-center justify-end gap-3 pt-4">
+                                <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center sm:justify-end gap-3 pt-4">
                                     <button
                                         onClick={() => {
                                             setShowEditor(false);
                                             setError('');
                                         }}
-                                        className="px-6 py-3 rounded-full border border-gray-200 text-gray-700 font-semibold hover:bg-gray-50 transition-all"
+                                        className="px-6 py-3 rounded-full border border-gray-200 text-gray-700 font-semibold hover:bg-gray-50 transition-all text-center"
                                     >
                                         Cancel
                                     </button>
                                     <button
                                         onClick={handleSave}
                                         disabled={saving}
-                                        className="flex items-center gap-2 px-6 py-3 rounded-full bg-gray-900 text-white font-semibold hover:bg-black transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                                        className="flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-gray-900 text-white font-semibold hover:bg-black transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
                                     >
                                         <Save className="w-4 h-4" />
                                         {saving ? 'Saving...' : editingBlog ? 'Update Post' : 'Publish Post'}
@@ -410,13 +410,13 @@ const BlogAdmin = () => {
                 {/* Blog List */}
                 {!showEditor && (
                     <>
-                        <div className="flex items-center justify-between mb-6">
-                            <h2 className="text-2xl font-bold text-gray-900">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+                            <h2 className="text-xl md:text-2xl font-bold text-gray-900">
                                 All Posts ({blogs.length})
                             </h2>
                             <button
                                 onClick={handleNewBlog}
-                                className="flex items-center gap-2 px-6 py-3 rounded-full bg-gray-900 text-white font-semibold hover:bg-black transition-all shadow-lg"
+                                className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-gray-900 text-white font-semibold hover:bg-black transition-all shadow-lg"
                             >
                                 <Plus className="w-5 h-5" />
                                 New Post
@@ -424,10 +424,10 @@ const BlogAdmin = () => {
                         </div>
 
                         {blogs.length === 0 ? (
-                            <div className="bg-white rounded-3xl border border-gray-200 p-12 text-center">
-                                <FileText className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                                <h3 className="text-xl font-bold text-gray-900 mb-2">No blog posts yet</h3>
-                                <p className="text-gray-500 mb-6">Create your first blog post to get started</p>
+                            <div className="bg-white rounded-3xl border border-gray-200 p-8 md:p-12 text-center">
+                                <FileText className="w-12 h-12 md:w-16 md:h-16 text-gray-300 mx-auto mb-4" />
+                                <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">No blog posts yet</h3>
+                                <p className="text-sm md:text-base text-gray-500 mb-6">Create your first blog post to get started</p>
                                 <button
                                     onClick={handleNewBlog}
                                     className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gray-900 text-white font-semibold hover:bg-black transition-all"
@@ -443,12 +443,12 @@ const BlogAdmin = () => {
                                         key={blog.id}
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
-                                        className="bg-white rounded-2xl border border-gray-200 p-6 hover:border-gray-300 transition-all"
+                                        className="bg-white rounded-2xl border border-gray-200 p-4 md:p-6 hover:border-gray-300 transition-all"
                                     >
-                                        <div className="flex items-start gap-6">
+                                        <div className="flex flex-col md:flex-row items-start gap-4 md:gap-6">
                                             {/* Thumbnail */}
                                             {blog.cover_url && (
-                                                <div className="w-32 h-32 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                                                <div className="w-full md:w-32 h-40 md:h-32 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
                                                     <img
                                                         src={blog.cover_url}
                                                         alt={blog.title}
@@ -459,35 +459,37 @@ const BlogAdmin = () => {
                                             )}
 
                                             {/* Content */}
-                                            <div className="flex-1 min-w-0">
-                                                <h3 className="text-xl font-bold text-gray-900 mb-2 truncate">
+                                            <div className="flex-1 min-w-0 w-full">
+                                                <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2 break-words">
                                                     {blog.title}
                                                 </h3>
-                                                <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
+                                                <div className="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm text-gray-500 mb-4 md:mb-3">
                                                     <span>{formatDate(blog.created_at)}</span>
-                                                    <span>•</span>
-                                                    <span className="font-mono text-xs bg-gray-100 px-2 py-1 rounded">
+                                                    <span className="hidden md:inline">•</span>
+                                                    <span className="font-mono bg-gray-100 px-2 py-1 rounded truncate max-w-[200px]">
                                                         /{blog.slug}
                                                     </span>
                                                 </div>
-                                            </div>
 
-                                            {/* Actions */}
-                                            <div className="flex items-center gap-2">
-                                                <button
-                                                    onClick={() => handleEditBlog(blog)}
-                                                    className="p-2.5 rounded-xl border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all"
-                                                    title="Edit"
-                                                >
-                                                    <Edit2 className="w-4 h-4" />
-                                                </button>
-                                                <button
-                                                    onClick={() => handleDelete(blog.id)}
-                                                    className="p-2.5 rounded-xl border border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700 transition-all"
-                                                    title="Delete"
-                                                >
-                                                    <Trash2 className="w-4 h-4" />
-                                                </button>
+                                                {/* Actions */}
+                                                <div className="flex items-center justify-end md:justify-start gap-2 mt-auto">
+                                                    <button
+                                                        onClick={() => handleEditBlog(blog)}
+                                                        className="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 md:p-2.5 rounded-xl border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all text-sm font-medium"
+                                                        title="Edit"
+                                                    >
+                                                        <Edit2 className="w-4 h-4" />
+                                                        <span className="md:hidden">Edit</span>
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleDelete(blog.id)}
+                                                        className="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 md:p-2.5 rounded-xl border border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700 transition-all text-sm font-medium"
+                                                        title="Delete"
+                                                    >
+                                                        <Trash2 className="w-4 h-4" />
+                                                        <span className="md:hidden">Delete</span>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </motion.div>
