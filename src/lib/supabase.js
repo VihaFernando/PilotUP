@@ -7,6 +7,14 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     auth: {
         persistSession: true,
         autoRefreshToken: true,
-        detectSessionInUrl: true
+        detectSessionInUrl: true,
+        storageKey: 'pilot-up-auth',
+        storage: localStorage // Explicitly use localStorage for better persistence
+    },
+    global: {
+        headers: {
+            // Optimize requests
+            'Connection': 'keep-alive'
+        }
     }
 });

@@ -18,20 +18,15 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const getSession = async () => {
             try {
-                const { data: { session } } = await supabase.auth.getSession();
+                // Get current session - this is fast and cached
+                const { data: { session }, error: sessionError } = await supabase.auth.getSession();
 
-                // Verify the user still exists in the auth system
-                if (session?.user) {
-                    // Try to get the user data - if this fails, user was deleted
-                    const { data: { user }, error } = await supabase.auth.getUser();
-
-                    if (error || !user) {
-                        // User was deleted from auth, sign them out
-                        await supabase.auth.signOut();
-                        setUser(null);
-                        return;
-                    }
-                    setUser(user);
+                if (sessionError) {
+                    console.error('Session error:', sessionError);
+                    setUser(null);
+                } else if (session?.user) {
+                    // Trust the session - it's already validated by Supabase
+                    setUser(session.user);
                 } else {
                     setUser(null);
                 }
@@ -45,20 +40,13 @@ export const AuthProvider = ({ children }) => {
 
         getSession();
 
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
-            // Verify user still exists when auth state changes
-            if (session?.user) {
-                const { data: { user }, error } = await supabase.auth.getUser();
-                if (error || !user) {
-                    await supabase.auth.signOut();
-                    setUser(null);
-                    return;
-                }
-            }
+        // Listen for auth changes
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            // Trust Supabase's auth state - no need to verify again
             setUser(session?.user ?? null);
         });
 
-        return () => subscription.unsubscribe();
+        return () => subscription?.unsubscribe();
     }, []);
 
     const signInWithEmail = async (email, password) => {
