@@ -17,6 +17,8 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
+import GoogleLoginCallback from './pages/GoogleLoginCallback';
+import GoogleSignupCallback from './pages/GoogleSignupCallback';
 import BlogFeed from './pages/BlogFeed';
 import BlogDetail from './pages/BlogDetail';
 import BlogAdmin from './pages/BlogAdmin';
@@ -1852,6 +1854,8 @@ export default function App() {
             {/* Auth Routes */}
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/auth/google-login" element={<GoogleLoginCallback />} />
+            <Route path="/auth/google-signup" element={<GoogleSignupCallback />} />
 
             {/* Protected Admin Route */}
             <Route

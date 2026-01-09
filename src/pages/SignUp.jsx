@@ -105,24 +105,22 @@ const SignUp = () => {
         setLoading(true);
 
         try {
-            // Sign up with Google (will be redirected to email confirmation)
+            if (!token) {
+                throw new Error('No invite token found');
+            }
+
+            // Store token in session storage so callback can use it
+            sessionStorage.setItem('pendingInviteToken', token);
+
+            // Sign up with Google (will be redirected to callback)
             const { data, error: signUpError } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    redirectTo: window.location.origin,
-                    data: {
-                        role: 'admin'
-                    }
+                    redirectTo: `${window.location.origin}/auth/google-signup`
                 }
             });
 
             if (signUpError) throw signUpError;
-
-            // Mark invite as used if signup succeeds
-            // Note: Due to redirect, this might not execute, but keeping for safety
-            if (token && data.user) {
-                await markInviteAsUsed(supabase, token, data.user.id);
-            }
         } catch (err) {
             setError(err.message || 'Google sign up failed');
             setLoading(false);
