@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import { validateInviteToken, markInviteAsUsed, getTokenFromUrl } from '../utils/inviteTokens';
-import { Mail, Lock, AlertCircle, CheckCircle } from 'lucide-react';
+import { Mail, Lock, AlertCircle, CheckCircle, Chrome } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const SignUp = () => {
@@ -100,6 +100,35 @@ const SignUp = () => {
         }
     };
 
+    const handleGoogleSignUp = async () => {
+        setError('');
+        setLoading(true);
+
+        try {
+            // Sign up with Google (will be redirected to email confirmation)
+            const { data, error: signUpError } = await supabase.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                    redirectTo: window.location.origin,
+                    data: {
+                        role: 'admin'
+                    }
+                }
+            });
+
+            if (signUpError) throw signUpError;
+
+            // Mark invite as used if signup succeeds
+            // Note: Due to redirect, this might not execute, but keeping for safety
+            if (token && data.user) {
+                await markInviteAsUsed(supabase, token, data.user.id);
+            }
+        } catch (err) {
+            setError(err.message || 'Google sign up failed');
+            setLoading(false);
+        }
+    };
+
     // Token validation is still loading
     if (tokenValid === null) {
         return (
@@ -190,6 +219,26 @@ const SignUp = () => {
                             <p className="text-red-800 text-sm">{error}</p>
                         </motion.div>
                     )}
+
+                    {/* Google Sign Up */}
+                    <button
+                        onClick={handleGoogleSignUp}
+                        disabled={loading}
+                        className="w-full flex items-center justify-center gap-3 px-6 py-3.5 rounded-2xl border-2 border-gray-200 text-gray-700 font-semibold hover:bg-gray-50 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed mb-6"
+                    >
+                        <Chrome className="w-5 h-5" />
+                        Sign Up with Google
+                    </button>
+
+                    {/* Divider */}
+                    <div className="relative mb-6">
+                        <div className="absolute inset-0 flex items-center">
+                            <div className="w-full border-t border-gray-200"></div>
+                        </div>
+                        <div className="relative flex justify-center text-sm">
+                            <span className="px-4 bg-white text-gray-500">Or sign up with email</span>
+                        </div>
+                    </div>
 
                     {/* Form */}
                     <form onSubmit={handleSignUp} className="space-y-4">

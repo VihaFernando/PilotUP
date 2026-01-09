@@ -19,9 +19,25 @@ export const AuthProvider = ({ children }) => {
         const getSession = async () => {
             try {
                 const { data: { session } } = await supabase.auth.getSession();
-                setUser(session?.user ?? null);
+
+                // Verify the user still exists in the auth system
+                if (session?.user) {
+                    // Try to get the user data - if this fails, user was deleted
+                    const { data: { user }, error } = await supabase.auth.getUser();
+
+                    if (error || !user) {
+                        // User was deleted from auth, sign them out
+                        await supabase.auth.signOut();
+                        setUser(null);
+                        return;
+                    }
+                    setUser(user);
+                } else {
+                    setUser(null);
+                }
             } catch (error) {
                 console.error('Error getting session:', error);
+                setUser(null);
             } finally {
                 setLoading(false);
             }
@@ -29,7 +45,16 @@ export const AuthProvider = ({ children }) => {
 
         getSession();
 
-        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+            // Verify user still exists when auth state changes
+            if (session?.user) {
+                const { data: { user }, error } = await supabase.auth.getUser();
+                if (error || !user) {
+                    await supabase.auth.signOut();
+                    setUser(null);
+                    return;
+                }
+            }
             setUser(session?.user ?? null);
         });
 

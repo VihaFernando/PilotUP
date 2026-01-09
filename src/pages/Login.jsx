@@ -53,6 +53,18 @@ const Login = () => {
         }
     };
 
+    // Only allow Google login for existing users (not signup)
+    const handleGoogleLogin = async () => {
+        setError('');
+        setLoading(true);
+        try {
+            await signInWithGoogle();
+        } catch (err) {
+            setError('Google login failed. Make sure you\'re logging into an existing account.');
+            setLoading(false);
+        }
+    };
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center px-4 py-12">
             <div className="w-full max-w-md">
@@ -94,9 +106,9 @@ const Login = () => {
                         </motion.div>
                     )}
 
-                    {/* Google Sign In */}
+                    {/* Google Sign In - LOGIN ONLY */}
                     <button
-                        onClick={handleGoogleAuth}
+                        onClick={handleGoogleLogin}
                         disabled={loading}
                         className="w-full flex items-center justify-center gap-3 px-6 py-3.5 rounded-2xl border-2 border-gray-200 text-gray-700 font-semibold hover:bg-gray-50 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed mb-6"
                     >
