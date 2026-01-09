@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { Mail, Lock, CheckCircle, AlertCircle, ArrowLeft, Info, Loader2 } from 'lucide-react';
+import { Mail, Lock, CheckCircle, AlertCircle, ArrowLeft, Info, Loader2, Eye, EyeOff } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
@@ -47,7 +48,7 @@ const Login = () => {
         /* min-h-[100dvh] ensures it fits the visible mobile screen (excluding URL bars) 
            flex items-center centers it vertically without forcing cutoff */
         <div className="min-h-[100dvh] bg-[#F5F5F7] font-sans text-[#1D1D1F] flex items-center justify-center p-4 relative overflow-hidden">
-            
+
             {/* Ambient Background Glows */}
             <div className="absolute top-[-20%] right-[-10%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] rounded-full bg-[#E21339]/10 blur-[80px] md:blur-[100px] pointer-events-none" />
             <div className="absolute bottom-[-20%] left-[-10%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] rounded-full bg-blue-500/5 blur-[80px] md:blur-[100px] pointer-events-none" />
@@ -60,7 +61,7 @@ const Login = () => {
                 className="w-full max-w-[380px] md:max-w-[440px] relative z-10"
             >
                 <div className="bg-white rounded-3xl md:rounded-[2rem] shadow-2xl shadow-gray-200/50 p-6 md:p-10 border border-white relative">
-                    
+
                     {/* --- Back Button (Moved Inside) --- */}
                     {/* Positioned absolute top-left for maximum space saving */}
                     <button
@@ -142,14 +143,25 @@ const Login = () => {
                             <div className="relative group">
                                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-gray-400 group-focus-within:text-[#1D1D1F] transition-colors" />
                                 <input
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
                                     minLength={6}
-                                    className="w-full pl-10 md:pl-12 pr-4 py-3 md:py-4 bg-gray-50 border-transparent rounded-xl md:rounded-2xl text-[#1D1D1F] text-base placeholder-gray-400 focus:bg-white focus:border-gray-200 focus:ring-4 focus:ring-[#E21339]/10 transition-all duration-300 outline-none font-medium"
+                                    className="w-full pl-10 md:pl-12 pr-12 py-3 md:py-4 bg-gray-50 border-transparent rounded-xl md:rounded-2xl text-[#1D1D1F] text-base placeholder-gray-400 focus:bg-white focus:border-gray-200 focus:ring-4 focus:ring-[#E21339]/10 transition-all duration-300 outline-none font-medium"
                                     placeholder="••••••••"
                                 />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-gray-400 hover:text-[#1D1D1F] transition-colors"
+                                >
+                                    {showPassword ? (
+                                        <EyeOff className="w-4 h-4 md:w-5 md:h-5" />
+                                    ) : (
+                                        <Eye className="w-4 h-4 md:w-5 md:h-5" />
+                                    )}
+                                </button>
                             </div>
                         </div>
 

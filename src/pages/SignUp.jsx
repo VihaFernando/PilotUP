@@ -3,18 +3,20 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import { validateInviteToken, markInviteAsUsed } from '../utils/inviteTokens';
-import { Mail, Lock, AlertCircle, CheckCircle, User, Loader2, ArrowRight } from 'lucide-react';
+import { Mail, Lock, AlertCircle, CheckCircle, User, Loader2, ArrowRight, Eye, EyeOff } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const SignUp = () => {
     const [searchParams] = useSearchParams();
     const [token, setToken] = useState(null);
-    const [tokenValid, setTokenValid] = useState(null); 
+    const [tokenValid, setTokenValid] = useState(null);
     const [tokenData, setTokenData] = useState(null);
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
@@ -105,7 +107,7 @@ const SignUp = () => {
     if (!tokenValid) {
         return (
             <div className="fixed inset-0 bg-[#F5F5F7] flex items-center justify-center p-4 font-sans text-[#1D1D1F]">
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     className="w-full max-w-[380px] bg-white rounded-3xl shadow-xl p-6 text-center"
@@ -131,7 +133,7 @@ const SignUp = () => {
     if (success) {
         return (
             <div className="fixed inset-0 bg-[#F5F5F7] flex items-center justify-center p-4 font-sans text-[#1D1D1F]">
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     className="w-full max-w-[380px] bg-white rounded-3xl shadow-xl p-6 text-center relative overflow-hidden"
@@ -159,7 +161,7 @@ const SignUp = () => {
            2. overflow-hidden: Strictly CUTS OFF the background blobs so no horizontal scroll.
         */
         <div className="fixed inset-0 bg-[#F5F5F7] font-sans text-[#1D1D1F] overflow-hidden">
-            
+
             {/* Background Glows (Now strictly contained) */}
             <div className="absolute top-[-20%] left-[-10%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] rounded-full bg-[#E21339]/5 blur-[60px] md:blur-[100px] pointer-events-none z-0" />
             <div className="absolute bottom-[-20%] right-[-10%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] rounded-full bg-blue-500/5 blur-[60px] md:blur-[100px] pointer-events-none z-0" />
@@ -171,7 +173,7 @@ const SignUp = () => {
             */}
             <div className="w-full h-full overflow-y-auto overflow-x-hidden relative z-10">
                 <div className="min-h-full flex items-center justify-center p-4 py-6">
-                    
+
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -243,13 +245,24 @@ const SignUp = () => {
                                     <div className="relative group">
                                         <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-[#1D1D1F] transition-colors" />
                                         <input
-                                            type="password"
+                                            type={showPassword ? "text" : "password"}
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
                                             placeholder="Min 6 chars"
                                             required
-                                            className="w-full pl-10 pr-4 py-3 bg-gray-50 border-transparent rounded-xl text-[#1D1D1F] text-sm md:text-base placeholder-gray-400 focus:bg-white focus:border-gray-200 focus:ring-4 focus:ring-[#E21339]/10 transition-all outline-none font-medium"
+                                            className="w-full pl-10 pr-12 py-3 bg-gray-50 border-transparent rounded-xl text-[#1D1D1F] text-sm md:text-base placeholder-gray-400 focus:bg-white focus:border-gray-200 focus:ring-4 focus:ring-[#E21339]/10 transition-all outline-none font-medium"
                                         />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 hover:text-[#1D1D1F] transition-colors"
+                                        >
+                                            {showPassword ? (
+                                                <EyeOff className="w-4 h-4" />
+                                            ) : (
+                                                <Eye className="w-4 h-4" />
+                                            )}
+                                        </button>
                                     </div>
                                 </div>
 
@@ -258,13 +271,24 @@ const SignUp = () => {
                                     <div className="relative group">
                                         <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-[#1D1D1F] transition-colors" />
                                         <input
-                                            type="password"
+                                            type={showConfirmPassword ? "text" : "password"}
                                             value={confirmPassword}
                                             onChange={(e) => setConfirmPassword(e.target.value)}
                                             placeholder="Repeat password"
                                             required
-                                            className="w-full pl-10 pr-4 py-3 bg-gray-50 border-transparent rounded-xl text-[#1D1D1F] text-sm md:text-base placeholder-gray-400 focus:bg-white focus:border-gray-200 focus:ring-4 focus:ring-[#E21339]/10 transition-all outline-none font-medium"
+                                            className="w-full pl-10 pr-12 py-3 bg-gray-50 border-transparent rounded-xl text-[#1D1D1F] text-sm md:text-base placeholder-gray-400 focus:bg-white focus:border-gray-200 focus:ring-4 focus:ring-[#E21339]/10 transition-all outline-none font-medium"
                                         />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                            className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 hover:text-[#1D1D1F] transition-colors"
+                                        >
+                                            {showConfirmPassword ? (
+                                                <EyeOff className="w-4 h-4" />
+                                            ) : (
+                                                <Eye className="w-4 h-4" />
+                                            )}
+                                        </button>
                                     </div>
                                 </div>
 
