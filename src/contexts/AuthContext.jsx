@@ -80,14 +80,20 @@ export const AuthProvider = ({ children }) => {
 
     const signOut = async () => {
         try {
+            // Clear localStorage FIRST before signOut
+            localStorage.removeItem('pilot-up-auth');
+
+            // Then call Supabase signOut - this will trigger the listener
             const { error } = await supabase.auth.signOut();
             if (error) throw error;
-            // Explicitly clear user state
+
+            // Explicitly clear user state as fallback
             setUser(null);
-            // Clear localStorage completely
-            localStorage.removeItem('pilot-up-auth');
         } catch (err) {
             console.error('Sign out error:', err);
+            // Clear state even if signOut fails
+            setUser(null);
+            localStorage.removeItem('pilot-up-auth');
             throw err;
         }
     };
