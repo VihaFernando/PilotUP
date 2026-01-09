@@ -266,7 +266,7 @@ const BlogDetail = () => {
 
                 /* Text Elements */
                 .article-body p { 
-                    margin-bottom: 2.5em; 
+                    margin-bottom: 2rem; 
                     font-weight: 400; /* Restored to Normal Weight */
                     color: #292929;
                 }
@@ -281,7 +281,7 @@ const BlogDetail = () => {
                     font-family: 'Merriweather', serif;
                     font-size: 2rem; 
                     font-weight: 900; 
-                    margin: 3.5em 0 1em; 
+                    margin: 2em 0 0.8em; 
                     color: #1a1a1a;
                     letter-spacing: -0.02em;
                     line-height: 1.25;
@@ -291,7 +291,7 @@ const BlogDetail = () => {
                     font-family: 'Merriweather', serif;
                     font-size: 1.5rem; 
                     font-weight: 700; 
-                    margin: 2.5em 0 1em; 
+                    margin: 1.8em 0 0.8em; 
                     color: #1a1a1a;
                     line-height: 1.35;
                 }
@@ -315,13 +315,18 @@ const BlogDetail = () => {
                 /* Blockquotes */
                 .article-body blockquote {
                     position: relative;
-                    padding-left: 2rem;
-                    margin: 3rem 0;
+                    padding: 1.25rem 1.5rem;
+                    margin: 2rem 0;
                     font-style: italic;
                     color: #111;
-                    font-size: 1.4rem;
-                    line-height: 1.5;
+                    font-size: 1.1rem;
+                    line-height: 1.6;
                     border-left: 3px solid #E21339;
+                    background: rgba(226, 19, 57, 0.03);
+                    border-radius: 0 0.5rem 0.5rem 0;
+                    font-weight: 400;
+                    display: flex;
+                    align-items: center;
                 }
 
                 /* Links */
