@@ -53,6 +53,38 @@ const Navbar = ({ showAnnouncement, scrolled, setScrolled }) => {
         }
     };
 
+    const handleSectionClick = (sectionId) => {
+        // If already on home page, just scroll
+        if (window.location.pathname === '/') {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        } else {
+            // Navigate to home and then scroll
+            navigate('/', { replace: true });
+            setTimeout(() => {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 100);
+        }
+    };
+
+    const handleLogoClick = () => {
+        if (window.location.pathname === '/') {
+            // Already on home, scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            // Navigate to home
+            navigate('/', { replace: true });
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 100);
+        }
+    };
+
     return (
         <>
             <div
@@ -90,7 +122,7 @@ const Navbar = ({ showAnnouncement, scrolled, setScrolled }) => {
                 >
                     {/* --- LOGO --- */}
                     <div
-                        onClick={() => navigate('/')}
+                        onClick={handleLogoClick}
                         className="flex items-center gap-2.5 cursor-pointer group"
                     >
                         {/* Mobile: Full black logo; Desktop: small rounded icon */}
@@ -114,19 +146,19 @@ const Navbar = ({ showAnnouncement, scrolled, setScrolled }) => {
                     {/* --- DESKTOP LINKS --- */}
                     <div className="hidden md:flex items-center gap-7">
                         <button
-                            onClick={() => navigate('/#features')}
+                            onClick={() => handleSectionClick('features')}
                             className="text-[13px] font-medium text-gray-500 hover:text-gray-900 transition-colors duration-200"
                         >
                             Features
                         </button>
                         <button
-                            onClick={() => navigate('/#pricing')}
+                            onClick={() => handleSectionClick('pricing')}
                             className="text-[13px] font-medium text-gray-500 hover:text-gray-900 transition-colors duration-200"
                         >
                             Pricing
                         </button>
                         <button
-                            onClick={() => navigate('/#reviews')}
+                            onClick={() => handleSectionClick('reviews')}
                             className="text-[13px] font-medium text-gray-500 hover:text-gray-900 transition-colors duration-200"
                         >
                             Reviews
@@ -211,7 +243,7 @@ const Navbar = ({ showAnnouncement, scrolled, setScrolled }) => {
                         <div className="flex flex-col gap-1">
                             <button
                                 onClick={() => {
-                                    navigate('/#features');
+                                    handleSectionClick('features');
                                     setOpenMenu(false);
                                 }}
                                 className="px-5 py-4 text-[15px] font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-2xl transition-colors text-center"
@@ -220,7 +252,7 @@ const Navbar = ({ showAnnouncement, scrolled, setScrolled }) => {
                             </button>
                             <button
                                 onClick={() => {
-                                    navigate('/#pricing');
+                                    handleSectionClick('pricing');
                                     setOpenMenu(false);
                                 }}
                                 className="px-5 py-4 text-[15px] font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-2xl transition-colors text-center"
@@ -229,7 +261,7 @@ const Navbar = ({ showAnnouncement, scrolled, setScrolled }) => {
                             </button>
                             <button
                                 onClick={() => {
-                                    navigate('/#reviews');
+                                    handleSectionClick('reviews');
                                     setOpenMenu(false);
                                 }}
                                 className="px-5 py-4 text-[15px] font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-2xl transition-colors text-center"
