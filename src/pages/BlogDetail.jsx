@@ -69,7 +69,8 @@ const BlogDetail = () => {
                 const key = codeText.substring(0, 20);
 
                 return (
-                    <div className="my-10 rounded-xl overflow-hidden bg-[#1e1e1e] shadow-2xl border border-[#333] group">
+                    // FIX: Added max-w-[calc(100vw-2rem)] to prevent page blowout on mobile
+                    <div className="my-10 rounded-xl overflow-hidden bg-[#1e1e1e] shadow-2xl border border-[#333] group max-w-[calc(100vw-2rem)] sm:max-w-full mx-auto">
                         <div className="flex items-center justify-between px-4 py-3 bg-[#252526] border-b border-[#111]">
                             <div className="flex gap-2">
                                 <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
@@ -88,18 +89,21 @@ const BlogDetail = () => {
                             </button>
                         </div>
                         
-                        <div className="overflow-x-auto">
+                        {/* FIX: Ensure scroll container has w-full */}
+                        <div className="overflow-x-auto w-full">
                             <SyntaxHighlighter
                                 language="javascript"
                                 style={vscDarkPlus}
                                 showLineNumbers={true}
+                                wrapLines={false} // Ensure lines don't wrap weirdly, forcing horizontal scroll
                                 customStyle={{
                                     margin: 0,
                                     padding: '1.5rem',
                                     background: 'transparent',
                                     fontSize: '0.9rem',
                                     lineHeight: '1.6',
-                                    fontFamily: "'SF Mono', 'JetBrains Mono', 'Fira Code', monospace"
+                                    fontFamily: "'SF Mono', 'JetBrains Mono', 'Fira Code', monospace",
+                                    minWidth: '100%' // Ensures background covers full scroll width
                                 }}
                                 lineNumberStyle={{
                                     minWidth: '2.5em',
@@ -144,7 +148,7 @@ const BlogDetail = () => {
             {/* Reading Progress Bar */}
             <motion.div className="fixed top-0 left-0 right-0 h-1 bg-[#E21339] origin-left z-[60]" style={{ scaleX }} />
 
-            <main className="pt-32 pb-24 px-4 sm:px-6 max-w-[1100px] mx-auto">
+            <main className="pt-32 pb-24 px-4 sm:px-6 max-w-[1100px] mx-auto overflow-hidden sm:overflow-visible">
                 
                 {/* --- Header Section --- */}
                 <motion.div 
@@ -183,7 +187,7 @@ const BlogDetail = () => {
                     <motion.article 
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        className="article-body min-w-0 max-w-[720px] mx-auto lg:mx-0"
+                        className="article-body min-w-0 max-w-full lg:max-w-[720px] mx-auto lg:mx-0"
                     >
                         {parse(DOMPurify.sanitize(blog.content), parseOptions)}
                     </motion.article>
@@ -231,6 +235,7 @@ const BlogDetail = () => {
                     line-height: 1.9; 
                     font-size: 1.125rem;
                     text-rendering: optimizeLegibility;
+                    word-wrap: break-word; /* Prevents long text from overflowing */
                 }
 
                 /* Paragraphs */
@@ -329,6 +334,7 @@ const BlogDetail = () => {
                     font-size: 0.85em;
                     font-weight: 500;
                     border: 1px solid rgba(226, 19, 57, 0.1);
+                    word-break: break-word;
                 }
             `}</style>
         </div>
