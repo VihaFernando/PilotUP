@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { Mail, Lock, Chrome, CheckCircle } from 'lucide-react';
+import { Mail, Lock, CheckCircle, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Login = () => {
@@ -11,11 +11,11 @@ const Login = () => {
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
 
-    const { user, signInWithEmail, signInWithGoogle } = useAuth();
+    const { user, signInWithEmail } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
 
-    // Check for success message from signup
+    // Check for success message from password reset
     useEffect(() => {
         if (location.state?.message) {
             setSuccessMessage(location.state.message);
@@ -38,29 +38,6 @@ const Login = () => {
         } catch (err) {
             setError(err.message || 'Authentication failed');
         } finally {
-            setLoading(false);
-        }
-    };
-
-    const handleGoogleAuth = async () => {
-        setError('');
-        setLoading(true);
-        try {
-            await signInWithGoogle();
-        } catch (err) {
-            setError(err.message || 'Google authentication failed');
-            setLoading(false);
-        }
-    };
-
-    // Only allow Google login for existing users (not signup)
-    const handleGoogleLogin = async () => {
-        setError('');
-        setLoading(true);
-        try {
-            await signInWithGoogle();
-        } catch (err) {
-            setError('Google login failed. Make sure you\'re logging into an existing account.');
             setLoading(false);
         }
     };
@@ -100,31 +77,12 @@ const Login = () => {
                         <motion.div
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-sm"
+                            className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-start gap-3"
                         >
-                            {error}
+                            <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                            <p>{error}</p>
                         </motion.div>
                     )}
-
-                    {/* Google Sign In - LOGIN ONLY */}
-                    <button
-                        onClick={handleGoogleLogin}
-                        disabled={loading}
-                        className="w-full flex items-center justify-center gap-3 px-6 py-3.5 rounded-2xl border-2 border-gray-200 text-gray-700 font-semibold hover:bg-gray-50 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed mb-6"
-                    >
-                        <Chrome className="w-5 h-5" />
-                        Continue with Google
-                    </button>
-
-                    {/* Divider */}
-                    <div className="relative mb-6">
-                        <div className="absolute inset-0 flex items-center">
-                            <div className="w-full border-t border-gray-200"></div>
-                        </div>
-                        <div className="relative flex justify-center text-sm">
-                            <span className="px-4 bg-white text-gray-500">Or continue with email</span>
-                        </div>
-                    </div>
 
                     {/* Email Form */}
                     <form onSubmit={handleEmailAuth} className="space-y-4">
@@ -170,6 +128,17 @@ const Login = () => {
                         >
                             {loading ? 'Please wait...' : 'Sign In'}
                         </button>
+
+                        {/* Password Reset Link */}
+                        <div className="text-center">
+                            <button
+                                type="button"
+                                onClick={() => navigate('/forgot-password')}
+                                className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+                            >
+                                Forgot your password?
+                            </button>
+                        </div>
                     </form>
 
                     {/* Info Message */}

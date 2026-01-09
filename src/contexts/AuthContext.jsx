@@ -70,25 +70,33 @@ export const AuthProvider = ({ children }) => {
         return data;
     };
 
-    const signUpWithEmail = async (email, password) => {
+    const signUpWithEmail = async (email, password, fullName) => {
         const { data, error } = await supabase.auth.signUp({
             email,
             password,
+            options: {
+                data: {
+                    full_name: fullName,
+                    role: 'admin'
+                }
+            }
         });
         if (error) throw error;
         return data;
     };
 
-    const signInWithGoogle = async (isSignUp = false) => {
-        const redirectPath = isSignUp ? '/auth/google-signup' : '/auth/google-login';
-        const { data, error } = await supabase.auth.signInWithOAuth({
-            provider: 'google',
-            options: {
-                redirectTo: `${window.location.origin}${redirectPath}`
-            }
+    const resetPassword = async (email) => {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+            redirectTo: `${window.location.origin}/auth/reset-password`
         });
         if (error) throw error;
-        return data;
+    };
+
+    const updatePassword = async (newPassword) => {
+        const { error } = await supabase.auth.updateUser({
+            password: newPassword
+        });
+        if (error) throw error;
     };
 
     const signOut = async () => {
@@ -101,7 +109,8 @@ export const AuthProvider = ({ children }) => {
         loading,
         signInWithEmail,
         signUpWithEmail,
-        signInWithGoogle,
+        resetPassword,
+        updatePassword,
         signOut,
     };
 

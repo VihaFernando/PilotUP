@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import { validateInviteToken, markInviteAsUsed, getTokenFromUrl } from '../utils/inviteTokens';
-import { Mail, Lock, AlertCircle, CheckCircle, Chrome } from 'lucide-react';
+import { Mail, Lock, AlertCircle, CheckCircle, User } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const SignUp = () => {
@@ -11,13 +11,15 @@ const SignUp = () => {
     const [token, setToken] = useState(null);
     const [tokenValid, setTokenValid] = useState(null); // null=checking, true=valid, false=invalid
     const [tokenData, setTokenData] = useState(null);
+    const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
 
-    const { user } = useAuth();
+    const { user, signUpWithEmail } = useAuth();
     const navigate = useNavigate();
 
     // Redirect if already logged in
@@ -58,7 +60,7 @@ const SignUp = () => {
         setLoading(true);
 
         try {
-            if (!email || !password) {
+            if (!fullName || !email || !password || !confirmPassword) {
                 throw new Error('Please fill in all fields');
             }
 
@@ -66,21 +68,17 @@ const SignUp = () => {
                 throw new Error('Password must be at least 6 characters');
             }
 
-            // Sign up user
-            const { data, error: signUpError } = await supabase.auth.signUp({
-                email,
-                password,
-                options: {
-                    data: {
-                        role: 'admin'
-                    }
-                }
-            });
+            if (password !== confirmPassword) {
+                throw new Error('Passwords do not match');
+            }
+
+            // Sign up user with full name
+            const { data, error: signUpError } = await signUpWithEmail(email, password, fullName);
 
             if (signUpError) throw signUpError;
 
             // Mark invite as used
-            if (token && data.user) {
+            if (token && data?.user) {
                 await markInviteAsUsed(supabase, token, data.user.id);
             }
 
@@ -96,33 +94,6 @@ const SignUp = () => {
         } catch (err) {
             setError(err.message || 'Sign up failed');
         } finally {
-            setLoading(false);
-        }
-    };
-
-    const handleGoogleSignUp = async () => {
-        setError('');
-        setLoading(true);
-
-        try {
-            if (!token) {
-                throw new Error('No invite token found');
-            }
-
-            // Store token in session storage so callback can use it
-            sessionStorage.setItem('pendingInviteToken', token);
-
-            // Sign up with Google (will be redirected to callback)
-            const { data, error: signUpError } = await supabase.auth.signInWithOAuth({
-                provider: 'google',
-                options: {
-                    redirectTo: `${window.location.origin}/auth/google-signup`
-                }
-            });
-
-            if (signUpError) throw signUpError;
-        } catch (err) {
-            setError(err.message || 'Google sign up failed');
             setLoading(false);
         }
     };
@@ -218,28 +189,23 @@ const SignUp = () => {
                         </motion.div>
                     )}
 
-                    {/* Google Sign Up */}
-                    <button
-                        onClick={handleGoogleSignUp}
-                        disabled={loading}
-                        className="w-full flex items-center justify-center gap-3 px-6 py-3.5 rounded-2xl border-2 border-gray-200 text-gray-700 font-semibold hover:bg-gray-50 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed mb-6"
-                    >
-                        <Chrome className="w-5 h-5" />
-                        Sign Up with Google
-                    </button>
-
-                    {/* Divider */}
-                    <div className="relative mb-6">
-                        <div className="absolute inset-0 flex items-center">
-                            <div className="w-full border-t border-gray-200"></div>
-                        </div>
-                        <div className="relative flex justify-center text-sm">
-                            <span className="px-4 bg-white text-gray-500">Or sign up with email</span>
-                        </div>
-                    </div>
-
                     {/* Form */}
                     <form onSubmit={handleSignUp} className="space-y-4">
+                        {/* Full Name */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                            <div className="relative">
+                                <User className="w-5 h-5 text-gray-400 absolute left-3 top-3" />
+                                <input
+                                    type="text"
+                                    value={fullName}
+                                    onChange={(e) => setFullName(e.target.value)}
+                                    className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                                    placeholder="John Doe"
+                                    required
+                                />
+                            </div>
+                        </div>
                         {/* Email */}
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
@@ -267,6 +233,22 @@ const SignUp = () => {
                                     onChange={(e) => setPassword(e.target.value)}
                                     className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                                     placeholder="At least 6 characters"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        {/* Confirm Password */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
+                            <div className="relative">
+                                <Lock className="w-5 h-5 text-gray-400 absolute left-3 top-3" />
+                                <input
+                                    type="password"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                                    placeholder="Confirm your password"
                                     required
                                 />
                             </div>
