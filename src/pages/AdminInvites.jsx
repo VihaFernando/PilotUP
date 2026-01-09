@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import { generateInviteToken, buildSignupUrl } from '../utils/inviteTokens';
-import { Copy, Trash2, Plus, CheckCircle, Clock, AlertCircle } from 'lucide-react';
+import { Copy, Trash2, Plus, CheckCircle, Clock, AlertCircle, ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const AdminInvites = () => {
     const { user } = useAuth();
+    const navigate = useNavigate();
     const [invites, setInvites] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showForm, setShowForm] = useState(false);
@@ -134,6 +136,15 @@ const AdminInvites = () => {
     return (
         <div className="min-h-screen bg-gray-50 p-8">
             <div className="max-w-4xl mx-auto">
+                {/* Back Button */}
+                <button
+                    onClick={() => navigate('/blog/admin')}
+                    className="flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-gray-200 text-gray-700 font-semibold hover:bg-gray-100 transition-all"
+                >
+                    <ArrowLeft className="w-4 h-4" />
+                    Back to Admin
+                </button>
+
                 {/* Header */}
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-gray-900 mb-2">Admin Invites</h1>
