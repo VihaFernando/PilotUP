@@ -85,7 +85,7 @@ const SignUp = () => {
 
             setSuccess(true);
 
-            // Redirect after 2 seconds
+            // Redirect after 3 seconds
             setTimeout(() => {
                 navigate('/login', {
                     replace: true,
@@ -101,13 +101,13 @@ const SignUp = () => {
 
     // --- RENDER HELPERS ---
 
-    // 1. Loading State (Validating Token)
+    // 1. Loading State
     if (tokenValid === null) {
         return (
-            <div className="min-h-screen bg-[#F5F5F7] flex items-center justify-center p-4">
+            <div className="min-h-[100dvh] bg-[#F5F5F7] flex items-center justify-center p-4">
                 <div className="flex flex-col items-center gap-4">
-                    <Loader2 className="w-10 h-10 animate-spin" style={{ color: BRAND_COLOR }} />
-                    <p className="text-gray-500 font-medium animate-pulse text-sm">Verifying invitation...</p>
+                    <Loader2 className="w-8 h-8 md:w-10 md:h-10 animate-spin" style={{ color: BRAND_COLOR }} />
+                    <p className="text-gray-500 font-medium animate-pulse text-xs md:text-sm">Verifying invitation...</p>
                 </div>
             </div>
         );
@@ -116,24 +116,24 @@ const SignUp = () => {
     // 2. Invalid Token State
     if (!tokenValid) {
         return (
-            <div className="min-h-screen bg-[#F5F5F7] flex items-center justify-center p-4 font-sans text-[#1D1D1F]">
+            <div className="min-h-[100dvh] bg-[#F5F5F7] flex items-center justify-center p-4 font-sans text-[#1D1D1F]">
                 <motion.div 
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="w-full max-w-md bg-white rounded-[2rem] shadow-2xl shadow-gray-200/50 p-8 md:p-12 text-center border border-white"
+                    className="w-full max-w-[380px] md:max-w-md bg-white rounded-3xl md:rounded-[2rem] shadow-2xl shadow-gray-200/50 p-6 md:p-12 text-center border border-white"
                 >
-                    <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <AlertCircle className="w-8 h-8 text-red-500" />
+                    <div className="w-12 h-12 md:w-16 md:h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6">
+                        <AlertCircle className="w-6 h-6 md:w-8 md:h-8 text-red-500" />
                     </div>
-                    <h1 className="text-2xl font-bold tracking-tight mb-3">Invalid Link</h1>
-                    <p className="text-gray-500 mb-8 leading-relaxed">
+                    <h1 className="text-xl md:text-2xl font-bold tracking-tight mb-2 md:mb-3">Invalid Link</h1>
+                    <p className="text-gray-500 mb-6 md:mb-8 text-xs md:text-base leading-relaxed">
                         {tokenData?.message || 'This invite link is invalid, expired, or has already been used.'}
                     </p>
                     <motion.button
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         onClick={() => navigate('/login')}
-                        className="w-full py-3.5 rounded-2xl bg-gray-900 text-white font-semibold shadow-lg hover:shadow-xl transition-all"
+                        className="w-full py-3 md:py-3.5 rounded-xl md:rounded-2xl bg-gray-900 text-white font-semibold text-sm md:text-base shadow-lg hover:shadow-xl transition-all"
                     >
                         Return to Login
                     </motion.button>
@@ -145,24 +145,22 @@ const SignUp = () => {
     // 3. Success State
     if (success) {
         return (
-            <div className="min-h-screen bg-[#F5F5F7] flex items-center justify-center p-4 font-sans text-[#1D1D1F]">
+            <div className="min-h-[100dvh] bg-[#F5F5F7] flex items-center justify-center p-4 font-sans text-[#1D1D1F]">
                 <motion.div 
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="w-full max-w-md bg-white rounded-[2rem] shadow-2xl shadow-gray-200/50 p-8 md:p-12 text-center border border-white relative overflow-hidden"
+                    className="w-full max-w-[380px] md:max-w-md bg-white rounded-3xl md:rounded-[2rem] shadow-2xl shadow-gray-200/50 p-6 md:p-12 text-center border border-white relative overflow-hidden"
                 >
-                     {/* Success Confetti/Glow */}
-                     <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-green-400 to-emerald-500" />
-
-                    <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <CheckCircle className="w-8 h-8 text-green-500" />
+                    <div className="absolute top-0 left-0 w-full h-1.5 md:h-2 bg-gradient-to-r from-green-400 to-emerald-500" />
+                    <div className="w-12 h-12 md:w-16 md:h-16 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6">
+                        <CheckCircle className="w-6 h-6 md:w-8 md:h-8 text-green-500" />
                     </div>
-                    <h1 className="text-2xl font-bold tracking-tight mb-3">Welcome Aboard!</h1>
-                    <p className="text-gray-500 mb-8 leading-relaxed">
+                    <h1 className="text-xl md:text-2xl font-bold tracking-tight mb-2 md:mb-3">Welcome Aboard!</h1>
+                    <p className="text-gray-500 mb-6 md:mb-8 text-xs md:text-base leading-relaxed">
                         Your admin account has been created successfully. Redirecting you to the login page...
                     </p>
                     <div className="flex justify-center">
-                        <Loader2 className="w-6 h-6 text-gray-300 animate-spin" />
+                        <Loader2 className="w-5 h-5 md:w-6 md:h-6 text-gray-300 animate-spin" />
                     </div>
                 </motion.div>
             </div>
@@ -171,26 +169,29 @@ const SignUp = () => {
 
     // 4. Main Sign Up Form
     return (
-        <div className="min-h-screen bg-[#F5F5F7] flex items-center justify-center p-4 relative overflow-hidden font-sans text-[#1D1D1F]">
+        /* min-h-[100dvh] allows scrolling if the form is taller than the screen (likely on small phones), 
+           but centers it on larger screens. */
+        <div className="min-h-[100dvh] bg-[#F5F5F7] flex items-center justify-center p-4 py-8 relative font-sans text-[#1D1D1F]">
             
             {/* Ambient Background Glows */}
-            <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-[#E21339]/5 blur-[100px] pointer-events-none" />
-            <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full bg-blue-500/5 blur-[100px] pointer-events-none" />
+            <div className="absolute top-[-20%] left-[-10%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] rounded-full bg-[#E21339]/5 blur-[60px] md:blur-[100px] pointer-events-none" />
+            <div className="absolute bottom-[-20%] right-[-10%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] rounded-full bg-blue-500/5 blur-[60px] md:blur-[100px] pointer-events-none" />
 
-            <div className="w-full max-w-[480px] relative z-10">
+            <div className="w-full max-w-[380px] md:max-w-[460px] relative z-10">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4 }}
-                    className="bg-white rounded-[2rem] shadow-2xl shadow-gray-200/50 p-8 md:p-10 border border-white"
+                    // Tighter padding on mobile (p-6)
+                    className="bg-white rounded-3xl md:rounded-[2rem] shadow-2xl shadow-gray-200/50 p-6 md:p-10 border border-white"
                 >
                     {/* Header */}
-                    <div className="text-center mb-8">
-                        <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-gray-900 to-gray-800 mb-5 shadow-lg shadow-gray-200">
-                            <img src="/Logo-white.png" alt="Logo" className="w-12 h-12 object-contain" />
+                    <div className="text-center mb-6 md:mb-8">
+                        <div className="inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-gradient-to-br from-gray-900 to-gray-800 mb-4 shadow-lg shadow-gray-200">
+                            <img src="/Logo-white.png" alt="Logo" className="w-7 h-7 md:w-10 md:h-10 object-contain" />
                         </div>
-                        <h1 className="text-2xl md:text-3xl font-bold tracking-tight mb-2">Create Account</h1>
-                        <p className="text-gray-500 text-sm md:text-base">
+                        <h1 className="text-xl md:text-3xl font-bold tracking-tight mb-1.5 md:mb-2 text-[#1D1D1F]">Create Account</h1>
+                        <p className="text-gray-500 text-xs md:text-base">
                             Join the workspace to start managing content
                         </p>
                     </div>
@@ -200,78 +201,78 @@ const SignUp = () => {
                         {error && (
                             <motion.div
                                 initial={{ opacity: 0, height: 0, mb: 0 }}
-                                animate={{ opacity: 1, height: 'auto', mb: 24 }}
+                                animate={{ opacity: 1, height: 'auto', mb: 20 }}
                                 exit={{ opacity: 0, height: 0, mb: 0 }}
-                                className="bg-red-50 text-red-600 p-4 rounded-2xl text-sm flex items-start gap-3 border border-red-100 overflow-hidden"
+                                className="bg-red-50 text-red-600 p-3 rounded-xl text-xs md:text-sm flex items-start gap-3 border border-red-100 overflow-hidden"
                             >
-                                <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                                <AlertCircle className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0 mt-0.5" />
                                 <span className="font-medium">{error}</span>
                             </motion.div>
                         )}
                     </AnimatePresence>
 
                     {/* Form */}
-                    <form onSubmit={handleSignUp} className="space-y-5">
+                    <form onSubmit={handleSignUp} className="space-y-4 md:space-y-5">
                         {/* Name Field */}
-                        <div className="space-y-1.5">
-                            <label className="text-xs font-semibold text-gray-400 uppercase tracking-wider ml-1">Full Name</label>
+                        <div className="space-y-1">
+                            <label className="text-[10px] md:text-xs font-semibold text-gray-400 uppercase tracking-wider ml-1">Full Name</label>
                             <div className="relative group">
-                                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-[#1D1D1F] transition-colors" />
+                                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-gray-400 group-focus-within:text-[#1D1D1F] transition-colors" />
                                 <input
                                     type="text"
                                     value={fullName}
                                     onChange={(e) => setFullName(e.target.value)}
                                     placeholder="Jane Doe"
                                     required
-                                    className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border-transparent rounded-2xl text-[#1D1D1F] placeholder-gray-400 focus:bg-white focus:border-gray-200 focus:ring-4 focus:ring-[#E21339]/10 transition-all duration-300 outline-none font-medium"
+                                    className="w-full pl-10 md:pl-12 pr-4 py-3 md:py-3.5 bg-gray-50 border-transparent rounded-xl md:rounded-2xl text-[#1D1D1F] text-base placeholder-gray-400 focus:bg-white focus:border-gray-200 focus:ring-4 focus:ring-[#E21339]/10 transition-all duration-300 outline-none font-medium"
                                 />
                             </div>
                         </div>
 
                         {/* Email Field */}
-                        <div className="space-y-1.5">
-                            <label className="text-xs font-semibold text-gray-400 uppercase tracking-wider ml-1">Email Address</label>
+                        <div className="space-y-1">
+                            <label className="text-[10px] md:text-xs font-semibold text-gray-400 uppercase tracking-wider ml-1">Email Address</label>
                             <div className="relative group">
-                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-[#1D1D1F] transition-colors" />
+                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-gray-400 group-focus-within:text-[#1D1D1F] transition-colors" />
                                 <input
                                     type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="admin@company.com"
                                     required
-                                    className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border-transparent rounded-2xl text-[#1D1D1F] placeholder-gray-400 focus:bg-white focus:border-gray-200 focus:ring-4 focus:ring-[#E21339]/10 transition-all duration-300 outline-none font-medium"
+                                    className="w-full pl-10 md:pl-12 pr-4 py-3 md:py-3.5 bg-gray-50 border-transparent rounded-xl md:rounded-2xl text-[#1D1D1F] text-base placeholder-gray-400 focus:bg-white focus:border-gray-200 focus:ring-4 focus:ring-[#E21339]/10 transition-all duration-300 outline-none font-medium"
                                 />
                             </div>
                         </div>
 
-                        {/* Password Grid - Stack on mobile, side-by-side on tablet if desired, but stacked usually safer for long passwords */}
-                        <div className="grid grid-cols-1 gap-5">
-                            <div className="space-y-1.5">
-                                <label className="text-xs font-semibold text-gray-400 uppercase tracking-wider ml-1">Password</label>
+                        {/* Password Grid */}
+                        <div className="grid grid-cols-1 gap-4 md:gap-5">
+                            <div className="space-y-1">
+                                <label className="text-[10px] md:text-xs font-semibold text-gray-400 uppercase tracking-wider ml-1">Password</label>
                                 <div className="relative group">
-                                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-[#1D1D1F] transition-colors" />
+                                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-gray-400 group-focus-within:text-[#1D1D1F] transition-colors" />
                                     <input
                                         type="password"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                         placeholder="Min 6 chars"
                                         required
-                                        className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border-transparent rounded-2xl text-[#1D1D1F] placeholder-gray-400 focus:bg-white focus:border-gray-200 focus:ring-4 focus:ring-[#E21339]/10 transition-all duration-300 outline-none font-medium"
+                                        className="w-full pl-10 md:pl-12 pr-4 py-3 md:py-3.5 bg-gray-50 border-transparent rounded-xl md:rounded-2xl text-[#1D1D1F] text-base placeholder-gray-400 focus:bg-white focus:border-gray-200 focus:ring-4 focus:ring-[#E21339]/10 transition-all duration-300 outline-none font-medium"
                                     />
                                 </div>
                             </div>
 
-                            <div className="space-y-1.5">
-                                <label className="text-xs font-semibold text-gray-400 uppercase tracking-wider ml-1">Confirm Password</label>
+                            <div className="space-y-1">
+                                <label className="text-[10px] md:text-xs font-semibold text-gray-400 uppercase tracking-wider ml-1">Confirm Password</label>
                                 <div className="relative group">
-                                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-[#1D1D1F] transition-colors" />
+                                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-gray-400 group-focus-within:text-[#1D1D1F] transition-colors" />
                                     <input
                                         type="password"
                                         value={confirmPassword}
                                         onChange={(e) => setConfirmPassword(e.target.value)}
                                         placeholder="Repeat password"
                                         required
-                                        className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border-transparent rounded-2xl text-[#1D1D1F] placeholder-gray-400 focus:bg-white focus:border-gray-200 focus:ring-4 focus:ring-[#E21339]/10 transition-all duration-300 outline-none font-medium"
+                                        className="w-full pl-10 md:pl-12 pr-4 py-3 md:py-3.5 bg-gray-50 border-transparent rounded-xl md:rounded-2xl text-[#1D1D1F] text-base placeholder-gray-400 focus:bg-white focus:border-gray-200 focus:ring-4 focus:ring-[#E21339]/10 transition-all duration-300 outline-none font-medium"
                                     />
                                 </div>
                             </div>
@@ -283,23 +284,23 @@ const SignUp = () => {
                             whileTap={{ scale: 0.98 }}
                             type="submit"
                             disabled={loading}
-                            className="w-full py-4 mt-2 rounded-2xl text-white font-semibold text-lg shadow-lg shadow-[#E21339]/25 hover:shadow-xl hover:shadow-[#E21339]/30 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                            className="w-full py-3 md:py-4 mt-2 rounded-xl md:rounded-2xl text-white font-semibold text-sm md:text-lg shadow-lg shadow-[#E21339]/25 hover:shadow-xl hover:shadow-[#E21339]/30 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                             style={{ backgroundColor: BRAND_COLOR }}
                         >
                             {loading ? (
-                                <Loader2 className="w-5 h-5 animate-spin" />
+                                <Loader2 className="w-4 h-4 md:w-5 md:h-5 animate-spin" />
                             ) : (
                                 <>
                                     <span>Create Account</span>
-                                    <ArrowRight className="w-5 h-5 opacity-80" />
+                                    <ArrowRight className="w-4 h-4 md:w-5 md:h-5 opacity-80" />
                                 </>
                             )}
                         </motion.button>
                     </form>
 
                     {/* Footer */}
-                    <div className="mt-8 pt-6 border-t border-gray-100 text-center">
-                        <p className="text-sm text-gray-500">
+                    <div className="mt-6 md:mt-8 pt-5 md:pt-6 border-t border-gray-100 text-center">
+                        <p className="text-xs md:text-sm text-gray-500">
                             Already have an account?{' '}
                             <button
                                 onClick={() => navigate('/login')}
@@ -312,8 +313,8 @@ const SignUp = () => {
                 </motion.div>
                 
                 {/* Copyright */}
-                <div className="text-center mt-8 text-xs text-gray-400 font-medium">
-                    &copy; {new Date().getFullYear()} Your Blog Name. All rights reserved.
+                <div className="text-center mt-6 text-[10px] md:text-xs text-gray-400 font-medium">
+                    &copy; {new Date().getFullYear()} PilotUP.io. All rights reserved.
                 </div>
             </div>
         </div>
