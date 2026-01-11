@@ -195,7 +195,7 @@ const Navbar = ({ showAnnouncement, scrolled, setScrolled }) => {
                         ) : (
                             /* Desktop CTA */
                             <button
-                                onClick={() => navigate('/login')}
+                                onClick={() => navigate('/')}
                                 className="
                   hidden md:flex items-center gap-2
                   bg-gray-900 text-white
@@ -298,7 +298,7 @@ const Navbar = ({ showAnnouncement, scrolled, setScrolled }) => {
                             ) : (
                                 <button
                                     onClick={() => {
-                                        navigate('/login');
+                                        navigate('/');
                                         setOpenMenu(false);
                                     }}
                                     className="
