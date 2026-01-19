@@ -128,7 +128,7 @@ const AnnouncementBar = () => {
     return (
         <div className="flex justify-center w-full">
             <div
-                className="relative text-white text-xs sm:text-sm font-medium py-0.5 sm:py-1 px-1.5 sm:px-2 text-center flex items-center justify-center flex-wrap gap-1"
+                className="relative text-white text-xs sm:text-sm font-medium py-1.5 sm:py-2 px-3 sm:px-4 text-center flex items-center justify-center flex-wrap gap-1"
                 style={{
                     backgroundColor: announcementSettings.backgroundColor,
                     backgroundImage: announcementSettings.backgroundImage
