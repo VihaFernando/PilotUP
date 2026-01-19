@@ -184,48 +184,67 @@ const BlogAdmin = () => {
             <div className="pt-28 pb-20 px-6 max-w-[1400px] mx-auto">
 
                 {/* --- Header Section --- */}
-                <header className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
+                <header className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8 mb-8 md:mb-12">
                     <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
+                        className="w-full md:w-auto"
                     >
                         <div className="flex items-center gap-2 mb-2">
                             <span className="h-6 px-2.5 rounded-md bg-white border border-gray-200 text-[11px] font-bold uppercase tracking-wider text-[#E21339] flex items-center shadow-sm">
                                 Admin Console
                             </span>
                         </div>
-                        <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-[#1D1D1F]">
+                        <h1 className="text-3xl md:text-5xl font-semibold tracking-tight text-[#1D1D1F]">
                             Content Manager
                         </h1>
-                        <p className="text-gray-500 mt-3 text-lg font-medium">
+                        <p className="text-gray-500 mt-2 md:mt-3 text-base md:text-lg font-medium">
                             Create, edit, and manage your publication.
                         </p>
                     </motion.div>
+
+                    {/* Navigation Controls */}
                     <motion.div
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5, delay: 0.1 }}
-                        className="flex items-center gap-3 p-1.5 bg-white/80 backdrop-blur-xl border border-white/40 rounded-full shadow-sm"
+                        /* Layout Logic:
+                        1. Mobile: 'grid grid-cols-2' creates the 2x2 layout.
+                        2. Desktop: 'md:flex' switches to the single row line.
+                        */
+                        className="grid grid-cols-2 md:flex items-center gap-2 p-2 md:p-1.5 bg-white/80 backdrop-blur-xl border border-white/40 rounded-2xl md:rounded-full shadow-sm w-full md:w-auto"
                     >
                         <button
                             onClick={() => navigate('/admin/invites')}
-                            className="h-10 px-5 rounded-full text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-[#E21339] transition-all flex items-center gap-2"
+                            className="h-10 px-3 md:px-5 rounded-xl md:rounded-full text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-[#E21339] transition-all flex items-center justify-center gap-2"
                         >
                             <Users className="w-4 h-4" /> Invites
                         </button>
+                        
+                        <button
+                            onClick={() => navigate('/admin/announcement')}
+                            className="h-10 px-3 md:px-5 rounded-xl md:rounded-full text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-[#E21339] transition-all flex items-center justify-center gap-2"
+                        >
+                            <LayoutDashboard className="w-4 h-4" /> Announcement
+                        </button>
+                        
                         <button
                             onClick={() => navigate('/blog')}
-                            className="h-10 px-5 rounded-full text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-[#E21339] transition-all flex items-center gap-2"
+                            className="h-10 px-3 md:px-5 rounded-xl md:rounded-full text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-[#E21339] transition-all flex items-center justify-center gap-2"
                         >
                             <ArrowUpRight className="w-4 h-4" /> Live Site
                         </button>
+                        
+                        {/* Logout Button: Rectangle with text on mobile (4th grid item), Circle icon on Desktop */}
                         <button
                             onClick={handleLogout}
-                            className="h-10 w-10 rounded-full flex items-center justify-center text-gray-500 hover:bg-red-50 hover:text-red-600 transition-all"
+                            className="h-10 w-full md:w-10 px-3 md:px-0 rounded-xl md:rounded-full flex items-center justify-center text-gray-500 hover:bg-red-50 hover:text-red-600 transition-all gap-2 md:gap-0"
                             title="Sign Out"
                         >
                             <LogOut className="w-4 h-4" />
+                            {/* Text visible only on mobile to fill the grid cell */}
+                            <span className="md:hidden text-sm font-medium">Sign Out</span>
                         </button>
                     </motion.div>
                 </header>

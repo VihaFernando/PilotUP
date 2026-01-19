@@ -13,8 +13,10 @@ import GreenRobot from "./assets/GreenRobot.json";
 
 // Auth & Blog Imports
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { AnnouncementProvider, useAnnouncement } from './contexts/AnnouncementContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
+import AnnouncementBar from './components/AnnouncementBar';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import ForgotPassword from './pages/ForgotPassword';
@@ -23,6 +25,7 @@ import BlogFeed from './pages/BlogFeed';
 import BlogDetail from './pages/BlogDetail';
 import BlogAdmin from './pages/BlogAdmin';
 import AdminInvites from './pages/AdminInvites';
+import AnnouncementAdmin from './pages/AnnouncementAdmin';
 
 // --- DATA CONSTANTS ---
 
@@ -212,54 +215,25 @@ const NavbarWrapper = ({ showAnnouncement = true }) => {
 
 
 
-const Hero = ({ showAnnouncement, onCloseAnnouncement }) => {
+const Hero = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
-
-
   useEffect(() => {
-
     const handleMouseMove = (e) => {
-
       // Calculate normalized position (-1 to 1)
-
       const x = (e.clientX / window.innerWidth - 0.5) * 2;
-
       const y = (e.clientY / window.innerHeight - 0.5) * 2;
-
       setMousePos({ x, y });
-
     };
 
-
-
     window.addEventListener("mousemove", handleMouseMove);
-
     return () => window.removeEventListener("mousemove", handleMouseMove);
-
   }, []);
+
   return (
     <>
       {/* 🔴 TOP ANNOUNCEMENT BAR */}
-      {showAnnouncement && (
-        <div className="relative w-full bg-red-600 text-white text-xs sm:text-sm font-medium py-1.5 sm:py-2 px-3 sm:px-4 text-center flex items-center justify-center">
-          <span className="leading-tight">
-            Be among the first 100 and receive {" "}
-            <span className="font-semibold">$100,000</span> in bonus credits. {" "}
-            <a href="#" className="underline font-semibold hover:text-white/90">
-              Join Now
-            </a>
-          </span>
-          <button
-            type="button"
-            aria-label="Close announcement"
-            onClick={onCloseAnnouncement}
-            className="absolute right-2.5 sm:right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/15 transition"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
-      )}
+      <AnnouncementBar />
 
       {/* HERO SECTION */}
       <section
@@ -1815,15 +1789,12 @@ const BackToTop = () => {
 
 // Home Page Component
 const HomePage = () => {
-  const [showAnnouncement, setShowAnnouncement] = useState(true);
+  const { showAnnouncement } = useAnnouncement();
 
   return (
     <>
       <NavbarWrapper showAnnouncement={showAnnouncement} />
-      <Hero
-        showAnnouncement={showAnnouncement}
-        onCloseAnnouncement={() => setShowAnnouncement(false)}
-      />
+      <Hero />
       <ValueProps />
       <IdentitySection />
       <Comparison />
@@ -1841,44 +1812,55 @@ const HomePage = () => {
 export default function App() {
   return (
     <AuthProvider>
-      <Router>
-        <div className="min-h-screen bg-[#fdfffc] text-gray-900 font-sans selection:bg-red-500/20">
-          <Routes>
-            {/* Home Page */}
-            <Route path="/" element={<HomePage />} />
+      <AnnouncementProvider>
+        <Router>
+          <div className="min-h-screen bg-[#fdfffc] text-gray-900 font-sans selection:bg-red-500/20">
+            <Routes>
+              {/* Home Page */}
+              <Route path="/" element={<HomePage />} />
 
-            {/* Blog Routes */}
-            <Route path="/blog" element={<BlogFeed />} />
-            <Route path="/blog/:slug" element={<BlogDetail />} />
+              {/* Blog Routes */}
+              <Route path="/blog" element={<BlogFeed />} />
+              <Route path="/blog/:slug" element={<BlogDetail />} />
 
-            {/* Auth Routes */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/auth/reset-password" element={<ResetPassword />} />
+              {/* Auth Routes */}
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/auth/reset-password" element={<ResetPassword />} />
 
-            {/* Protected Admin Route */}
-            <Route
-              path="/blog/admin"
-              element={
-                <ProtectedRoute>
-                  <BlogAdmin />
-                </ProtectedRoute>
-              }
-            />
+              {/* Protected Admin Route */}
+              <Route
+                path="/blog/admin"
+                element={
+                  <ProtectedRoute>
+                    <BlogAdmin />
+                  </ProtectedRoute>
+                }
+              />
 
-            {/* Protected Admin Invites Route */}
-            <Route
-              path="/admin/invites"
-              element={
-                <ProtectedRoute>
-                  <AdminInvites />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
+              {/* Protected Admin Invites Route */}
+              <Route
+                path="/admin/invites"
+                element={
+                  <ProtectedRoute>
+                    <AdminInvites />
+                  </ProtectedRoute>
+                }
+              />
 
-          <style jsx>{`
+              {/* Protected Announcement Admin Route */}
+              <Route
+                path="/admin/announcement"
+                element={
+                  <ProtectedRoute>
+                    <AnnouncementAdmin />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+
+            <style jsx>{`
               @keyframes marquee {
                 0% { transform: translateX(0); }
                 100% { transform: translateX(calc(-100% / 4)); }
@@ -1934,8 +1916,9 @@ export default function App() {
                 }
               }
             `}</style>
-        </div>
-      </Router>
+          </div>
+        </Router>
+      </AnnouncementProvider>
     </AuthProvider>
   );
 }
