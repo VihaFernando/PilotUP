@@ -26,6 +26,14 @@ html {
 
 .animate-infinite-marquee {
   animation: infinite-marquee 28s linear infinite;
+  will-change: transform;
+}
+
+/* Reverse direction utility for an alternate row to avoid sync and create a natural feel */
+.animate-infinite-marquee-reverse {
+  animation: infinite-marquee 28s linear infinite;
+  animation-direction: reverse;
+  will-change: transform;
 }
 
 @keyframes glow-text-slow {

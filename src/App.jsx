@@ -78,7 +78,8 @@ const CORE_VALUES = [
     hoverBorder: "hover:border-rose-200/80",
     hoverShadow: "hover:shadow-[0_25px_70px_-35px_rgba(244,63,94,0.45)]",
     gradient: "from-rose-400/30 to-rose-500/10",
-    iconColor: "text-rose-600"
+    iconColor: "text-rose-600",
+    image: "/self-managing.png"
   }
 ];
 
@@ -259,12 +260,12 @@ const Hero = () => {
             {/* TITLE */}
             <h1 className="text-[2.2rem] sm:text-5xl lg:text-[3.5rem] font-extrabold leading-[1.1] tracking-tight text-gray-900">
               Build your own, <br />
-              <span className="text-gray-800">Ai employees to scale your business.</span>
+              <span className="text-gray-800">AI employees to scale your business.</span>
             </h1>
 
             {/* SUBTEXT */}
             <p className="text-gray-500 text-base lg:text-lg max-w-[520px] leading-relaxed">
-              Meet <span className="font-semibold text-gray-900">PilotUP</span>. Your AI team member
+              Meet <span className="font-semibold text-gray-900">PilotUP. Your AI team member </span>
               that plans, executes, and reports on complex workflows — so you can focus
               on strategy, not busywork.
             </p>
@@ -441,7 +442,7 @@ const ValueProps = () => {
   const logoRows = [LOGOS.slice(0, 4), LOGOS.slice(4, 8)];
 
   return (
-    <section className="relative py-16 px-6 w-full max-w-[1280px] mx-auto overflow-hidden bg-[#fdfffc]">
+    <section className="relative py-10 px-6 w-full max-w-[1280px] mx-auto overflow-hidden bg-[#fdfffc]">
       <div className="relative z-10">
 
         {/* --- HEADER SECTION --- */}
@@ -519,20 +520,40 @@ const ValueProps = () => {
               {/* Hover Gradient Background */}
               <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
 
-              <div className="relative z-10 flex flex-col h-full items-start">
-                <div className={`mb-6 p-4 rounded-2xl bg-white shadow-sm border border-gray-100 group-hover:scale-110 transition-transform duration-500 ${item.iconColor}`}>
-                  <item.icon className="w-8 h-8" strokeWidth={1.5} />
+              <div className={`relative z-10 flex flex-col ${item.image ? 'md:flex-row md:items-center md:justify-between' : ''} h-full items-start`}>
+
+                <div className={`${item.image ? 'md:max-w-md' : ''}`}>
+                  <div className={`mb-6 w-12 h-12 flex items-center justify-center rounded-xl group-hover:scale-110 transition-transform duration-500 bg-white shadow-sm border border-gray-100 ${item.iconColor}`}>
+                    <item.icon className="w-7 h-7" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{item.title}</h3>
+                  <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">{item.subtitle}</p>
+                  <p className="text-gray-600 leading-relaxed text-[15px] sm:text-[16px] max-w-md">
+                    {item.description}
+                  </p>
                 </div>
 
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">{item.title}</h3>
-                <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">{item.subtitle}</p>
-                <p className="text-gray-600 leading-relaxed text-[15px] sm:text-[16px] max-w-md">
-                  {item.description}
-                </p>
+                {item.image && (
+                  <div className="w-full mt-8 md:mt-0 md:w-auto md:flex-1 flex justify-center md:justify-end">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="max-w-full h-auto object-contain max-h-[220px] md:max-h-[280px]"
+                      style={{
+                        maskImage: 'linear-gradient(to bottom, black 70%, transparent 100%), linear-gradient(to left, black 85%, transparent 100%)',
+                        WebkitMaskImage: 'linear-gradient(to bottom, black 70%, transparent 100%), linear-gradient(to left, black 85%, transparent 100%)',
+                        maskComposite: 'intersect',
+                        WebkitMaskComposite: 'source-in'
+                      }}
+                    />
+                  </div>
+                )}
               </div>
 
               {/* Decorative Icon Fade in corner */}
-              <item.icon className="absolute -bottom-6 -right-6 w-48 h-48 text-gray-200/50 -rotate-12 group-hover:rotate-0 transition-transform duration-700 pointer-events-none" />
+              {item.title !== "Self-Managing" && (
+                <item.icon className="absolute -bottom-6 -right-6 w-48 h-48 text-gray-200/50 -rotate-12 group-hover:rotate-0 transition-transform duration-700 pointer-events-none" />
+              )}
             </motion.div>
           ))}
         </div>
@@ -553,7 +574,7 @@ const ValueProps = () => {
 
             {/* CARD 1 */}
             <div>
-              <div className="rounded-2xl overflow-hidden bg-black mb-5">
+              <div className="rounded-2xl overflow-hidden bg-black mb-5 border-4 border-gray-400">
                 <img
                   src="handshake.png"
                   alt="Hire experts"
@@ -575,33 +596,81 @@ const ValueProps = () => {
 
             {/* CARD 2 */}
             <div>
-              <div className="rounded-2xl overflow-hidden bg-black mb-5 relative h-[200px]">
-                <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-black/90" />
-                <div className="relative z-10 h-full px-6 py-6 flex flex-col justify-evenly">
-                  {logoRows.map((row, rowIdx) => (
-                    <div
-                      key={`row-${rowIdx}`}
-                      className="logo-marquee flex items-center gap-6"
-                      data-direction={rowIdx % 2 === 0 ? "normal" : "reverse"}
-                    >
-                      {[...row, ...row].map((logo, idx) => (
-                        <img
-                          key={`${logo.name}-${idx}`}
-                          src={logo.src}
-                          alt={logo.name}
-                          className="h-10 w-auto object-contain"
-                        />
-                      ))}
+              <div className="rounded-2xl overflow-hidden bg-black mb-5 relative border-4 border-gray-400">
+                {/* soft overlay */}
+                <div className="absolute inset-0 bg-gradient-to-b from-white/6 via-transparent to-black/90 pointer-events-none" />
+
+                <div className="relative z-10 h-[200px] p-4 flex flex-col justify-center gap-3">
+                  {/* Row 1: use LOGOS[0..3], alternate icon + blank */}
+                  <div className="w-full overflow-hidden">
+                    <div className="flex items-center gap-3 w-[200%] animate-infinite-marquee" style={{ animationDuration: '28s' }}>
+                      {(() => {
+                        const start = 0;
+                        const base = [0, 1, 2, 3].map(i => LOGOS[(start + i) % LOGOS.length]);
+                        const seq = base.flatMap(l => [l, 'blank']);
+                        const doubled = [...seq, ...seq];
+                        return doubled.map((item, i) => (
+                          <div key={i} className={item === 'blank' ? 'w-10 h-10 aspect-square flex items-center justify-center' : 'w-12 h-12 aspect-square flex items-center justify-center'}>
+                            {item === 'blank' ? (
+                              <div className="w-full h-full rounded-md bg-[#121212] border border-[#333]" />
+                            ) : (
+                              <img src={item.src} alt={item.name} className="w-9 h-9 object-contain" style={item.name === 'GitHub' ? { filter: 'invert(1)' } : undefined} />
+                            )}
+                          </div>
+                        ));
+                      })()}
                     </div>
-                  ))}
+                  </div>
+
+                  {/* Row 2: use LOGOS[2..5] */}
+                  <div className="w-full overflow-hidden">
+                    <div className="flex items-center gap-3 w-[200%] animate-infinite-marquee-reverse" style={{ animationDuration: '32s' }}>
+                      {(() => {
+                        const start = 2;
+                        const base = [0, 1, 2, 3].map(i => LOGOS[(start + i) % LOGOS.length]);
+                        const seq = base.flatMap(l => [l, 'blank']);
+                        const doubled = [...seq, ...seq];
+                        return doubled.map((item, i) => (
+                          <div key={i} className={item === 'blank' ? 'w-10 h-10 aspect-square flex items-center justify-center' : 'w-12 h-12 aspect-square flex items-center justify-center'}>
+                            {item === 'blank' ? (
+                              <div className="w-full h-full rounded-md bg-[#121212] border border-[#333]" />
+                            ) : (
+                              <img src={item.src} alt={item.name} className="w-9 h-9 object-contain" style={item.name === 'GitHub' ? { filter: 'invert(1)' } : undefined} />
+                            )}
+                          </div>
+                        ));
+                      })()}
+                    </div>
+                  </div>
+
+                  {/* Row 3: use LOGOS[4..7] */}
+                  <div className="w-full overflow-hidden">
+                    <div className="flex items-center gap-3 w-[200%] animate-infinite-marquee" style={{ animationDuration: '24s' }}>
+                      {(() => {
+                        const start = 4;
+                        const base = [0, 1, 2, 3].map(i => LOGOS[(start + i) % LOGOS.length]);
+                        const seq = base.flatMap(l => [l, 'blank']);
+                        const doubled = [...seq, ...seq];
+                        return doubled.map((item, i) => (
+                          <div key={i} className={item === 'blank' ? 'w-10 h-10 aspect-square flex items-center justify-center' : 'w-12 h-12 aspect-square flex items-center justify-center'}>
+                            {item === 'blank' ? (
+                              <div className="w-full h-full rounded-md bg-[#121212] border border-[#333]" />
+                            ) : (
+                              <img src={item.src} alt={item.name} className="w-9 h-9 object-contain" />
+                            )}
+                          </div>
+                        ));
+                      })()}
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <h4 className="font-bold text-gray-900 mb-2">
+              <h4 className="font-bold text-gray-900 mb-2 text-center">
                 Seamless Integration
               </h4>
 
-              <p className="text-sm text-gray-500 leading-relaxed">
+              <p className="text-sm text-gray-500 leading-relaxed text-center">
                 Connect your AI employee to the tools you already use — no changes
                 required. From project management to communication platforms, it fits
                 right into your existing workflow and starts working immediately.
@@ -610,9 +679,9 @@ const ValueProps = () => {
 
             {/* CARD 3 */}
             <div>
-              <div className="rounded-2xl overflow-hidden bg-black mb-5">
+              <div className="rounded-2xl overflow-hidden bg-black mb-5 border-4 border-gray-400">
                 <img
-                  src="handshake.png"
+                  src="availability.png"
                   alt="24/7 availability"
                   className="w-full h-[200px] object-cover"
                 />
@@ -636,6 +705,16 @@ const ValueProps = () => {
     </section>
   );
 };
+
+const FocusLead = () => (
+  <section className="py-1 px-6 pt-6">
+    <div className="max-w-4xl mx-auto text-center">
+      <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#020617] leading-tight tracking-tight">
+        Focus on what matters while AI handles the rest. Smarter work, faster results, and less stress, it's that simple.
+      </h2>
+    </div>
+  </section>
+);
 
 const Comparison = () => {
   return (
@@ -732,15 +811,21 @@ const Comparison = () => {
 };
 
 const PRICING = {
-  monthly: { growth: 49, exec: 99 },
-  yearly: { growth: 39, exec: 79 },
+  monthly: { growth: 149, exec: 499 },
 };
+// Note: yearly display is calculated as monthly * 0.8 (20% discount) and shown as per-month billed annually.
 
 const Pricing = () => {
-  const [isYearly, setIsYearly] = useState(false);
+  const [isYearly, setIsYearly] = useState(true);
+
+  // Compute displayed monthly equivalents for annual billing (20% discount)
+  const growthMonthly = PRICING.monthly.growth;
+  const execMonthly = PRICING.monthly.exec;
+  const growthAnnualPerMonth = Math.round(growthMonthly * 0.8);
+  const execAnnualPerMonth = Math.round(execMonthly * 0.8);
 
   return (
-    <section id="pricing" className="relative py-24 px-6 w-full max-w-[1280px] mx-auto overflow-hidden bg-[#fdfffc]">
+    <section id="pricing" className="relative py-16 px-6 w-full max-w-[1280px] mx-auto overflow-hidden bg-[#fdfffc]">
       {/* Background Decor */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full z-0 pointer-events-none opacity-40">
         <div className="absolute top-20 left-20 w-96 h-96 bg-blue-50 rounded-full blur-[100px]" />
@@ -759,24 +844,24 @@ const Pricing = () => {
             <span className="text-gray-900 font-medium">Lock in these rates early.</span>
           </p>
 
-          {/* --- APPLE-STYLE TOGGLE --- */}
+          {/* --- APPLE-STYLE TOGGLE (Yearly left, Monthly right) --- */}
           <div className="flex items-center justify-center gap-4">
-            <div className="relative flex bg-gray-200 p-1 rounded-full cursor-pointer">
+            <div className="relative flex bg-gray-200 p-2 rounded-full cursor-pointer w-[220px] sm:w-[220px]">
               <div
-                className="absolute inset-y-1 left-1 w-[calc(50%-4px)] bg-white rounded-full shadow-sm transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)]"
-                style={{ transform: isYearly ? 'translateX(100%) translateX(4px)' : 'translateX(0)' }}
+                className="absolute inset-y-1 left-1 w-[calc(50%-8px)] bg-white rounded-full shadow-sm transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)]"
+                style={{ transform: isYearly ? 'translateX(0)' : 'translateX(100%) translateX(4px)' }}
               />
               <button
-                onClick={() => setIsYearly(false)}
-                className={`relative z-10 px-6 py-2 rounded-full text-sm font-semibold transition-colors duration-300 ${!isYearly ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900'}`}
+                onClick={() => setIsYearly(true)}
+                className={`relative z-10 flex-1 text-center py-2 rounded-full text-sm font-semibold transition-colors duration-300 ${isYearly ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900'}`}
               >
-                Monthly
+                Yearly <span className="inline-block align-text-top text-[10px] text-emerald-600 ml-1 font-bold">-20%</span>
               </button>
               <button
-                onClick={() => setIsYearly(true)}
-                className={`relative z-10 px-6 py-2 rounded-full text-sm font-semibold transition-colors duration-300 ${isYearly ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900'}`}
+                onClick={() => setIsYearly(false)}
+                className={`relative z-10 flex-1 text-center py-2 rounded-full text-sm font-semibold transition-colors duration-300 ${!isYearly ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900'}`}
               >
-                Yearly <span className="text-[10px] text-emerald-600 ml-1 font-bold">-20%</span>
+                Monthly
               </button>
             </div>
           </div>
@@ -786,7 +871,7 @@ const Pricing = () => {
         <div className="grid md:grid-cols-3 gap-8 items-stretch max-w-6xl mx-auto">
 
           {/* TIER 1: FREE */}
-          <div className="flex flex-col p-8 rounded-[2.5rem] bg-white border border-gray-200 hover:border-gray-300 transition-colors">
+          <div className="relative overflow-hidden flex flex-col p-8 rounded-[2.5rem] bg-gradient-to-br from-white to-blue-50/10 border border-gray-200/60 hover:border-blue-200 transition-colors shadow-md hover:shadow-lg ring-1 ring-transparent hover:ring-blue-50">
             <div className="mb-6">
               <span className="px-3 py-1 rounded-full bg-gray-100 text-gray-600 text-xs font-bold uppercase tracking-wider">
                 Starter
@@ -795,9 +880,10 @@ const Pricing = () => {
             <h3 className="text-xl font-bold text-gray-900 mb-2">The Freemium</h3>
             <p className="text-gray-500 text-sm mb-6 h-10">Perfect for exploring the platform and building your first agent.</p>
 
-            <div className="text-4xl font-bold text-gray-900 mb-8">
+            <div className="text-4xl font-bold text-gray-900 mb-2">
               $0 <span className="text-lg font-medium text-gray-400">/mo</span>
             </div>
+            <div className="text-xs text-gray-500 mb-6">FREE PLAN</div>
 
             <ul className="space-y-4 mb-8 flex-1">
               {[
@@ -836,10 +922,11 @@ const Pricing = () => {
             <h3 className="text-xl font-bold text-white mb-2">Growth Squad</h3>
             <p className="text-gray-400 text-sm mb-6 h-10">For startups ready to automate serious workflows.</p>
 
-            <div className="text-4xl font-bold text-white mb-8">
-              ${isYearly ? PRICING.yearly.growth : PRICING.monthly.growth}
+            <div className="text-4xl font-bold text-white mb-2">
+              {`$${isYearly ? growthAnnualPerMonth : growthMonthly}`}
               <span className="text-lg font-medium text-gray-500">/mo</span>
             </div>
+            {isYearly && <div className="text-xs text-gray-300 mb-4">Billed annually</div>}
 
             <ul className="space-y-4 mb-8 flex-1">
               {[
@@ -873,10 +960,11 @@ const Pricing = () => {
             <h3 className="text-xl font-bold text-gray-900 mb-2">Executive</h3>
             <p className="text-gray-500 text-sm mb-6 h-10">Full autonomy for scaling companies with heavy workloads.</p>
 
-            <div className="text-4xl font-bold text-gray-900 mb-8">
-              ${isYearly ? PRICING.yearly.exec : PRICING.monthly.exec}
+            <div className="text-4xl font-bold text-gray-900 mb-2">
+              {`$${isYearly ? execAnnualPerMonth : execMonthly}`}
               <span className="text-lg font-medium text-gray-400">/mo</span>
             </div>
+            {isYearly && <div className="text-xs text-gray-500 mb-4">Billed annually</div>}
 
             <ul className="space-y-4 mb-8 flex-1">
               {[
@@ -905,7 +993,7 @@ const Pricing = () => {
 
 const IdentitySection = () => {
   return (
-    <section id="identity" className="relative py-10 px-4 sm:px-6 bg-[#fdfffc] w-full">
+    <section id="identity" className="relative px-4 sm:px-6 bg-[#fdfffc] w-full">
       <div className="max-w-[1100px] mx-auto">
 
         <div className="text-center mb-16 sm:mb-24 px-4">
@@ -954,7 +1042,8 @@ const IdentitySection = () => {
                   Real Responsibility.
                 </h3>
                 <p className="text-sm sm:text-lg text-gray-500 leading-relaxed mb-6 sm:mb-8 max-w-sm">
-                  Your agent isn't a script. It gets a corporate email, a Slack account, and a secure ID. It takes ownership of tasks so you don't have to.
+                  Your agent gets a name, role, and professional email. It behaves like a real team member, not a chatbot.
+                  Delegate tasks just like you would do to human staff. Reliable, accountable, and always ready to work.
                 </p>
                 <button className="px-5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-white text-gray-900 font-semibold text-xs sm:text-sm shadow-sm border border-gray-200 hover:scale-105 transition-transform">
                   Create Identity
@@ -995,11 +1084,12 @@ const IdentitySection = () => {
                   <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
                 <h3 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight">
-                  Fluent in <br />
-                  Human & Business.
+                  Communicate the<br />
+                  Classic Way
                 </h3>
                 <p className="text-sm sm:text-lg text-gray-500 leading-relaxed mb-0 md:mb-8 max-w-sm">
-                  Don't learn prompt engineering. Just talk. Call them, text them, or tag them in Slack. They understand context.
+                  Call, message, or email your AI employee anytime. It joins meetings, take notes, and handles tasks autonomously.
+                  You step in only approval is needed.
                 </p>
               </div>
 
@@ -1071,7 +1161,8 @@ const IdentitySection = () => {
                   Domain Expertise.
                 </h3>
                 <p className="text-sm sm:text-lg text-gray-400 leading-relaxed mb-6 sm:mb-8 max-w-sm">
-                  Don't hire a generalist. Select an agent pre-trained for Operations, HR, or Sales. Expert-level output from Day 1.
+                  Choose from content, marketing, operations, support, and more. Each AI is trained to perform like a domain specialist.
+                  Scale your operaitons with expert level output, without hiring experts.
                 </p>
 
                 <div className="flex flex-wrap gap-2">
@@ -1213,8 +1304,8 @@ const Join = () => {
                   <CheckCircle2 className="w-4 h-4 sm:w-6 sm:h-6" />
                 </div>
                 <div>
-                  <div className="text-2xl sm:text-4xl font-bold text-gray-900 mb-0.5 sm:mb-1">2K+</div>
-                  <div className="text-[10px] sm:text-sm font-medium text-gray-500 leading-tight">Founders on waitlist</div>
+                  <div className="text-xl sm:text-2xl font-bold text-gray-900 mb-0.5 sm:mb-1 break-words whitespace-normal">Early Access</div>
+                  <div className="text-xs sm:text-sm font-medium text-gray-500 leading-tight">Join the founder waitlist</div>
                 </div>
               </motion.div>
 
@@ -1222,10 +1313,10 @@ const Join = () => {
                 whileHover={{ y: -5 }}
                 className="p-4 sm:p-8 rounded-2xl sm:rounded-[2rem] bg-gray-900 text-white shadow-[0_10px_30px_-10px_rgba(17,24,39,0.3)] flex flex-col justify-center h-full"
               >
-                <div className="text-2xl sm:text-4xl font-bold mb-1 text-emerald-400">96%</div>
-                <div className="text-[10px] sm:text-sm font-medium text-gray-400 leading-tight mb-3">Satisfaction rating</div>
+                <div className="text-xl sm:text-2xl font-bold mb-1 text-white break-words whitespace-normal">Enterprise Secure</div>
+                <div className="text-xs sm:text-sm font-medium text-gray-400 leading-tight mb-3">Bank-grade encryption &amp; data isolation</div>
                 <div className="h-1 sm:h-1.5 w-full bg-gray-800 rounded-full overflow-hidden">
-                  <div className="h-full w-[96%] bg-emerald-400 rounded-full" />
+                  <div className="h-full w-[20%] bg-emerald-400 rounded-full" />
                 </div>
               </motion.div>
             </div>
@@ -1236,21 +1327,29 @@ const Join = () => {
                 whileHover={{ y: -5 }}
                 className="p-4 sm:p-8 rounded-2xl sm:rounded-[2rem] bg-gradient-to-br from-[#E21339] to-[#F0284A] text-white shadow-[0_10px_30px_-10px_rgba(226,19,57,0.3)] flex flex-col justify-center h-full"
               >
-                <div className="text-2xl sm:text-4xl font-bold mb-1">48k</div>
-                <div className="text-[10px] sm:text-sm font-medium text-[#fca5ac] leading-tight">Tasks automated daily</div>
+                <div className="text-xl sm:text-2xl font-bold mb-1 break-words whitespace-normal">Automates Workflows</div>
+                <div className="text-xs sm:text-sm font-medium text-[#fca5ac] leading-tight">Handles repetitive work like triage, summaries &amp; updates</div>
               </motion.div>
 
               <motion.div
                 whileHover={{ y: -5 }}
                 className="p-4 sm:p-8 rounded-2xl sm:rounded-[2rem] bg-white border border-gray-100 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.08)] flex flex-col justify-center h-full"
               >
-                <div className="flex -space-x-2 sm:-space-x-3 mb-2 sm:mb-4">
-                  {[1, 2, 3].map(i => (
-                    <div key={i} className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border-2 border-white bg-gray-200" />
+                <div className="flex items-center gap-3 mb-3 flex-wrap">
+                  {LOGOS.slice(0, 5).map((logo, i) => (
+                    <div key={i} className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white flex items-center justify-center border border-gray-100 shadow-sm overflow-hidden flex-shrink-0">
+                      <img src={logo.src} alt={logo.name} className="w-full h-full object-contain p-[2px]" />
+                    </div>
                   ))}
-                  <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-gray-500">+200</div>
+
+                  {LOGOS.length > 5 && (
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gray-100 flex items-center justify-center text-[11px] sm:text-xs font-semibold text-gray-700 border border-gray-200 flex-shrink-0">
+                      +{LOGOS.length - 5}
+                    </div>
+                  )}
                 </div>
-                <div className="text-[10px] sm:text-sm font-medium text-gray-500 leading-tight">Partner startups onboarded</div>
+
+                <div className="text-xs sm:text-sm font-medium text-gray-500 leading-tight break-words">Integrates with Slack, Gmail, Notion, Figma & more</div>
               </motion.div>
             </div>
 
@@ -1520,7 +1619,7 @@ const FAQ = () => {
                     animate={{ rotate: isOpen ? 0 : -45, opacity: isOpen ? 1 : 0 }}
                     className="absolute"
                   >
-                    <X className="w-5 h-5 text-[#E21339]" />
+                    <X className={`w-5 h-5 ${isOpen ? 'text-white' : 'text-[#E21339]'}`} />
                   </motion.div>
                 </div>
               </motion.div>
@@ -1797,6 +1896,7 @@ const HomePage = () => {
       <Hero />
       <ValueProps />
       <IdentitySection />
+      <FocusLead />
       <Comparison />
       <Pricing />
       <Reviews />
