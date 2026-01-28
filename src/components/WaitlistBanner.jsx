@@ -4,9 +4,9 @@ import { X, ArrowRight, Sparkles } from "lucide-react";
 
 // --- CONFIGURATION ---
 const WAITLIST_LINK = "https://example.com/waitlist";
-const WAITLIST_INITIAL_DELAY_MS = 5000; // Initial delay before showing the banner
-const WAITLIST_VISIBLE_DURATION_MS = 50000; // Duration the banner stays visible (50 seconds)
-const WAITLIST_HIDDEN_DURATION_MS = 90000; // Duration the banner stays hidden (1.5 minutes)
+const WAITLIST_INITIAL_DELAY_MS = 5000;
+const WAITLIST_VISIBLE_DURATION_MS = 50000;
+const WAITLIST_HIDDEN_DURATION_MS = 90000;
 const SESSION_KEY = "hq_waitlist_banner_dock_v1";
 
 const WaitlistBanner = () => {
@@ -61,21 +61,21 @@ const WaitlistBanner = () => {
         <motion.div
           role="dialog"
           aria-label="Join waitlist"
-          // --- ANIMATION: Slide up from bottom like a sheet ---
+          // --- ANIMATION ---
           initial={{ y: "100%", opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: "100%", opacity: 0 }}
           transition={{ 
             type: "spring", 
             stiffness: 260, 
-            damping: 30, // Smooth, heavy damping feels premium
+            damping: 30,
             mass: 1
           }}
           className="
             fixed bottom-1 left-0 right-0 z-[100]
             flex justify-center
             pointer-events-none
-            overflow-visible /* Ensures it looks like it's rising from the bezel */
+            overflow-visible
           "
         >
           {/* --- THE BANNER (SHEET) --- */}
@@ -83,58 +83,73 @@ const WaitlistBanner = () => {
             style={{ backdropFilter: 'none', WebkitBackdropFilter: 'none', filter: 'none' }}
             className="
               pointer-events-auto
+              relative
               w-full sm:w-[92%] max-w-4xl
 
-              /* SHAPE: Rounded Top Only, sits flush at bottom */
-              rounded-t-[24px]
+              /* SHAPE: Smaller radius on mobile, larger on desktop */
+              rounded-t-[16px] sm:rounded-t-[24px]
 
-              /* MATERIAL: 'Apple Frost' - High opacity for readability; no blur so content stays crisp */
+              /* MATERIAL */
               bg-white/95 dark:bg-[#121212]/95
-
-              /* BORDERS: Top and Sides only */
+              
+              /* BORDERS */
               border-t border-l border-r border-black/5 dark:border-white/10
 
-              /* SHADOW: Casting upwards */
+              /* SHADOW */
               shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)]
               dark:shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.5)]
 
               /* LAYOUT */
               flex flex-col sm:flex-row items-center justify-between
-              px-6 py-5 sm:py-4 gap-4 sm:gap-0
+              
+              /* RESPONSIVE PADDING: Tight on mobile, spacious on desktop */
+              px-4 py-4 sm:px-6 sm:py-5 
+              gap-3 sm:gap-0
             "
           >
             
+            {/* --- MOBILE ONLY: ABSOLUTE CLOSE ICON --- */}
+            {/* Replaces "No thanks" text on small screens to save space */}
+            <button 
+              onClick={handleClose}
+              className="absolute top-3 right-3 p-1 text-gray-400 hover:text-gray-900 dark:hover:text-white sm:hidden"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
             {/* --- LEFT: Brand & Value Prop --- */}
-            <div className="flex items-center gap-4 w-full sm:w-auto">
-              {/* Logo Box */}
-              <div className="relative shrink-0 w-12 h-12 rounded-xl bg-white flex items-center justify-center border border-black/5">
-                <img src="/Logo-black.svg" alt="PilotUP" className="w-10 h-10 object-contain" />
+            <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto pr-6 sm:pr-0">
+              {/* Logo Box: Smaller on mobile */}
+              <div className="relative shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white flex items-center justify-center border border-black/5">
+                <img src="/Logo-black.svg" alt="PilotUP" className="w-6 h-6 sm:w-10 sm:h-10 object-contain" />
               </div>
 
-              {/* Text */}
-              <div className="flex flex-col">
+              {/* Text: Scaled down for mobile */}
+              <div className="flex flex-col justify-center">
                 <div className="flex items-center gap-2">
-                  <h3 className="text-[16px] font-bold text-gray-900 dark:text-white tracking-tight">
+                  <h3 className="text-[14px] sm:text-[16px] font-bold text-gray-900 dark:text-white tracking-tight leading-tight">
                     Join the PilotUP Waitlist
                   </h3>
+                  {/* Beta tag hidden on very small screens to save width, visible on sm+ */}
                   <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-[10px] font-bold text-blue-600 dark:text-blue-300 uppercase tracking-wide">
                     <Sparkles className="w-2.5 h-2.5" />
                     Beta
                   </span>
                 </div>
-                <p className="text-[14px] text-gray-500 dark:text-gray-400 font-medium leading-snug">
-                  Join early and build AI teammates that scale your operations.
+                <p className="text-[12px] sm:text-[14px] text-gray-500 dark:text-gray-400 font-medium leading-tight sm:leading-snug mt-0.5 sm:mt-0 pr-2 sm:pr-0">
+                  Join early and build AI teammates that scale your operaitons.
                 </p>
               </div>
             </div>
 
             {/* --- RIGHT: Actions --- */}
-            <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
+            <div className="flex items-center gap-3 w-full sm:w-auto justify-end mt-1 sm:mt-0">
               
-              {/* Close (Secondary) */}
+              {/* DESKTOP ONLY: "No thanks" Text Button */}
               <button
                 onClick={handleClose}
                 className="
+                  hidden sm:block
                   px-4 py-2.5 rounded-xl
                   text-[14px] font-semibold text-gray-500 dark:text-gray-400
                   hover:bg-gray-100 dark:hover:bg-white/10
@@ -145,7 +160,7 @@ const WaitlistBanner = () => {
                 No thanks
               </button>
 
-              {/* CTA (Primary) - Brand Color */}
+              {/* CTA (Primary) */}
               <a
                 href={WAITLIST_LINK}
                 target="_blank"
@@ -154,15 +169,20 @@ const WaitlistBanner = () => {
                 className="
                   group
                   relative overflow-hidden
-                  flex items-center gap-2
-                  px-6 py-2.5
+                  flex items-center justify-center sm:justify-start gap-2
+                  
+                  /* Full width on mobile for easy tapping */
+                  w-full sm:w-auto
+                  
+                  /* Compact padding on mobile */
+                  px-4 py-2 sm:px-6 sm:py-2.5
                   rounded-xl
                   
                   /* BRAND COLOR #E21339 */
                   bg-[#E21339]
                   text-white
                   
-                  text-[14px] font-bold tracking-wide
+                  text-[13px] sm:text-[14px] font-bold tracking-wide
                   shadow-lg shadow-red-600/20
                   hover:bg-[#c90f30]
                   hover:shadow-red-600/30
@@ -171,7 +191,7 @@ const WaitlistBanner = () => {
                 "
               >
                 <span>Join Now</span>
-                <ArrowRight className="w-4 h-4 opacity-80 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 opacity-80 group-hover:translate-x-1 transition-transform" />
                 
                 {/* Shine Animation */}
                 <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12" />
