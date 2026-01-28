@@ -1327,7 +1327,7 @@ const Join = () => {
                 whileHover={{ y: -5 }}
                 className="p-4 sm:p-8 rounded-2xl sm:rounded-[2rem] bg-gradient-to-br from-[#E21339] to-[#F0284A] text-white shadow-[0_10px_30px_-10px_rgba(226,19,57,0.3)] flex flex-col justify-center h-full"
               >
-                <div className="text-xl sm:text-2xl font-bold mb-1 break-words whitespace-normal">Automates Workflows</div>
+                <div className="text-xl sm:text-2xl font-bold mb-1 break-words whitespace-normal">Automates Operations</div>
                 <div className="text-xs sm:text-sm font-medium text-[#fca5ac] leading-tight">Handles repetitive work like triage, summaries &amp; updates</div>
               </motion.div>
 
