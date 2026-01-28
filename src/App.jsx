@@ -17,6 +17,7 @@ import { AnnouncementProvider, useAnnouncement } from './contexts/AnnouncementCo
 import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
 import AnnouncementBar from './components/AnnouncementBar';
+import WaitlistBanner from './components/WaitlistBanner';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import ForgotPassword from './pages/ForgotPassword';
@@ -1915,6 +1916,7 @@ export default function App() {
       <AnnouncementProvider>
         <Router>
           <div className="min-h-screen bg-[#fdfffc] text-gray-900 font-sans selection:bg-red-500/20">
+            <WaitlistBanner />
             <Routes>
               {/* Home Page */}
               <Route path="/" element={<HomePage />} />
