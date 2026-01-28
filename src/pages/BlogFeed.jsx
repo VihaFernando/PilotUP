@@ -142,6 +142,8 @@ const BlogFeed = () => {
                                         <div className="mt-auto flex items-center justify-between border-t border-gray-200 pt-4 w-full">
                                             <div className="flex items-center gap-2 text-xs font-sans text-gray-400 font-medium">
                                                 <span>{formatDate(featuredBlog.created_at)}</span>
+                                                <span className="text-gray-300">|</span>
+                                                <span>{calculateReadTime(featuredBlog.content)} min read</span>
                                             </div>
                                             <span className="text-[#E21339] font-sans text-xs font-bold uppercase flex items-center gap-1 group-hover:gap-2 transition-all">
                                                 Read Now <ArrowRight className="w-3 h-3" />
@@ -199,8 +201,7 @@ const BlogFeed = () => {
                                                 <Calendar className="w-3 h-3" />
                                                 {formatDate(blog.created_at)}
                                             </div>
-                                            <span className="text-gray-300">|</span>
-                                            <span>5 min read</span>
+                                            <span>{calculateReadTime(blog.content)} min read</span>
                                         </div>
                                     </div>
                                 </motion.article>
@@ -211,6 +212,11 @@ const BlogFeed = () => {
             </main>
         </div>
     );
+};
+
+// Function to calculate read time
+const calculateReadTime = (content) => {
+    return Math.max(1, Math.ceil(content.replace(/<[^>]+>/g, '').split(' ').length / 250));
 };
 
 export default BlogFeed;
