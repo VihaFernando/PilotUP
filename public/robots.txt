@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pilotup.ai/sitemap.xml
+Sitemap: https://pilotup.io/sitemap.xml

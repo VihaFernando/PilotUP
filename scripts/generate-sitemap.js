@@ -12,7 +12,7 @@ import { dirname, join } from 'path';
 
 loadEnvLocal({ path: '.env.local' });
 
-const SITE_URL = 'https://pilotup.ai';
+const SITE_URL = 'https://pilotup.io';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const publicDir = join(__dirname, '..', 'public');
 const outPath = join(publicDir, 'sitemap.xml');
