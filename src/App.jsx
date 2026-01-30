@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Menu, Check, ChevronDown, Users, Zap, LayoutDashboard, Briefcase, Shield,
@@ -46,44 +46,35 @@ const LOGOS = [
 
 const CORE_VALUES = [
   {
-    icon: Users,
-    title: "Digital Workforce",
-    subtitle: "Works Like a Human, Scales Like Software",
-    description: "Why hire one by one? Deploy an entire AI team that integrates into your Slack, email, and project boards instantly.",
-    colSpan: "md:col-span-2", // Bento: Wide card
-    cardBg: "bg-blue-50",
-    borderColor: "border-blue-100/70",
-    hoverBorder: "hover:border-blue-200/80",
-    hoverShadow: "hover:shadow-[0_25px_70px_-35px_rgba(37,99,235,0.45)]",
-    gradient: "from-blue-400/30 to-blue-500/10",
-    iconColor: "text-blue-600"
+    icon: "/turbocharge-1.png",
+    image: "/woman.png",
+    title: "AI Employees That Work Like Humans",
+    subtitle: "",
+    description: "Why hire when you can create the perfect employee? Your AI agent becomes a real member of your team, working, reporting, and delivering like a star performer at a fraction of the cost.",
+    colSpan: "md:col-span-2",
+    cardBg: "bg-[#E9FBFD]",
+    transform: "translate-x-16",
+    imageSize: "w-auto h-full",
   },
   {
-    icon: Zap,
+    icon: "/lightning.png",
     title: "10x Output",
     subtitle: "Zero Downtime",
     description: "Replace inconsistent execution with 24/7 autonomy. No coffee breaks, just results.",
-    colSpan: "md:col-span-1", // Bento: Square card
-    cardBg: "bg-emerald-50",
-    borderColor: "border-emerald-100/70",
-    hoverBorder: "hover:border-emerald-200/80",
-    hoverShadow: "hover:shadow-[0_25px_70px_-35px_rgba(16,185,129,0.45)]",
-    gradient: "from-emerald-400/30 to-emerald-500/10",
-    iconColor: "text-emerald-600"
+    colSpan: "md:col-span-1",
+    cardBg: "bg-[#D0F4DB]",
+    transform: "translate-x-0",
   },
   {
-    icon: LayoutDashboard,
-    title: "Self-Managing",
+    icon: "/self.png",
+    image: "/self-managing.png",
+    title: "Self Managing",
     subtitle: "Autonomous Responsibility",
     description: "Agents don't just wait for commands. They plan, research, and execute workflows based on your goals.",
-    colSpan: "md:col-span-3", // Bento: Full width
-    cardBg: "bg-rose-50",
-    borderColor: "border-rose-100/70",
-    hoverBorder: "hover:border-rose-200/80",
-    hoverShadow: "hover:shadow-[0_25px_70px_-35px_rgba(244,63,94,0.45)]",
-    gradient: "from-rose-400/30 to-rose-500/10",
-    iconColor: "text-rose-600",
-    image: "/self-managing.png"
+    colSpan: "md:col-span-3",
+    cardBg: "bg-[#FFEEF2]",
+    transform: "translate-x-0 -translate-y-16",
+    imageSize: "w-50 h-auto",
   }
 ];
 
@@ -122,42 +113,42 @@ const FAQS = [
 const TESTIMONIALS = [
   {
     type: "review",
-    name: "Alex Rivera",
-    role: "Founder, TechFlow",
-    text: "I was skeptical about 'AI employees' until I tried PilotUP. Now, my entire research department is just one agent running 24/7.",
-    initial: "A",
+    name: "Anonymous",
+    role: "",
+    text: "I know what I want to build, I just don’t know how to build every part of it.",
+    initial: "",
     color: "bg-blue-100 text-blue-600"
   },
   {
     type: "review",
-    name: "Sarah Chen",
-    role: "Product Lead, Stripe",
-    text: "The autonomy is real. I assigned a workflow to the Growth Agent, went to sleep, and woke up to a full report and drafted emails.",
+    name: "Anonymous",
+    role: "",
+    text: "Hiring help isn’t an option when you’re still validating the idea",
     initial: "S",
     color: "bg-indigo-100 text-indigo-600"
   },
   {
     type: "review",
-    name: "James Wilson",
-    role: "CEO, Horizon",
-    text: "It feels illegal to have this much leverage. We scaled from 10 to 100 clients without hiring a single new human operations manager.",
-    initial: "J",
+    name: "Anonymous",
+    role: "",
+    text: "I’m constantly switching roles — developer, marketer, ops — and I’m mediocre at half of them.",
+    initial: "",
     color: "bg-emerald-100 text-emerald-600"
   },
   {
     type: "review",
-    name: "Emily Davis",
-    role: "Marketing Director",
-    text: "Finally, an AI tool that doesn't feel like a toy. The 'Executive' tier allows us to manage multiple brands seamlessly.",
-    initial: "E",
+    name: "Anonymous",
+    role: "",
+    text: "Most tools assume you already know what you’re doing.",
+    initial: "",
     color: "bg-purple-100 text-purple-600"
   },
   {
     type: "review",
-    name: "Michael Chang",
-    role: "Startup Founder",
-    text: "The pricing is a steal. Getting an infinite workforce for the price of a SaaS subscription is the biggest no-brainer of the year.",
-    initial: "M",
+    name: "Anonymous",
+    role: "",
+    text: "Automation sounds simple until you try setting it up yourself.",
+    initial: "",
     color: "bg-amber-100 text-amber-600"
   }
 ];
@@ -278,7 +269,11 @@ const Hero = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
 
               {/* PRIMARY */}
-              <button className="flex items-center gap-2 px-6 py-3 rounded-full bg-red-600 text-white font-semibold text-sm shadow-md hover:bg-red-700 transition">
+              <button
+                type="button"
+                onClick={() => document.getElementById("join")?.scrollIntoView({ behavior: "smooth" })}
+                className="flex items-center gap-2 px-6 py-3 rounded-full bg-red-600 text-white font-semibold text-sm shadow-md hover:bg-red-700 transition"
+              >
                 Start with PilotUP
                 <ArrowRight className="w-4 h-4" />
               </button>
@@ -495,8 +490,8 @@ const ValueProps = () => {
             transition={{ delay: 0.2 }}
             className="text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium"
           >
-            Scaling your startup no longer means signing expensive contracts.
-            <span className="text-gray-900"> PilotUP fundamentally changes your org chart.</span>
+            Scaling your startup is no longer a headache.
+            <span className="text-gray-900"> PilotUP replaces entire roles with AI workers that run your operations, marketing, and workflows—24/7.</span>
           </motion.p>
         </div>
 
@@ -515,20 +510,16 @@ const ValueProps = () => {
                 ${item.cardBg}
                 rounded-[2.5rem]
                 p-8 sm:p-10
-                border ${item.borderColor}
                 transition-all duration-500 ease-out
-                ${item.hoverBorder}
-                ${item.hoverShadow}
+                relative
               `}
             >
-              {/* Hover Gradient Background */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
 
-              <div className={`relative z-10 flex flex-col ${item.image ? 'md:flex-row md:items-center md:justify-between' : ''} h-full items-start`}>
+              <div className={`h-full z-10 flex flex-col ${item.image ? 'md:flex-row md:items-center md:justify-between' : ''} h-full items-start`}>
 
                 <div className={`${item.image ? 'md:max-w-md' : ''}`}>
-                  <div className={`mb-6 w-12 h-12 flex items-center justify-center rounded-xl group-hover:scale-110 transition-transform duration-500 bg-white shadow-sm border border-gray-100 ${item.iconColor}`}>
-                    <item.icon className="w-7 h-7" strokeWidth={1.5} />
+                  <div className={`mb-6 ${(i !== 0 && i !== 1) ? 'w-12 h-12' : 'w-20 h-20'} p-2 flex items-center justify-center rounded-xl transition-transform duration-500 ${(i !== 0 && i !== 1) && 'bg-white shadow-sm border border-gray-100'} ${item.iconColor}`}>
+                    <img src={item.icon} alt={item.title} className="w-full h-full" />
                   </div>
                   <h3 className="text-2xl font-bold text-gray-900 mb-2">{item.title}</h3>
                   <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">{item.subtitle}</p>
@@ -538,11 +529,11 @@ const ValueProps = () => {
                 </div>
 
                 {item.image && (
-                  <div className="w-full mt-8 md:mt-0 md:w-auto md:flex-1 flex justify-center md:justify-end">
+                  <div className={`absolute ${item.imageSize} right-0 top-0 xl:flex justify-end hidden ${item.transform}`}>
                     <img
                       src={item.image}
                       alt={item.title}
-                      className="max-w-full h-auto object-contain max-h-[220px] md:max-h-[280px]"
+                      className={`${item.imageSize} object-contain`}
                       style={{
                         maskImage: 'linear-gradient(to bottom, black 70%, transparent 100%), linear-gradient(to left, black 85%, transparent 100%)',
                         WebkitMaskImage: 'linear-gradient(to bottom, black 70%, transparent 100%), linear-gradient(to left, black 85%, transparent 100%)',
@@ -553,11 +544,6 @@ const ValueProps = () => {
                   </div>
                 )}
               </div>
-
-              {/* Decorative Icon Fade in corner */}
-              {item.title !== "Self-Managing" && (
-                <item.icon className="absolute -bottom-6 -right-6 w-48 h-48 text-gray-200/50 -rotate-12 group-hover:rotate-0 transition-transform duration-700 pointer-events-none" />
-              )}
             </motion.div>
           ))}
         </div>
@@ -592,7 +578,7 @@ const ValueProps = () => {
 
               <p className="text-sm text-gray-500 leading-relaxed">
                 Build your employee from the ground up, tailored exactly to your needs.
-                No downtime, no distractions, just consistent execution. Reliable AI
+                <b>No downtime, no distractions, just consistent execution.</b> Reliable AI
                 employees handle complex tasks so you can focus on driving your business
                 forward.
               </p>
@@ -670,14 +656,14 @@ const ValueProps = () => {
                 </div>
               </div>
 
-              <h4 className="font-bold text-gray-900 mb-2 text-center">
+              <h4 className="font-bold text-gray-900 mb-2 text-left">
                 Seamless Integration
               </h4>
 
-              <p className="text-sm text-gray-500 leading-relaxed text-center">
+              <p className="text-sm text-gray-500 leading-relaxed text-left">
                 Connect your AI employee to the tools you already use — no changes
-                required. From project management to communication platforms, it fits
-                right into your existing workflow and starts working immediately.
+                required. <b>From project management to communication platforms, it fits
+                right into your existing workflow and starts working immediately.</b>
               </p>
             </div>
 
@@ -697,7 +683,7 @@ const ValueProps = () => {
 
               <p className="text-sm text-gray-500 leading-relaxed">
                 Always on, always working. Your AI employee operates 24/7 without
-                breaks or downtime. Progress continues even when you’re offline.
+                breaks or downtime. <b>Progress continues even when you’re offline.</b>
               </p>
             </div>
 
@@ -882,12 +868,12 @@ const Pricing = () => {
               </span>
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">The Freemium</h3>
-            <p className="text-gray-500 text-sm mb-6 h-10">Perfect for exploring the platform and building your first agent.</p>
+            <p className="text-gray-500 text-sm mb-6 h-10">Perfect for exploring the platform and building your first agent. <b>Forever free.</b></p>
 
             <div className="text-4xl font-bold text-gray-900 mb-2">
               $0 <span className="text-lg font-medium text-gray-400">/mo</span>
             </div>
-            <div className="text-xs text-gray-500 mb-6">FREE PLAN</div>
+            <div className="text-xs text-gray-500 mb-6">FREE PLAN. FREE FOREVER.</div>
 
             <ul className="space-y-4 mb-8 flex-1">
               {[
@@ -903,8 +889,12 @@ const Pricing = () => {
               ))}
             </ul>
 
-            <button className="w-full py-3.5 rounded-2xl border border-gray-200 text-gray-900 font-bold hover:bg-gray-50 hover:border-gray-300 transition-all">
-              Start for Free
+            <button
+              type="button"
+              onClick={() => document.getElementById("join")?.scrollIntoView({ behavior: "smooth" })}
+              className="w-full py-3.5 rounded-2xl border border-gray-200 text-gray-900 font-bold hover:bg-gray-50 hover:border-gray-300 transition-all"
+            >
+              Get Early Access
             </button>
           </div>
 
@@ -949,7 +939,11 @@ const Pricing = () => {
               ))}
             </ul>
 
-            <button className="w-full py-3.5 rounded-2xl bg-white text-gray-900 font-bold hover:bg-gray-100 transition-all shadow-lg shadow-white/10">
+            <button
+              type="button"
+              onClick={() => document.getElementById("join")?.scrollIntoView({ behavior: "smooth" })}
+              className="w-full py-3.5 rounded-2xl bg-white text-gray-900 font-bold hover:bg-gray-100 transition-all shadow-lg shadow-white/10"
+            >
               Get Early Access
             </button>
           </div>
@@ -985,7 +979,11 @@ const Pricing = () => {
               ))}
             </ul>
 
-            <button className="w-full py-3.5 rounded-2xl border border-gray-200 text-gray-900 font-bold hover:bg-gray-50 hover:border-gray-300 transition-all">
+            <button
+              type="button"
+              onClick={() => document.getElementById("join")?.scrollIntoView({ behavior: "smooth" })}
+              className="w-full py-3.5 rounded-2xl border border-gray-200 text-gray-900 font-bold hover:bg-gray-50 hover:border-gray-300 transition-all"
+            >
               Get Early Access
             </button>
           </div>
@@ -1280,7 +1278,7 @@ const Join = () => {
             className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#ffe5e7] text-[#E21339] text-[10px] sm:text-xs font-bold uppercase tracking-wider mb-4 sm:mb-6"
           >
             <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#E21339] animate-pulse" />
-            Limited Beta Access
+            Exclusive Early Access
           </motion.div>
 
           <motion.h2
@@ -1303,8 +1301,8 @@ const Join = () => {
             transition={{ delay: 0.1 }}
             className="text-sm sm:text-lg text-gray-500 leading-relaxed max-w-md mx-auto lg:mx-0 mb-8 sm:mb-10"
           >
-            Be one of the first to automate your entire backend.
-            Get exclusive access and <span className="text-gray-900 font-medium">priority onboarding</span>.
+            Founders are already preparing to scale smarter.
+            Join the waiting list and be next.
           </motion.p>
 
           {/* Premium Input Form */}
@@ -1313,13 +1311,13 @@ const Join = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="relative flex items-center w-full max-w-md mx-auto lg:mx-0 p-1 bg-white border border-gray-200 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.04)] focus-within:shadow-[0_8px_30px_rgba(226,19,57,0.15)] focus-within:border-[#E21339] transition-all duration-300"
+            className="relative flex items-center w-full max-w-md mx-auto lg:mx-0 p-1 rounded-full backdrop-blur-2xl backdrop-saturate-150 border border-gray-200/60 bg-gradient-to-b from-gray-200/90 to-gray-300/50 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_4px_20px_rgba(0,0,0,0.06)] focus-within:shadow-[0_8px_30px_rgba(226,19,57,0.15)] transition-all duration-300"
           >
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter work email..."
+              placeholder="Enter your email..."
               className="flex-grow px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base text-gray-900 placeholder:text-gray-400 bg-transparent outline-none rounded-full min-w-0"
             />
             <button className={`group flex items-center justify-center w-10 h-10 sm:w-auto sm:px-6 sm:h-12 bg-gray-900 text-white rounded-full hover:bg-black transition-all duration-300 shadow-lg shadow-gray-900/20 hover:scale-105 active:scale-95 shrink-0 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
@@ -1332,9 +1330,11 @@ const Join = () => {
           </motion.div>
 
 
-          <p className="mt-4 text-[10px] sm:text-xs text-gray-400 sm:ml-6 flex items-center justify-center lg:justify-start gap-1">
-            {error && <p>{error}</p>}
-          </p>
+          {error && (
+            <p className="mt-4 text-[10px] sm:text-xs text-gray-400 sm:ml-6 flex items-center justify-center lg:justify-start gap-1">
+              {error}
+            </p>
+          )}
 
           <p className="mt-4 text-[10px] sm:text-xs text-gray-400 sm:ml-6 flex items-center justify-center lg:justify-start gap-1">
             <CheckCircle2 className="w-3 h-3 text-emerald-500" />
@@ -1447,10 +1447,9 @@ const Reviews = () => {
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs sm:text-sm font-bold uppercase tracking-widest text-gray-300 mb-8"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#E21339]/10 text-xs sm:text-sm font-bold uppercase tracking-widest text-[#E21339] mb-8"
             >
-              <Star className="w-4 h-4 text-[#E21339] fill-[#E21339]" />
-              <span>Trusted by 5,000+ Teams</span>
+              <span>The Problems Founders Face</span>
             </motion.div>
 
             <motion.h2
@@ -1459,8 +1458,8 @@ const Reviews = () => {
               viewport={{ once: true }}
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 tracking-tight leading-[1.1]"
             >
-              Real Results. <br className="hidden lg:block" />
-              Real Growth.
+              This is what  <br className="hidden lg:block" />
+              Founders Keep Telling Us
             </motion.h2>
 
             <motion.p
@@ -1470,19 +1469,9 @@ const Reviews = () => {
               transition={{ delay: 0.1 }}
               className="text-base sm:text-xl text-gray-400 mb-10 leading-relaxed max-w-lg mx-auto lg:mx-0"
             >
-              See how companies are automating their entire workflows with our AI employees.
-              Efficiency isn't just a goal; it's the new standard.
+              Every founder hits the same wall when scaling.
+              These are the problems no one warns you about.
             </motion.p>
-
-            <motion.button
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-[#E21339] text-white font-bold text-base sm:text-lg hover:bg-[#c91032] transition-colors shadow-[0_10px_30px_-10px_rgba(226,19,57,0.4)]"
-            >
-              Read More
-            </motion.button>
           </div>
 
           {/* RIGHT SIDE */}
@@ -1492,7 +1481,7 @@ const Reviews = () => {
               style={{ height: (CARD_HEIGHT + GAP) * 2 + 80 }}
             >
               <AnimatePresence initial={false} mode="popLayout">
-                {[0, 1, 2].map((offset) => {
+                {[0, 1, 2,].map((offset) => {
                   const itemIndex = (index + offset) % TESTIMONIALS.length;
                   const testimonial = TESTIMONIALS[itemIndex];
 
@@ -1517,7 +1506,7 @@ const Reviews = () => {
 
                   return (
                     <motion.div
-                      key={testimonial.name}
+                      key={testimonial.text}
                       layout
                       initial={{ opacity: 0, y: yPos + 60, scale: 0.9 }}
                       animate={{
@@ -1527,7 +1516,7 @@ const Reviews = () => {
                         zIndex,
                         filter: `blur(${blur})`,
                       }}
-                      exit={{ opacity: 0, scale: 0.9, y: -40, transition: { duration: 0.4 } }}
+                      exit={{ opacity: 0, scale: 0.9, y: -40, transition: { duration: 2 } }}
                       transition={{
                         type: "spring",
                         stiffness: 160,
@@ -1536,7 +1525,7 @@ const Reviews = () => {
                       }}
                       className={`absolute left-0 right-0 p-8 rounded-3xl border backdrop-blur-md flex flex-col justify-between
                         ${offset === 0
-                          ? "bg-[#18181b] border-[#E21339]/30 shadow-2xl z-30"
+                          ? "bg-[#E21339] border-none shadow-2xl z-30"
                           : "bg-[#121212] border-white/5 z-10"
                         }
                       `}
@@ -1553,11 +1542,6 @@ const Reviews = () => {
                       </div>
 
                       <div className="flex items-center gap-4 mt-auto">
-                        <div
-                          className={`w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-sm shadow-inner ${testimonial.color}`}
-                        >
-                          {testimonial.initial}
-                        </div>
                         <div className="flex-1 min-w-0">
                           <h4
                             className={`text-sm font-bold truncate ${offset === 0 ? "text-white" : "text-gray-400"
@@ -1565,16 +1549,7 @@ const Reviews = () => {
                           >
                             {testimonial.name}
                           </h4>
-                          <p className="text-xs text-gray-600 font-bold uppercase tracking-wide truncate">
-                            {testimonial.role}
-                          </p>
                         </div>
-
-                        {offset === 0 && (
-                          <div className="bg-[#E21339]/10 p-1.5 rounded-full">
-                            <BadgeCheck className="w-5 h-5 text-[#E21339]" />
-                          </div>
-                        )}
                       </div>
                     </motion.div>
                   );
@@ -1741,7 +1716,7 @@ const CTASection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-3xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-4 md:mb-6 lg:mb-8 leading-tight"
+          className="text-3xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 md:mb-6 lg:mb-8 leading-tight"
         >
           Your next hire<br />isn't human
         </motion.h2>
@@ -1768,7 +1743,9 @@ const CTASection = () => {
         >
           {/* Talk to Sales Button */}
           <button
-            onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
+            onClick={() => {
+              window.open("https://cal.com/nigeljacob/1-on-1", "_blank");
+            }}
             className="px-6 py-2.5 md:px-8 md:py-4 rounded-full bg-white text-gray-900 font-semibold text-sm md:text-base hover:bg-gray-50 transition-all duration-200 shadow-md hover:shadow-lg w-full max-w-[200px] sm:w-auto sm:max-w-none"
           >
             Talk to Sales
@@ -1776,8 +1753,8 @@ const CTASection = () => {
 
           {/* Start with PilotUP Button */}
           <button
-            onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
-            className="px-6 py-2.5 md:px-8 md:py-4 rounded-full bg-gradient-to-r from-rose-500 to-pink-600 text-white font-semibold text-sm md:text-base hover:from-rose-600 hover:to-pink-700 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 w-full max-w-[200px] sm:w-auto sm:max-w-none group"
+            onClick={() => document.getElementById("join")?.scrollIntoView({ behavior: "smooth" })}
+            className="px-6 py-2.5 md:px-8 md:py-4 rounded-full bg-[#E21339] text-white font-semibold text-sm md:text-base hover:from-rose-600 hover:to-pink-700 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 w-full max-w-[200px] sm:w-auto sm:max-w-none group"
           >
             Start with PilotUP
             <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform duration-200" />
@@ -1793,7 +1770,7 @@ const Footer = () => {
 
   return (
     <footer className="bg-[#0a0a0a] text-white pt-20 pb-10 border-t border-white/5">
-      <div className="max-w-[1280px] mx-auto px-6">
+      <div className="max-w-[1280px] mx-auto px-6 overflow-auto">
 
         {/* --- MAIN GRID --- */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 lg:gap-8 mb-16">
@@ -1872,47 +1849,35 @@ const Footer = () => {
         </div>
 
         {/* --- BOTTOM SECTION --- */}
-        <div className="mt-16 border-t border-white/10 pt-6 overflow-hidden">
-
-          {/* COPYRIGHT */}
+        <div className="mt-16 border-t border-white/10 pt-6">
           <div className="text-gray-500 text-xs mb-10">
             © {currentYear} PilotUP Inc. All rights reserved.
           </div>
-
-          {/* WATERMARK — UNDER COPYRIGHT */}
-          <div className="relative left-1/2 -translate-x-1/2 w-screen flex justify-center select-none pointer-events-none">
-            <span
-              className="
-                font-semibold
-                tracking-[-0.03em]
-                leading-none
-                scale-[1.05]
-                inline-block
-                bg-gradient-to-b
-                from-[#ffffff66]
-                via-[#ffffff33]
-                to-transparent
-                bg-clip-text
-                text-transparent
-
-                /* MOBILE — very small */
-                text-[14vw]
-
-                /* TABLET */
-                sm:text-[18vw]
-
-                /* DESKTOP — EXACT SAME AS NOW */
-                md:text-[16vw]
-                lg:text-[14vw]
-              "
-            >
-              PilotUP.io
-            </span>
-
-          </div>
-
-
         </div>
+      </div>
+
+      {/* WATERMARK — full-width outside max-w so it isn't clipped */}
+      <div className="w-full flex justify-center select-none pointer-events-none py-2">
+        <span
+          className="
+            font-semibold
+            tracking-[-0.03em]
+            leading-none
+            inline-block
+            bg-gradient-to-b
+            from-[#ffffff66]
+            via-[#ffffff33]
+            to-transparent
+            bg-clip-text
+            text-transparent
+            text-[12vw]
+            sm:text-[14vw]
+            md:text-[12vw]
+            lg:text-[11vw]
+          "
+        >
+          PilotUP.io
+        </span>
       </div>
     </footer>
   );
@@ -1984,6 +1949,20 @@ function GoogleAnalyticsPageView() {
   return null
 }
 
+function WaitlistScrollFromQuery() {
+  const [searchParams] = useSearchParams()
+  useEffect(() => {
+    const waitlist = searchParams.get('waitlist') ?? searchParams.get('waitinglist')
+    if (waitlist !== null) {
+      const el = document.getElementById('join')
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }
+  }, [searchParams])
+  return null
+}
+
 export default function App() {
   return (
     <AuthProvider>
@@ -1992,6 +1971,7 @@ export default function App() {
           <div className="min-h-screen bg-[#fdfffc] text-gray-900 font-sans selection:bg-red-500/20">
             <PostHogPageView />
             <GoogleAnalyticsPageView />
+            <WaitlistScrollFromQuery />
             <WaitlistBanner />
             <Routes>
               {/* Home Page */}

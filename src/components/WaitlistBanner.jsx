@@ -161,10 +161,12 @@ const WaitlistBanner = () => {
 
               {/* CTA (Primary) */}
               <a
-                href={WAITLIST_LINK}
                 target="_blank"
                 rel="noreferrer"
-                onClick={handleClose}
+                onClick={() => {
+                  document.getElementById("join")?.scrollIntoView({ behavior: "smooth" })
+                  handleClose()
+                }}
                 className="
                   group
                   relative overflow-hidden

@@ -181,7 +181,7 @@ const Navbar = ({ showAnnouncement, scrolled, setScrolled }) => {
                             </>
                         ) : (
                             <button
-                                onClick={() => navigate('/')}
+                                onClick={() => document.getElementById("join")?.scrollIntoView({ behavior: "smooth" })}
                                 className="
                   hidden md:flex items-center gap-2
                   bg-gray-900 text-white
