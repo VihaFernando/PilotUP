@@ -6,7 +6,8 @@ import {
   Star, Quote, BadgeCheck, X, Plus, Minus, MessageCircle, CheckCircle2, BarChart3, Mail,
   ArrowRight, ArrowLeft, PlayCircle, ShieldCheck, Clock, BrainCircuit, Frown, Smile,
   Globe2, Sparkles, MessageSquare, TrendingUp, Instagram, Linkedin, Github, Globe, ArrowUpRight, ChevronUp, Fingerprint, Mic, LogOut, UserCircle,
-  Loader2
+  Loader2,
+  Youtube
 } from 'lucide-react';
 
 import Lottie from "lottie-react";
@@ -29,8 +30,12 @@ import BlogDetail from './pages/BlogDetail';
 import BlogAdmin from './pages/BlogAdmin';
 import AdminInvites from './pages/AdminInvites';
 import AnnouncementAdmin from './pages/AnnouncementAdmin';
+import CountdownPage from './pages/CountdownPage';
 import { usePostHog } from 'posthog-js/react';
 import { pageview as gtagPageview } from './gtag.js';
+
+// Site gate: show only countdown until this date (31 Jan 2026, 3:00 PM IST = 9:30 AM UTC)
+const COUNTDOWN_TARGET_DATE = new Date('2026-01-31T09:30:00.000Z');
 
 // --- DATA CONSTANTS ---
 
@@ -1795,13 +1800,25 @@ const Footer = () => {
 
             {/* Socials */}
             <div className="flex items-center gap-4">
-              {[Instagram, Linkedin, Github].map((Icon, i) => (
+              {[{
+                Icon: Instagram,
+                href: 'https://www.instagram.com/thepilotup',
+                label: 'Instagram'
+              }, {
+                Icon: Linkedin,
+                href: 'https://www.linkedin.com/company/pilotup/',
+                label: 'LinkedIn'
+              }, {
+                Icon: Youtube,
+                href: 'https://www.youtube.com/@thepilotup',
+                label: 'Youtube'
+              }].map((Icon, i) => (
                 <a
                   key={i}
                   href="#"
                   className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-white/10 hover:text-white transition-all duration-200"
                 >
-                  <Icon className="w-4 h-4" />
+                  <Icon.Icon className="w-4 h-4" />
                 </a>
               ))}
             </div>
@@ -1979,6 +1996,12 @@ function WaitlistScrollFromQuery() {
 }
 
 export default function App() {
+  // Restrict entire site: show countdown page until target date (skip in development)
+  const isDev = import.meta.env.VITE_PUBLIC_ENVIRONMENT === 'development';
+  if (!isDev && new Date() < COUNTDOWN_TARGET_DATE) {
+    return <CountdownPage />;
+  }
+
   return (
     <AuthProvider>
       <AnnouncementProvider>
