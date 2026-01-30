@@ -6,7 +6,8 @@ import {
   Star, Quote, BadgeCheck, X, Plus, Minus, MessageCircle, CheckCircle2, BarChart3, Mail,
   ArrowRight, ArrowLeft, PlayCircle, ShieldCheck, Clock, BrainCircuit, Frown, Smile,
   Globe2, Sparkles, MessageSquare, TrendingUp, Instagram, Linkedin, Github, Globe, ArrowUpRight, ChevronUp, Fingerprint, Mic, LogOut, UserCircle,
-  Loader2
+  Loader2,
+  Youtube
 } from 'lucide-react';
 
 import Lottie from "lottie-react";
@@ -19,7 +20,9 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
 import AnnouncementBar from './components/AnnouncementBar';
 import WaitlistBanner from './components/WaitlistBanner';
+import WaitlistSuccessModal from './components/WaitlistSuccessModal';
 import SEO, { SITE_URL } from './components/SEO';
+import { submitToWaitlist } from './lib/loops';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import ForgotPassword from './pages/ForgotPassword';
@@ -29,8 +32,12 @@ import BlogDetail from './pages/BlogDetail';
 import BlogAdmin from './pages/BlogAdmin';
 import AdminInvites from './pages/AdminInvites';
 import AnnouncementAdmin from './pages/AnnouncementAdmin';
+import CountdownPage from './pages/CountdownPage';
 import { usePostHog } from 'posthog-js/react';
 import { pageview as gtagPageview } from './gtag.js';
+
+// Site gate: show only countdown until this date (31 Jan 2026, 3:00 PM IST = 9:30 AM UTC)
+const COUNTDOWN_TARGET_DATE = new Date('2026-01-31T09:30:00.000Z');
 
 // --- DATA CONSTANTS ---
 
@@ -1220,12 +1227,13 @@ const IdentitySection = () => {
 };
 
 const Join = () => {
-
   const posthog = usePostHog()
+  const [searchParams] = useSearchParams()
 
   const [email, setEmail] = useState('');
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const isValidEmail = (email) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
@@ -1248,13 +1256,16 @@ const Join = () => {
         posthog.capture('joined_waitlist', { email, location: 'landing_page' })
       }
 
-      // 3️⃣ Continue your real flow (API call, DB save, etc.)
-      await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      })
+      const sourceFromUrl = searchParams.get('source')
+      const { ok, error: apiError } = await submitToWaitlist(email, sourceFromUrl)
 
+      if (!ok) {
+        setError(apiError || 'Something went wrong. Try again.')
+        return
+      }
+
+      setEmail('')
+      setShowSuccessModal(true)
     } catch {
       setError('Something went wrong. Try again.')
     } finally {
@@ -1264,6 +1275,10 @@ const Join = () => {
 
   return (
     <section id="join" className="relative py-12 sm:py-20 lg:py-24 px-4 sm:px-6 w-full max-w-[1280px] mx-auto overflow-hidden">
+      <WaitlistSuccessModal
+        open={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+      />
 
       {/* Background Decor - Scaled for mobile */}
       <div className="absolute top-0 right-0 w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] bg-gradient-to-b from-[#ffe5e7] to-transparent rounded-full blur-[80px] sm:blur-[120px] -z-10 opacity-60" />
@@ -1332,7 +1347,7 @@ const Join = () => {
 
 
           {error && (
-            <p className="mt-4 text-[10px] sm:text-xs text-gray-400 sm:ml-6 flex items-center justify-center lg:justify-start gap-1">
+            <p className="mt-4 text-[10px] sm:text-xs text-[red] sm:ml-6 flex items-center justify-center lg:justify-start gap-1">
               {error}
             </p>
           )}
@@ -1795,13 +1810,25 @@ const Footer = () => {
 
             {/* Socials */}
             <div className="flex items-center gap-4">
-              {[Instagram, Linkedin, Github].map((Icon, i) => (
+              {[{
+                Icon: Instagram,
+                href: 'https://www.instagram.com/thepilotup',
+                label: 'Instagram'
+              }, {
+                Icon: Linkedin,
+                href: 'https://www.linkedin.com/company/pilotup/',
+                label: 'LinkedIn'
+              }, {
+                Icon: Youtube,
+                href: 'https://www.youtube.com/@thepilotup',
+                label: 'Youtube'
+              }].map((Icon, i) => (
                 <a
                   key={i}
                   href="#"
                   className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-white/10 hover:text-white transition-all duration-200"
                 >
-                  <Icon className="w-4 h-4" />
+                  <Icon.Icon className="w-4 h-4" />
                 </a>
               ))}
             </div>
@@ -1979,6 +2006,12 @@ function WaitlistScrollFromQuery() {
 }
 
 export default function App() {
+  // Restrict entire site: show countdown page until target date (skip in development)
+  const isDev = import.meta.env.VITE_PUBLIC_ENVIRONMENT === 'development';
+  if (!isDev && new Date() < COUNTDOWN_TARGET_DATE) {
+    return <CountdownPage />;
+  }
+
   return (
     <AuthProvider>
       <AnnouncementProvider>
