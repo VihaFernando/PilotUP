@@ -1,5 +1,6 @@
 import React, { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { HelmetProvider } from 'react-helmet-async'
 import './index.css'
 import App from './App.jsx'
 import { PostHogProvider } from 'posthog-js/react'
@@ -35,10 +36,12 @@ if (!root) {
 
 createRoot(root).render(
   <StrictMode>
-    <ErrorBoundary>
-      <PostHogProvider client={posthog}>
-        <App />
-      </PostHogProvider>
-    </ErrorBoundary>
+    <HelmetProvider>
+      <ErrorBoundary>
+        <PostHogProvider client={posthog}>
+          <App />
+        </PostHogProvider>
+      </ErrorBoundary>
+    </HelmetProvider>
   </StrictMode>,
 )

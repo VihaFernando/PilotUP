@@ -19,6 +19,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
 import AnnouncementBar from './components/AnnouncementBar';
 import WaitlistBanner from './components/WaitlistBanner';
+import SEO, { SITE_URL } from './components/SEO';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import ForgotPassword from './pages/ForgotPassword';
@@ -1911,8 +1912,22 @@ const BackToTop = () => {
 const HomePage = () => {
   const { showAnnouncement } = useAnnouncement();
 
+  const softwareAppJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'PilotUP',
+    url: SITE_URL,
+    description: 'Build your own, AI employees to scale your business. Automate workflows with an AI workforce.',
+  };
+
   return (
     <>
+      <SEO
+        title="PilotUP – Build your own AI employees to scale your business"
+        description="Build your own, AI employees to scale your business. PilotUP helps you automate workflows with an AI workforce."
+        canonicalPath="/"
+        jsonLd={softwareAppJsonLd}
+      />
       <NavbarWrapper showAnnouncement={showAnnouncement} />
       <Hero />
       <ValueProps />

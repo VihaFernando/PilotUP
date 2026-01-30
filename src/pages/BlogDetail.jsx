@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
-import { formatDate } from '../utils/helpers';
+import { formatDate, extractTextFromHTML } from '../utils/helpers';
 import { Calendar, ArrowLeft, Share2, Clock, Check, Bookmark } from 'lucide-react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import DOMPurify from 'dompurify';
 import Navbar from '../components/Navbar';
+import SEO, { SITE_URL } from '../components/SEO';
 
 // --- LIBRARIES FOR CODE BLOCKS ---
 import parse from 'html-react-parser';
@@ -134,9 +135,29 @@ const BlogDetail = () => {
     if (!blog) return null;
 
     const readTime = Math.max(1, Math.ceil(blog.content.replace(/<[^>]+>/g, '').split(' ').length / 250));
+    const metaDescription = blog.summary || extractTextFromHTML(blog.content, 160);
+    const canonicalPath = `/blog/${blog.slug}`;
+    const postUrl = `${SITE_URL}${canonicalPath}`;
+    const blogPostingJsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: blog.title,
+        description: metaDescription,
+        url: postUrl,
+        author: { '@type': 'Organization', name: 'PilotUP' },
+        datePublished: blog.created_at,
+    };
 
     return (
         <div className="bg-[#F9F9FB] min-h-screen selection:bg-[#E21339] selection:text-white pb-32">
+            <SEO
+                title={blog.title}
+                description={metaDescription}
+                canonicalPath={canonicalPath}
+                ogType="article"
+                ogImage={blog.cover_url || `${SITE_URL}/favicon.ico`}
+                jsonLd={blogPostingJsonLd}
+            />
             <style>
                 {`@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&display=swap');`}
             </style>

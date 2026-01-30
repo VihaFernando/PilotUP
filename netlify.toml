@@ -1,7 +1,6 @@
 [build]
-  # Standard Vite build command
+  # Build + prerender so crawlers get static HTML for /, /blog, /blog/[slug]
   command = "npm run build"
-  # Vite outputs to 'dist' by default (Next.js uses .next)
   publish = "dist"
 
 [dev]

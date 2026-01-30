@@ -5,6 +5,7 @@ import { formatDate, extractTextFromHTML } from '../utils/helpers';
 import { Calendar, ArrowRight, Search } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Navbar from '../components/Navbar';
+import SEO from '../components/SEO';
 
 const BlogFeed = () => {
     const [blogs, setBlogs] = useState([]);
@@ -60,6 +61,11 @@ const BlogFeed = () => {
 
     return (
         <div className="min-h-screen bg-[#fff] text-[#111]">
+            <SEO
+                title="Blog"
+                description="PilotUP blog: AI workflows, automation, and building your AI workforce. Tips and insights for scaling with AI employees."
+                canonicalPath="/blog"
+            />
              {/* Font Import */}
              <style>
                 {`@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&display=swap');`}
