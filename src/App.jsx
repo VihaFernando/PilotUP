@@ -20,7 +20,9 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
 import AnnouncementBar from './components/AnnouncementBar';
 import WaitlistBanner from './components/WaitlistBanner';
+import WaitlistSuccessModal from './components/WaitlistSuccessModal';
 import SEO, { SITE_URL } from './components/SEO';
+import { submitToWaitlist } from './lib/loops';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import ForgotPassword from './pages/ForgotPassword';
@@ -1225,12 +1227,13 @@ const IdentitySection = () => {
 };
 
 const Join = () => {
-
   const posthog = usePostHog()
+  const [searchParams] = useSearchParams()
 
   const [email, setEmail] = useState('');
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const isValidEmail = (email) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
@@ -1253,13 +1256,16 @@ const Join = () => {
         posthog.capture('joined_waitlist', { email, location: 'landing_page' })
       }
 
-      // 3️⃣ Continue your real flow (API call, DB save, etc.)
-      await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      })
+      const sourceFromUrl = searchParams.get('source')
+      const { ok, error: apiError } = await submitToWaitlist(email, sourceFromUrl)
 
+      if (!ok) {
+        setError(apiError || 'Something went wrong. Try again.')
+        return
+      }
+
+      setEmail('')
+      setShowSuccessModal(true)
     } catch {
       setError('Something went wrong. Try again.')
     } finally {
@@ -1269,6 +1275,10 @@ const Join = () => {
 
   return (
     <section id="join" className="relative py-12 sm:py-20 lg:py-24 px-4 sm:px-6 w-full max-w-[1280px] mx-auto overflow-hidden">
+      <WaitlistSuccessModal
+        open={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+      />
 
       {/* Background Decor - Scaled for mobile */}
       <div className="absolute top-0 right-0 w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] bg-gradient-to-b from-[#ffe5e7] to-transparent rounded-full blur-[80px] sm:blur-[120px] -z-10 opacity-60" />
@@ -1337,7 +1347,7 @@ const Join = () => {
 
 
           {error && (
-            <p className="mt-4 text-[10px] sm:text-xs text-gray-400 sm:ml-6 flex items-center justify-center lg:justify-start gap-1">
+            <p className="mt-4 text-[10px] sm:text-xs text-[red] sm:ml-6 flex items-center justify-center lg:justify-start gap-1">
               {error}
             </p>
           )}
