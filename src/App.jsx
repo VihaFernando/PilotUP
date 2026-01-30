@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Menu, Check, ChevronDown, Users, Zap, LayoutDashboard, Briefcase, Shield,
   Star, Quote, BadgeCheck, X, Plus, Minus, MessageCircle, CheckCircle2, BarChart3, Mail,
   ArrowRight, ArrowLeft, PlayCircle, ShieldCheck, Clock, BrainCircuit, Frown, Smile,
-  Globe2, Sparkles, MessageSquare, TrendingUp, Instagram, Linkedin, Github, Globe, ArrowUpRight, ChevronUp, Fingerprint, Mic, LogOut, UserCircle
+  Globe2, Sparkles, MessageSquare, TrendingUp, Instagram, Linkedin, Github, Globe, ArrowUpRight, ChevronUp, Fingerprint, Mic, LogOut, UserCircle,
+  Loader2
 } from 'lucide-react';
 
 import Lottie from "lottie-react";
 import GreenRobot from "./assets/GreenRobot.json";
 
 // Auth & Blog Imports
-import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { AuthProvider } from './contexts/AuthContext';
 import { AnnouncementProvider, useAnnouncement } from './contexts/AnnouncementContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
@@ -27,6 +28,8 @@ import BlogDetail from './pages/BlogDetail';
 import BlogAdmin from './pages/BlogAdmin';
 import AdminInvites from './pages/AdminInvites';
 import AnnouncementAdmin from './pages/AnnouncementAdmin';
+import { usePostHog } from 'posthog-js/react';
+import { pageview as gtagPageview } from './gtag.js';
 
 // --- DATA CONSTANTS ---
 
@@ -1218,6 +1221,48 @@ const IdentitySection = () => {
 };
 
 const Join = () => {
+
+  const posthog = usePostHog()
+
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState(null)
+  const [loading, setLoading] = useState(false)
+
+  const isValidEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+  }
+
+  const handleJoinWaitlist = async () => {
+    setError(null)
+
+    if (!isValidEmail(email)) {
+      posthog?.capture('waitlist_validation_failed', { email })
+      setError('Enter a valid email')
+      return
+    }
+
+    setLoading(true)
+
+    try {
+      if (posthog) {
+        posthog.identify(email, { email, source: 'waitlist' })
+        posthog.capture('joined_waitlist', { email, location: 'landing_page' })
+      }
+
+      // 3️⃣ Continue your real flow (API call, DB save, etc.)
+      await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+
+    } catch {
+      setError('Something went wrong. Try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <section id="join" className="relative py-12 sm:py-20 lg:py-24 px-4 sm:px-6 w-full max-w-[1280px] mx-auto overflow-hidden">
 
@@ -1272,14 +1317,24 @@ const Join = () => {
           >
             <input
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter work email..."
               className="flex-grow px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base text-gray-900 placeholder:text-gray-400 bg-transparent outline-none rounded-full min-w-0"
             />
-            <button className="group flex items-center justify-center w-10 h-10 sm:w-auto sm:px-6 sm:h-12 bg-gray-900 text-white rounded-full hover:bg-black transition-all duration-300 shadow-lg shadow-gray-900/20 hover:scale-105 active:scale-95 shrink-0">
-              <span className="hidden sm:block font-semibold mr-2 text-sm">Join Waitlist</span>
-              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
+            <button className={`group flex items-center justify-center w-10 h-10 sm:w-auto sm:px-6 sm:h-12 bg-gray-900 text-white rounded-full hover:bg-black transition-all duration-300 shadow-lg shadow-gray-900/20 hover:scale-105 active:scale-95 shrink-0 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+              onClick={handleJoinWaitlist}
+              disabled={loading}
+            >
+              <span className="hidden sm:block font-semibold mr-2 text-sm">{loading ? 'Joining...' : 'Join Waitlist'}</span>
+              {loading ? <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" /> : <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />}
             </button>
           </motion.div>
+
+
+          <p className="mt-4 text-[10px] sm:text-xs text-gray-400 sm:ml-6 flex items-center justify-center lg:justify-start gap-1">
+            {error && <p>{error}</p>}
+          </p>
 
           <p className="mt-4 text-[10px] sm:text-xs text-gray-400 sm:ml-6 flex items-center justify-center lg:justify-start gap-1">
             <CheckCircle2 className="w-3 h-3 text-emerald-500" />
@@ -1910,12 +1965,33 @@ const HomePage = () => {
   );
 };
 
+function PostHogPageView() {
+  const location = useLocation()
+  const posthog = usePostHog()
+  useEffect(() => {
+    if (posthog) {
+      posthog.capture('$pageview', { path: location.pathname })
+    }
+  }, [location.pathname, posthog])
+  return null
+}
+
+function GoogleAnalyticsPageView() {
+  const location = useLocation()
+  useEffect(() => {
+    gtagPageview(location.pathname)
+  }, [location.pathname])
+  return null
+}
+
 export default function App() {
   return (
     <AuthProvider>
       <AnnouncementProvider>
         <Router>
           <div className="min-h-screen bg-[#fdfffc] text-gray-900 font-sans selection:bg-red-500/20">
+            <PostHogPageView />
+            <GoogleAnalyticsPageView />
             <WaitlistBanner />
             <Routes>
               {/* Home Page */}
@@ -1962,7 +2038,7 @@ export default function App() {
               />
             </Routes>
 
-            <style jsx>{`
+            <style>{`
               @keyframes marquee {
                 0% { transform: translateX(0); }
                 100% { transform: translateX(calc(-100% / 4)); }

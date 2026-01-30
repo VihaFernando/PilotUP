@@ -18,6 +18,7 @@
     "liquid-glass-react": "^1.1.1",
     "lottie-react": "^2.4.1",
     "lucide-react": "^0.555.0",
+    "posthog-js": "^1.336.4",
     "prismjs": "^1.30.0",
     "react": "^19.2.0",
     "react-colorful": "^5.6.1",

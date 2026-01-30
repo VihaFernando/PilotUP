@@ -253,7 +253,7 @@ const BlogDetail = () => {
             </main>
 
             {/* --- TYPOGRAPHY SYSTEM --- */}
-            <style jsx global>{`
+            <style>{`
                 /* Base Settings */
                 .article-body { 
                     font-family: 'Merriweather', 'Georgia', serif; 
