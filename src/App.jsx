@@ -219,8 +219,12 @@ const NavbarWrapper = ({ showAnnouncement = true }) => {
 
 
 
+// Demo video – replace with your YouTube embed URL later (use /embed/ form)
+const HERO_VIDEO_EMBED_URL = 'https://www.youtube.com/embed/dQw4w9WgXcQ';
+
 const Hero = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [showVideoModal, setShowVideoModal] = useState(false);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -236,6 +240,39 @@ const Hero = () => {
 
   return (
     <>
+      {/* Video modal – YouTube embed */}
+      {showVideoModal && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label="How it works video"
+        >
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            onClick={() => setShowVideoModal(false)}
+            onKeyDown={(e) => e.key === 'Escape' && setShowVideoModal(false)}
+          />
+          <div className="relative z-10 w-full max-w-4xl aspect-video rounded-xl overflow-hidden bg-black shadow-2xl">
+            <button
+              type="button"
+              onClick={() => setShowVideoModal(false)}
+              className="absolute top-3 right-3 z-20 p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
+              aria-label="Close"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <iframe
+              src={HERO_VIDEO_EMBED_URL}
+              title="How it works"
+              className="w-full h-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      )}
+
       {/* 🔴 TOP ANNOUNCEMENT BAR */}
       <AnnouncementBar />
 
@@ -286,8 +323,12 @@ const Hero = () => {
                 <ArrowRight className="w-4 h-4" />
               </button>
 
-              {/* SECONDARY */}
-              <button className="flex items-center gap-2 px-6 py-3 rounded-full bg-white border border-gray-300 text-gray-800 font-semibold text-sm hover:bg-gray-50 transition">
+              {/* SECONDARY – opens video modal */}
+              <button
+                type="button"
+                onClick={() => setShowVideoModal(true)}
+                className="flex items-center gap-2 px-6 py-3 rounded-full bg-white border border-gray-300 text-gray-800 font-semibold text-sm hover:bg-gray-50 transition"
+              >
                 <PlayCircle className="w-4 h-4" />
                 See How It Works
               </button>
@@ -671,7 +712,7 @@ const ValueProps = () => {
               <p className="text-sm text-gray-500 leading-relaxed text-left">
                 Connect your AI employee to the tools you already use — no changes
                 required. <b>From project management to communication platforms, it fits
-                right into your existing workflow and starts working immediately.</b>
+                  right into your existing workflow and starts working immediately.</b>
               </p>
             </div>
 
@@ -1040,46 +1081,30 @@ const IdentitySection = () => {
           {/* === CARD 1: IDENTITY (THE ROBOT) === */}
           {/* Mobile: sticky top-20 (80px), Desktop: top-28 (112px) */}
           <div className="sticky top-20 sm:top-28 z-10">
-            <div className="relative overflow-hidden rounded-[2rem] sm:rounded-[3rem] bg-[#F5F5F7] border border-gray-200 shadow-2xl shadow-black/5 min-h-fit md:min-h-[550px] flex flex-col md:flex-row items-center justify-between p-6 sm:p-14">
+            <div className="relative overflow-hidden rounded-[2rem] sm:rounded-[3rem] bg-[#F5F5F7] border border-gray-200 shadow-2xl shadow-black/5 min-h-fit md:min-h-[450px] flex flex-col md:flex-row items-center justify-between p-6 sm:p-14">
 
               {/* Content */}
-              <div className="w-full md:w-1/2 relative z-10 flex flex-col items-start text-left mb-8 md:mb-0">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white flex items-center justify-center text-xl sm:text-2xl shadow-sm mb-4 sm:mb-6">
-                  🤖
-                </div>
+              <div className="w-full lg:w-1/2 relative z-10 flex flex-col items-start text-left mb-8 md:mb-0">
                 <h3 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight">
-                  Real Identity. <br />
-                  Real Responsibility.
-                </h3>
-                <p className="text-sm sm:text-lg text-gray-500 leading-relaxed mb-6 sm:mb-8 max-w-sm">
-                  Your agent gets a name, role, and professional email. It behaves like a real team member, not a chatbot.
-                  Delegate tasks just like you would do to human staff. Reliable, accountable, and always ready to work.
+                  AI Employees with <br />
+                  Real Identities                </h3>
+                <p className="text-sm sm:text-lg text-gray-500 leading-relaxed mb-6 sm:mb-8 w-full lg:max-w-sm">
+                  Your agent gets a name, role, and professional email.
+                  It behaves like a real team member, not a chatbot.
+                  Delegate tasks just like you would to human staff.
+                  Reliable, accountable, and always ready to work.
                 </p>
-                <button className="px-5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-white text-gray-900 font-semibold text-xs sm:text-sm shadow-sm border border-gray-200 hover:scale-105 transition-transform">
-                  Create Identity
+                <button onClick={() => document.getElementById("join")?.scrollIntoView({ behavior: "smooth" })} className="px-5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-white text-gray-900 font-semibold text-xs sm:text-sm shadow-sm border border-gray-200 hover:scale-105 transition-transform">
+                  Get Started
                 </button>
               </div>
 
               {/* Visual */}
-              <div className="w-full md:w-1/2 flex items-center justify-center relative">
+              <div className="absolute top-0 right-8 w-full md:w-1/2 items-center justify-center hidden lg:flex">
                 {/* Reduced width on mobile (w-[220px]) to fit screen */}
-                <div className="w-[220px] sm:w-[380px] drop-shadow-2xl">
-                  <Lottie animationData={GreenRobot} loop autoplay />
+                <div className="w-full drop-shadow-2xl">
+                  <img src="/id.png" alt="" />
                 </div>
-
-                {/* Floating Badge - Scaled down on mobile */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.5 }}
-                  className="absolute -bottom-4 -left-2 sm:-bottom-6 sm:-left-6 bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-xl flex items-center gap-2 sm:gap-3 border border-gray-100 scale-90 sm:scale-100 origin-bottom-left"
-                >
-                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <div>
-                    <div className="text-[8px] sm:text-[10px] text-gray-400 font-bold uppercase">Status</div>
-                    <div className="text-xs sm:text-sm font-bold text-gray-900">Online</div>
-                  </div>
-                </motion.div>
               </div>
             </div>
           </div>
@@ -1162,7 +1187,7 @@ const IdentitySection = () => {
               <div className="absolute top-0 right-0 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-indigo-500/20 rounded-full blur-[80px] sm:blur-[120px] pointer-events-none" />
 
               {/* --- LEFT: TEXT CONTENT --- */}
-              <div className="w-full md:w-1/2 relative z-10 flex flex-col items-start text-left mb-12 md:mb-0">
+              <div className="w-full lg:w-1/2 relative z-10 flex flex-col items-start text-left mb-12 md:mb-0">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/10 border border-white/10 text-white flex items-center justify-center mb-4 sm:mb-6">
                   <Briefcase className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
@@ -1170,7 +1195,7 @@ const IdentitySection = () => {
                   Specialized <br />
                   Domain Expertise.
                 </h3>
-                <p className="text-sm sm:text-lg text-gray-400 leading-relaxed mb-6 sm:mb-8 max-w-sm">
+                <p className="text-sm sm:text-lg text-gray-400 leading-relaxed mb-6 sm:mb-8 w-full lg:max-w-sm">
                   Choose from content, marketing, operations, support, and more. Each AI is trained to perform like a domain specialist.
                   Scale your operaitons with expert level output, without hiring experts.
                 </p>
@@ -1185,7 +1210,7 @@ const IdentitySection = () => {
               </div>
 
               {/* --- RIGHT: FLOATING CARDS VISUAL --- */}
-              <div className="w-full md:w-1/2 relative h-[300px] sm:h-[350px] flex items-center justify-center">
+              <div className="w-full md:w-1/2 relative h-[300px] sm:h-[350px] items-center justify-center hidden lg:flex">
                 {[
                   { title: "HEAD OF GROWTH", top: "0%", left: "0%", delay: 0 },
                   { title: "SOCIAL MEDIA MANAGER", top: "35%", left: "20%", delay: 0.2 }, // Shifted right
