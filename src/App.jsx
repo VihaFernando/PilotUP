@@ -757,7 +757,7 @@ const FocusLead = () => (
 
 const Comparison = () => {
   return (
-    <section id="features" className="py-24 bg-[#fdfffc] font-sans">
+    <section className="py-24 bg-[#fdfffc] font-sans">
       <div className="max-w-[1100px] mx-auto px-6">
 
         {/* --- HEADER --- */}
@@ -1044,7 +1044,7 @@ const Pricing = () => {
 
 const IdentitySection = () => {
   return (
-    <section id="identity" className="relative px-4 sm:px-6 bg-[#fdfffc] w-full">
+    <section id="features" className="relative px-4 sm:px-6 bg-[#fdfffc] w-full">
       <div className="max-w-[1100px] mx-auto">
 
         <div className="text-center mb-16 sm:mb-24 px-4">
