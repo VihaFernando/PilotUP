@@ -3,8 +3,8 @@ import CountdownBox from '../components/CountdownBox';
 import CountdownEmailForm from '../components/CountdownEmailForm';
 import CountdownSocialIcons from '../components/CountdownSocialIcons';
 
-// Target: 31st January 2026, 3:00 PM IST (UTC+5:30) = 9:30 AM UTC
-const TARGET_DATE = new Date('2026-01-31T09:30:00.000Z');
+// Target: 31st January 2026, 4:00 PM IST (UTC+5:30) = 10:30 AM UTC
+const TARGET_DATE = new Date('2026-01-31T10:30:00.000Z');
 
 export default function CountdownPage() {
   const timeLeft = useCountdown(TARGET_DATE);
