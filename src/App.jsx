@@ -36,8 +36,8 @@ import CountdownPage from './pages/CountdownPage';
 import { usePostHog } from 'posthog-js/react';
 import { pageview as gtagPageview } from './gtag.js';
 
-// Site gate: show only countdown until this date (31 Jan 2026, 3:00 PM IST = 9:30 AM UTC)
-const COUNTDOWN_TARGET_DATE = new Date('2026-01-31T09:30:00.000Z');
+// Site gate: show only countdown until this date (31 Jan 2026, 4:00 PM IST = 10:30 AM UTC)
+const COUNTDOWN_TARGET_DATE = new Date('2026-01-31T10:30:00.000Z');
 
 // --- DATA CONSTANTS ---
 
