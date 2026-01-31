@@ -220,7 +220,7 @@ const NavbarWrapper = ({ showAnnouncement = true }) => {
 
 
 // Demo video – replace with your YouTube embed URL later (use /embed/ form)
-const HERO_VIDEO_EMBED_URL = 'https://www.youtube.com/embed/dQw4w9WgXcQ';
+const HERO_VIDEO_EMBED_URL = 'https://www.youtube.com/embed/QnRtcMGw6d0';
 
 const Hero = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
