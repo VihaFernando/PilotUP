@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Lock, CheckCircle, AlertCircle, Loader2, KeyRound, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Seo from '../components/SEO';
 
 const ResetPassword = () => {
     const [password, setPassword] = useState('');
@@ -91,6 +92,13 @@ const ResetPassword = () => {
 
     // --- Form State ---
     return (
+        <>
+        <Seo
+          title="Reset password"
+          description="Set a new password for your PilotUP account."
+          canonical="/auth/reset-password"
+          type="website"
+        />
         <div className="min-h-screen bg-[#F5F5F7] flex items-center justify-center p-4 relative overflow-hidden font-sans text-[#1D1D1F]">
             
             {/* Ambient Background Glows */}
@@ -194,6 +202,7 @@ const ResetPassword = () => {
                 </motion.div>
             </div>
         </div>
+        </>
     );
 };
 

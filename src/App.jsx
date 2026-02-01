@@ -21,7 +21,7 @@ import Navbar from './components/Navbar';
 import AnnouncementBar from './components/AnnouncementBar';
 import WaitlistBanner from './components/WaitlistBanner';
 import WaitlistSuccessModal from './components/WaitlistSuccessModal';
-import SEO, { SITE_URL } from './components/SEO';
+import Seo, { SITE_URL } from './components/SEO';
 import { submitToWaitlist } from './lib/loops';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
@@ -1850,7 +1850,7 @@ const Footer = () => {
               }].map((Icon, i) => (
                 <a
                   key={i}
-                  href="#"
+                  href={Icon.href}
                   className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-white/10 hover:text-white transition-all duration-200"
                 >
                   <Icon.Icon className="w-4 h-4" />
@@ -1964,7 +1964,7 @@ const BackToTop = () => {
 const HomePage = () => {
   const { showAnnouncement } = useAnnouncement();
 
-  const softwareAppJsonLd = {
+  const softwareApplicationSchema = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
     name: 'PilotUP',
@@ -1974,11 +1974,12 @@ const HomePage = () => {
 
   return (
     <>
-      <SEO
-        title="PilotUP – Build your own AI employees to scale your business"
+      <Seo
+        fullTitle="PilotUP – Build your own AI employees to scale your business"
         description="Build your own, AI employees to scale your business. PilotUP helps you automate workflows with an AI workforce."
-        canonicalPath="/"
-        jsonLd={softwareAppJsonLd}
+        canonical="/"
+        type="website"
+        schema={softwareApplicationSchema}
       />
       <NavbarWrapper showAnnouncement={showAnnouncement} />
       <Hero />

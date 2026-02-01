@@ -33,7 +33,7 @@ function getRoutesFromSitemap() {
   let m;
   while ((m = locRegex.exec(xml)) !== null) {
     const url = m[0].replace(/<\/?loc>/g, '');
-    const path = url.replace('https://pilotup.ai', '') || '/';
+    const path = url.replace('https://pilotup.io', '') || '/';
     if (path.startsWith('/blog/') && path !== '/blog') {
       slugs.push(path);
     }

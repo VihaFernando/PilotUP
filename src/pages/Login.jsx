@@ -3,6 +3,7 @@ import { useNavigate, Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Mail, Lock, CheckCircle, AlertCircle, ArrowLeft, Info, Loader2, Eye, EyeOff } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Seo from '../components/SEO';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -45,8 +46,15 @@ const Login = () => {
     };
 
     return (
-        /* min-h-[100dvh] ensures it fits the visible mobile screen (excluding URL bars) 
-           flex items-center centers it vertically without forcing cutoff */
+        <>
+        <Seo
+          title="Login"
+          description="Sign in to PilotUP. Manage your AI workforce and workflows."
+          canonical="/login"
+          type="website"
+        />
+        {/* min-h-[100dvh] ensures it fits the visible mobile screen (excluding URL bars) 
+           flex items-center centers it vertically without forcing cutoff */}
         <div className="min-h-[100dvh] bg-[#F5F5F7] font-sans text-[#1D1D1F] flex items-center justify-center p-4 relative overflow-hidden">
 
             {/* Ambient Background Glows */}
@@ -198,6 +206,7 @@ const Login = () => {
                 </div>
             </motion.div>
         </div>
+        </>
     );
 };
 

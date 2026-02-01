@@ -9,6 +9,7 @@ import {
     ChevronUp
 } from 'lucide-react';
 import { HexColorPicker } from 'react-colorful';
+import Seo from '../components/SEO';
 
 const AnnouncementAdmin = () => {
     const { user } = useAuth();
@@ -436,6 +437,13 @@ const AnnouncementAdmin = () => {
     }
 
     return (
+        <>
+        <Seo
+          title="Announcement admin"
+          description="Manage PilotUP announcement bar. Edit content and visibility."
+          canonical="/admin/announcement"
+          type="website"
+        />
         <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 px-6 py-8">
             {/* Custom styles */}
             <style>{`
@@ -866,6 +874,7 @@ const AnnouncementAdmin = () => {
                 </div>
             )}
         </div>
+        </>
     );
 };
 

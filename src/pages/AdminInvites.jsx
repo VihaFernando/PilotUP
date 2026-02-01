@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { generateInviteToken, buildSignupUrl } from '../utils/inviteTokens';
 import { Copy, Trash2, Plus, CheckCircle, Clock, AlertCircle, ArrowLeft, X, Link as LinkIcon, Calendar } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Seo from '../components/SEO';
 
 const AdminInvites = () => {
     const { user } = useAuth();
@@ -117,6 +118,13 @@ const AdminInvites = () => {
     }
 
     return (
+        <>
+        <Seo
+          title="Invites"
+          description="Manage PilotUP admin invites. Create and share invite links."
+          canonical="/admin/invites"
+          type="website"
+        />
         <div className="min-h-screen bg-[#F5F5F7] text-[#1D1D1F] font-sans pb-20">
             {/* Top Navigation Bar - Sticky & Glassmorphic */}
             <div className="sticky top-0 z-30 bg-[#F5F5F7]/90 backdrop-blur-xl border-b border-gray-200/50 supports-[backdrop-filter]:bg-[#F5F5F7]/60">
@@ -382,6 +390,7 @@ const AdminInvites = () => {
                 </div>
             </div>
         </div>
+        </>
     );
 };
 

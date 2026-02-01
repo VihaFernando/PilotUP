@@ -5,7 +5,7 @@ import { formatDate, extractTextFromHTML } from '../utils/helpers';
 import { Calendar, ArrowRight, Search } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Navbar from '../components/Navbar';
-import SEO from '../components/SEO';
+import Seo from '../components/SEO';
 
 const BlogFeed = () => {
     const [blogs, setBlogs] = useState([]);
@@ -61,10 +61,11 @@ const BlogFeed = () => {
 
     return (
         <div className="min-h-screen bg-[#fff] text-[#111]">
-            <SEO
+            <Seo
                 title="Blog"
                 description="PilotUP blog: AI workflows, automation, and building your AI workforce. Tips and insights for scaling with AI employees."
-                canonicalPath="/blog"
+                canonical="/blog"
+                type="website"
             />
              {/* Font Import */}
              <style>

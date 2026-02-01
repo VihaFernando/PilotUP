@@ -25,12 +25,12 @@ This project is configured for search and social visibility.
 
 ## Domain and env
 
-- Canonical and sitemap URLs use **https://pilotup.ai**. Change `SITE_URL` in `src/components/SEO.jsx` and in `scripts/generate-sitemap.js` if your domain differs.
+- Canonical and sitemap URLs use **https://pilotup.io**. Change `SITE_URL` in `src/components/SEO.jsx` and in `scripts/generate-sitemap.js` if your domain differs.
 - Sitemap generation needs `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in `.env` or `.env.local` so blog slugs can be fetched at build time.
 
 ## Next steps (your side)
 
-1. **Google Search Console** – Add the property and submit `https://pilotup.ai/sitemap.xml`.
+1. **Google Search Console** – Add the property and submit `https://pilotup.io/sitemap.xml`.
 2. **GA4** – Already wired; confirm in Reports.
 3. **Bing Webmaster Tools** – Add site and sitemap.
 4. **Netlify** – To enable prerender on deploy, set build command to:  

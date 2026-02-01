@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { validateInviteToken, markInviteAsUsed } from '../utils/inviteTokens';
 import { Mail, Lock, AlertCircle, CheckCircle, User, Loader2, ArrowRight, Eye, EyeOff } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Seo from '../components/SEO';
 
 const SignUp = () => {
     const [searchParams] = useSearchParams();
@@ -157,9 +158,16 @@ const SignUp = () => {
     // --- MAIN FORM ---
 
     return (
-        /* 1. fixed inset-0: Locks the outer container to the viewport size.
+        <>
+        <Seo
+          title="Sign up"
+          description="Create your PilotUP account. Get early access to AI employees that scale your business."
+          canonical="/signup"
+          type="website"
+        />
+        {/* 1. fixed inset-0: Locks the outer container to the viewport size.
            2. overflow-hidden: Strictly CUTS OFF the background blobs so no horizontal scroll.
-        */
+        */}
         <div className="fixed inset-0 bg-[#F5F5F7] font-sans text-[#1D1D1F] overflow-hidden">
 
             {/* Background Glows (Now strictly contained) */}
@@ -333,6 +341,7 @@ const SignUp = () => {
                 </div>
             </div>
         </div>
+        </>
     );
 };
 

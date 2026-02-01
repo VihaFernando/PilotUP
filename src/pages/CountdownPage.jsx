@@ -2,6 +2,7 @@ import { useCountdown } from '../hooks/useCountdown';
 import CountdownBox from '../components/CountdownBox';
 import CountdownEmailForm from '../components/CountdownEmailForm';
 import CountdownSocialIcons from '../components/CountdownSocialIcons';
+import Seo from '../components/SEO';
 
 // Target: 31st January 2026, 4:00 PM IST (UTC+5:30) = 10:30 AM UTC
 const TARGET_DATE = new Date('2026-01-31T10:30:00.000Z');
@@ -10,7 +11,14 @@ export default function CountdownPage() {
   const timeLeft = useCountdown(TARGET_DATE);
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-[#fdfffc]">
+    <>
+      <Seo
+        title="We're almost there"
+        description="PilotUP is coming soon. Join the waitlist for early access to AI employees that scale your business."
+        canonical="/"
+        type="website"
+      />
+      <div className="relative min-h-screen w-full overflow-hidden bg-[#fdfffc]">
       {/* Decorative red accent line */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-[#E21339]" />
 
@@ -71,5 +79,6 @@ export default function CountdownPage() {
         </footer>
       </div>
     </div>
+    </>
   );
 }

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Mail, CheckCircle, AlertCircle, ArrowLeft, Loader2, KeyRound } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Seo from '../components/SEO';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
@@ -34,6 +35,13 @@ const ForgotPassword = () => {
     };
 
     return (
+        <>
+        <Seo
+          title="Forgot password"
+          description="Reset your PilotUP password. We'll send you a link to set a new password."
+          canonical="/forgot-password"
+          type="website"
+        />
         <div className="min-h-screen bg-[#F5F5F7] flex items-center justify-center p-4 relative overflow-hidden font-sans text-[#1D1D1F]">
             
             {/* Ambient Background Glows */}
@@ -178,6 +186,7 @@ const ForgotPassword = () => {
                 </div>
             </div>
         </div>
+        </>
     );
 };
 

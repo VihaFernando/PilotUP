@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { generateSlug, formatDate } from '../utils/helpers';
 import { Editor } from '@tinymce/tinymce-react';
 import Navbar from '../components/Navbar';
+import Seo from '../components/SEO';
 import {
     Plus,
     Edit2,
@@ -178,6 +179,13 @@ const BlogAdmin = () => {
     }
 
     return (
+        <>
+        <Seo
+          title="Blog admin"
+          description="Manage PilotUP blog posts. Create, edit, and publish content."
+          canonical="/blog/admin"
+          type="website"
+        />
         <div className="min-h-screen bg-[#F5F5F7] selection:bg-[#E21339] selection:text-white font-sans">
             <Navbar showAnnouncement={false} scrolled={false} setScrolled={() => { }} />
 
@@ -734,6 +742,7 @@ const BlogAdmin = () => {
                 )}
             </div>
         </div>
+        </>
     );
 };
 
