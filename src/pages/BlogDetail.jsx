@@ -351,7 +351,7 @@ const BlogDetail = () => {
         description: metaDescription,
         url: postUrl,
         image: blogImage,
-        author: { '@type': 'Organization', name: 'PilotUP' },
+        author: { '@type': 'Organization', name: 'PilotUP', url: SITE_URL },
         datePublished: blog.created_at,
     };
 
