@@ -26,6 +26,9 @@ const BlogDetail = () => {
     const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
     useEffect(() => {
+        // ✅ Netlify / prerender services: WAIT until we explicitly say the page is ready
+        if (typeof window !== 'undefined') window.prerenderReady = false;
+
         const fetchBlog = async () => {
             try {
                 const { data, error } = await supabase
@@ -39,6 +42,8 @@ const BlogDetail = () => {
                 console.error(error);
             } finally {
                 setLoading(false);
+                // ✅ Tell prerender services to snapshot now (even if blog is null due to error)
+                if (typeof window !== 'undefined') window.prerenderReady = true;
             }
         };
         fetchBlog();
@@ -131,7 +136,207 @@ const BlogDetail = () => {
         }
     };
 
-    if (loading) return <div className="min-h-screen bg-[#F9F9FB]" />;
+    // ✅ Don't return a blank page while loading — prerender bots will snapshot that
+    if (loading) {
+        return (
+            <div className="bg-[#F9F9FB] min-h-screen selection:bg-[#E21339] selection:text-white pb-32">
+                <style>
+                    {`@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&display=swap');`}
+                </style>
+
+                <Navbar showAnnouncement={false} scrolled={scrolled} setScrolled={setScrolled} />
+
+                {/* Reading Progress Bar */}
+                <motion.div className="fixed top-0 left-0 right-0 h-1 bg-[#E21339] origin-left z-[60]" style={{ scaleX }} />
+
+                <main className="pt-32 px-4 sm:px-6 mx-auto w-full">
+                    <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(auto,720px)_1fr] gap-8 max-w-[1400px] mx-auto relative items-start">
+                        <div className="hidden lg:block"></div>
+
+                        <div className="min-w-0">
+                            <div className="text-left mb-10">
+                                <div className="flex items-center gap-2 mb-6">
+                                    <span className="text-[#E21339] text-xs font-bold uppercase tracking-[0.2em] font-sans bg-red-50/80 px-4 py-1.5 rounded-full backdrop-blur-sm border border-red-100">
+                                        Blog Post
+                                    </span>
+                                </div>
+
+                                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#242424] tracking-tight mb-8 font-sans leading-[1.25] md:leading-[1.25]">
+                                    Loading article...
+                                </h1>
+
+                                <div className="flex items-center gap-6 text-gray-500 text-sm font-medium font-sans border-b border-gray-200/80 pb-8">
+                                    <div className="flex items-center gap-2.5">
+                                        <Calendar className="w-4 h-4 text-gray-400" />
+                                        <span>Loading date...</span>
+                                    </div>
+                                    <div className="w-1 h-1 bg-gray-300 rounded-full"></div>
+                                    <div className="flex items-center gap-2.5">
+                                        <Clock className="w-4 h-4 text-gray-400" />
+                                        <span>Calculating read time...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <aside className="hidden lg:block h-full">
+                            <div className="sticky top-32 flex flex-col gap-6 w-fit ml-6">
+                                <div className="flex flex-col items-center gap-3">
+                                    <button
+                                        className="w-12 h-12 flex items-center justify-center rounded-full bg-white border border-gray-200 text-gray-400 transition-all shadow-sm"
+                                        title="Share Article"
+                                        disabled
+                                    >
+                                        <Share2 className="w-5 h-5" />
+                                    </button>
+
+                                    <button
+                                        className="w-12 h-12 flex items-center justify-center rounded-full bg-white border border-gray-200 text-gray-400 transition-all shadow-sm"
+                                        title="Save for later"
+                                        disabled
+                                    >
+                                        <Bookmark className="w-5 h-5" />
+                                    </button>
+                                </div>
+
+                                <div className="w-full h-[1px] bg-gray-200 my-1"></div>
+
+                                <button
+                                    onClick={() => navigate('/blog')}
+                                    className="w-12 h-12 flex items-center justify-center rounded-full bg-white border border-gray-200 text-gray-500 hover:text-black hover:border-gray-400 transition-all shadow-sm hover:shadow-md"
+                                    title="Back to Blog"
+                                >
+                                    <ArrowLeft className="w-5 h-5" />
+                                </button>
+                            </div>
+                        </aside>
+                    </div>
+
+                    <div className="lg:hidden mt-20 text-center border-t border-gray-200 pt-10">
+                        <button onClick={() => navigate('/blog')} className="inline-flex items-center gap-2 text-sm text-gray-600 font-bold hover:text-[#E21339] transition-colors uppercase tracking-wider">
+                            <ArrowLeft className="w-4 h-4" /> Back to All Posts
+                        </button>
+                    </div>
+                </main>
+
+                {/* --- TYPOGRAPHY SYSTEM --- */}
+                <style>{`
+                    /* Base Settings */
+                    .article-body { 
+                        font-family: 'Merriweather', 'Georgia', serif; 
+                        color: #242424; 
+                        line-height: 2; 
+                        font-size: 1.125rem;
+                        text-rendering: optimizeLegibility;
+                        -webkit-font-smoothing: antialiased;
+                    }
+
+                    /* Text Elements */
+                    .article-body p { 
+                        margin-bottom: 2rem; 
+                        font-weight: 400; /* Restored to Normal Weight */
+                        color: #292929;
+                    }
+
+                    .article-body strong {
+                        font-weight: 700;
+                        color: #111;
+                    }
+
+                    /* Headings */
+                    .article-body h2 { 
+                        font-family: 'Merriweather', serif;
+                        font-size: 2rem; 
+                        font-weight: 900; 
+                        margin: 2em 0 0.8em; 
+                        color: #1a1a1a;
+                        letter-spacing: -0.02em;
+                        line-height: 1.25;
+                    }
+                    
+                    .article-body h3 { 
+                        font-family: 'Merriweather', serif;
+                        font-size: 1.5rem; 
+                        font-weight: 700; 
+                        margin: 1.8em 0 0.8em; 
+                        color: #1a1a1a;
+                        line-height: 1.35;
+                    }
+
+                    /* Lists */
+                    .article-body ul, .article-body ol {
+                        margin-bottom: 2.5rem;
+                        padding-left: 1.5rem;
+                        color: #292929;
+                        font-weight: 400; /* Ensure lists are also normal weight */
+                    }
+                    .article-body li {
+                        margin-bottom: 0.85em;
+                        padding-left: 0.5rem;
+                        position: relative;
+                    }
+                    .article-body ul li::marker {
+                        color: #E21339;
+                    }
+
+                    /* Blockquotes */
+                    .article-body blockquote {
+                        position: relative;
+                        padding: 1.25rem 1.5rem;
+                        margin: 2rem 0;
+                        font-style: italic;
+                        color: #111;
+                        font-size: 1.1rem;
+                        line-height: 1.6;
+                        border-left: 3px solid #E21339;
+                        background: rgba(226, 19, 57, 0.03);
+                        border-radius: 0 0.5rem 0.5rem 0;
+                        font-weight: 400;
+                        display: flex;
+                        align-items: center;
+                    }
+
+                    /* Links */
+                    .article-body a { 
+                        color: #111;
+                        text-decoration: underline; 
+                        text-decoration-color: rgba(226, 19, 57, 0.4);
+                        text-decoration-thickness: 1px;
+                        text-underline-offset: 4px;
+                        font-weight: 700; 
+                        transition: all 0.2s ease;
+                    }
+                    .article-body a:hover {
+                        color: #E21339;
+                        text-decoration-color: #E21339;
+                        background: rgba(226, 19, 57, 0.05);
+                    }
+
+                    /* Images inside content */
+                    .article-body img {
+                        width: 100%;
+                        height: auto;
+                        border-radius: 0.75rem;
+                        margin: 3.5rem 0;
+                        box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+                    }
+
+                    /* Inline Code */
+                    .article-body :not(pre) > code {
+                        background: #f3f4f6;
+                        color: #E21339;
+                        padding: 0.2rem 0.4rem;
+                        border-radius: 4px;
+                        font-family: 'SF Mono', 'Menlo', monospace;
+                        font-size: 0.85em;
+                        font-weight: 500;
+                        border: 1px solid #e5e7eb;
+                    }
+                `}</style>
+            </div>
+        );
+    }
+
     if (!blog) return null;
 
     const readTime = Math.max(1, Math.ceil(blog.content.replace(/<[^>]+>/g, '').split(' ').length / 250));

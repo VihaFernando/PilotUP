@@ -1975,7 +1975,7 @@ const HomePage = () => {
   return (
     <>
       <Seo
-        fullTitle="PilotUP – Build your own AI employees to scale your business"
+        fullTitle="PilotUP: Build your own AI Employees to Scale your Business"
         description="Build your own, AI employees to scale your business. PilotUP helps you automate workflows with an AI workforce."
         canonical="/"
         type="website"

@@ -62,7 +62,7 @@ const BlogFeed = () => {
     return (
         <div className="min-h-screen bg-[#fff] text-[#111]">
             <Seo
-                title="Blog"
+                title="Blog Articles"
                 description="PilotUP blog: AI workflows, automation, and building your AI workforce. Tips and insights for scaling with AI employees."
                 canonical="/blog"
                 type="website"
