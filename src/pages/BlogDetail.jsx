@@ -343,12 +343,14 @@ const BlogDetail = () => {
     const metaDescription = blog.summary || extractTextFromHTML(blog.content, 200);
     const canonicalPath = `/blog/${blog.slug}`;
     const postUrl = `${SITE_URL}${canonicalPath}`;
+    const blogImage = blog.cover_url || `${SITE_URL}/favicon.ico`;
     const blogPostingSchema = {
         '@context': 'https://schema.org',
         '@type': 'BlogPosting',
         headline: blog.title,
         description: metaDescription,
         url: postUrl,
+        image: blogImage,
         author: { '@type': 'Organization', name: 'PilotUP' },
         datePublished: blog.created_at,
     };

@@ -1970,6 +1970,8 @@ const HomePage = () => {
     name: 'PilotUP',
     url: SITE_URL,
     description: 'Build your own, AI employees to scale your business. Automate workflows with an AI workforce.',
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
   };
 
   return (
