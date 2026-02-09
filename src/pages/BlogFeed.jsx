@@ -5,7 +5,7 @@ import { formatDate, extractTextFromHTML } from '../utils/helpers';
 import { Calendar, ArrowRight, Search } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Navbar from '../components/Navbar';
-import Seo from '../components/SEO';
+import Seo, { SITE_URL } from '../components/SEO';
 
 const BlogFeed = () => {
     const [blogs, setBlogs] = useState([]);
@@ -59,13 +59,38 @@ const BlogFeed = () => {
     const featuredBlog = filteredBlogs[0];
     const remainingBlogs = filteredBlogs.slice(1);
 
+    // Blog feed schemas
+    const blogFeedSchemas = [
+        {
+            '@type': 'Blog',
+            name: 'PilotUP Blog',
+            description: 'AI workflows, automation, and building your AI workforce. Expert insights on scaling with AI employees.',
+            url: `${SITE_URL}/blog`,
+            publisher: {
+                '@type': 'Organization',
+                name: 'PilotUP',
+                url: SITE_URL
+            }
+        },
+        {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+                { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+                { '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE_URL}/blog` }
+            ]
+        }
+    ];
+
     return (
         <div className="min-h-screen bg-[#fff] text-[#111]">
             <Seo
                 title="Blog Articles"
-                description="PilotUP blog: AI workflows, automation, and building your AI workforce. Tips and insights for scaling with AI employees."
+                description="Explore PilotUP blog for insights on AI employees, workflow automation, building AI workforce, and scaling your business with AI. Expert tips and implementation guides."
                 canonical="/blog"
                 type="website"
+                schema={blogFeedSchemas}
+                keywords={['AI blog', 'automation guides', 'AI workforce tips', 'business AI', 'AI employees insights']}
+                twitterCard="summary_large_image"
             />
              {/* Font Import */}
              <style>

@@ -3,7 +3,7 @@ import { useNavigate, Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Mail, Lock, CheckCircle, AlertCircle, ArrowLeft, Info, Loader2, Eye, EyeOff } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Seo from '../components/SEO';
+import Seo, { SITE_URL } from '../components/SEO';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -45,13 +45,29 @@ const Login = () => {
         }
     };
 
+    // WebPage schema for login
+    const loginSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        name: 'Login - PilotUP',
+        description: 'Sign in to PilotUP to manage your AI workforce',
+        url: `${SITE_URL}/login`,
+        isPartOf: {
+            '@type': 'WebSite',
+            name: 'PilotUP',
+            url: SITE_URL
+        }
+    };
+
     return (
         <>
         <Seo
           title="Login"
-          description="Sign in to PilotUP. Manage your AI workforce and workflows."
+          description="Sign in to PilotUP. Manage your AI workforce and automation workflows."
           canonical="/login"
           type="website"
+          schema={loginSchema}
+          robots="noindex,nofollow"
         />
         {/* min-h-[100dvh] ensures it fits the visible mobile screen (excluding URL bars) 
            flex items-center centers it vertically without forcing cutoff */}

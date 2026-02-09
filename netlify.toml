@@ -1,6 +1,6 @@
 [build]
   # Build + prerender so crawlers get static HTML for /, /blog, /blog/[slug]
-  command = "npm install --legacy-peer-deps && npm run build"
+  command = "npm install --legacy-peer-deps && npm run prebuild && npm run build"
   publish = "dist"
 
 [dev]

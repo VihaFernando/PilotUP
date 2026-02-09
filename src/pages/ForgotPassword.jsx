@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Mail, CheckCircle, AlertCircle, ArrowLeft, Loader2, KeyRound } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Seo from '../components/SEO';
+import Seo, { SITE_URL } from '../components/SEO';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
@@ -34,6 +34,20 @@ const ForgotPassword = () => {
         }
     };
 
+    // WebPage schema for forgot password
+    const forgotPasswordSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        name: 'Reset Password - PilotUP',
+        description: 'Reset your PilotUP password',
+        url: `${SITE_URL}/forgot-password`,
+        isPartOf: {
+            '@type': 'WebSite',
+            name: 'PilotUP',
+            url: SITE_URL
+        }
+    };
+
     return (
         <>
         <Seo
@@ -41,6 +55,8 @@ const ForgotPassword = () => {
           description="Reset your PilotUP password. We'll send you a link to set a new password."
           canonical="/forgot-password"
           type="website"
+          schema={forgotPasswordSchema}
+          robots="noindex,nofollow"
         />
         <div className="min-h-screen bg-[#F5F5F7] flex items-center justify-center p-4 relative overflow-hidden font-sans text-[#1D1D1F]">
             

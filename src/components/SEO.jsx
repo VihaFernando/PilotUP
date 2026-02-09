@@ -77,6 +77,12 @@ function Seo({
   ogImage,
   type = 'website',
   schema = null,
+  keywords = null,
+  twitterCard = 'summary',
+  twitterImage = null,
+  datePublished = null,
+  dateModified = null,
+  robots = null,
 }) {
   const cleanDesc = cleanDescription(description);
   const canonicalUrl = canonical === '/' || !canonical
@@ -104,19 +110,49 @@ function Seo({
     }
     setOrUpdateMeta(head, { property: 'og:image', content: imageUrl }, SEO_MARKER);
     setOrUpdateMeta(head, { property: 'og:site_name', content: SITE_NAME }, SEO_MARKER);
-    setOrUpdateMeta(head, { name: 'twitter:card', content: 'summary' }, SEO_MARKER);
+    setOrUpdateMeta(head, { property: 'og:locale', content: 'en_US' }, SEO_MARKER);
+
+    // Enhanced Twitter Cards
+    const twitterImageUrl = twitterImage || ogImage || imageUrl;
+    setOrUpdateMeta(head, { name: 'twitter:card', content: twitterCard }, SEO_MARKER);
     setOrUpdateMeta(head, { name: 'twitter:title', content: fullTitle }, SEO_MARKER);
     if (cleanDesc) {
       setOrUpdateMeta(head, { name: 'twitter:description', content: cleanDesc }, SEO_MARKER);
     }
+    setOrUpdateMeta(head, { name: 'twitter:image', content: twitterImageUrl }, SEO_MARKER);
+    setOrUpdateMeta(head, { name: 'twitter:image:alt', content: fullTitle }, SEO_MARKER);
+
+    // Date metadata for freshness signals
+    if (datePublished) {
+      setOrUpdateMeta(head, { property: 'article:published_time', content: datePublished }, SEO_MARKER);
+    }
+    if (dateModified) {
+      setOrUpdateMeta(head, { property: 'article:modified_time', content: dateModified }, SEO_MARKER);
+    }
+
+    // Keywords meta tag
+    if (keywords) {
+      const keywordString = Array.isArray(keywords) ? keywords.join(', ') : keywords;
+      setOrUpdateMeta(head, { name: 'keywords', content: keywordString }, SEO_MARKER);
+    }
+
+    // Robots meta tag for indexing control
+    if (robots) {
+      setOrUpdateMeta(head, { name: 'robots', content: robots }, SEO_MARKER);
+    }
+
+    // Multi-schema support with @graph
     if (schema != null) {
-      setOrUpdateScript(head, 'pilotup-ldjson', JSON.stringify(schema), SEO_MARKER);
+      const schemaToEmbed = Array.isArray(schema)
+        ? { '@context': 'https://schema.org', '@graph': schema }
+        : schema;
+      setOrUpdateScript(head, 'pilotup-ldjson', JSON.stringify(schemaToEmbed), SEO_MARKER);
     }
 
     return () => {
       removeSeoTags(head, SEO_MARKER);
     };
-  }, [fullTitle, cleanDesc, canonicalUrl, type, imageUrl, schema]);
+  }, [fullTitle, cleanDesc, canonicalUrl, type, imageUrl, schema, keywords, twitterCard, twitterImage, datePublished, dateModified, robots]);
 
   return (
     <Helmet defer={false}>

@@ -54,10 +54,11 @@ function escapeXml(s) {
 
 async function main() {
   const slugs = await getBlogSlugs();
+  const currentDate = new Date().toISOString().split('T')[0];
 
   const urls = [
-    { loc: `${SITE_URL}/`, changefreq: 'weekly', priority: '1.0' },
-    { loc: `${SITE_URL}/blog`, changefreq: 'weekly', priority: '0.9' },
+    { loc: `${SITE_URL}/`, changefreq: 'weekly', priority: '1.0', lastmod: currentDate },
+    { loc: `${SITE_URL}/blog`, changefreq: 'daily', priority: '0.9', lastmod: currentDate },
     ...slugs.map(({ slug, lastmod }) => ({
       loc: `${SITE_URL}/blog/${escapeXml(slug)}`,
       lastmod: lastmod || null,

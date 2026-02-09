@@ -1964,24 +1964,85 @@ const BackToTop = () => {
 const HomePage = () => {
   const { showAnnouncement } = useAnnouncement();
 
-  const softwareApplicationSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
-    name: 'PilotUP',
-    url: SITE_URL,
-    description: 'Build your own, AI employees to scale your business. Automate workflows with an AI workforce.',
-    applicationCategory: 'BusinessApplication',
-    operatingSystem: 'Web',
-  };
+  // Multi-schema graph for comprehensive SEO
+  const homePageSchemas = [
+    // Organization Schema - establishes brand identity
+    {
+      '@type': 'Organization',
+      '@id': `${SITE_URL}/#organization`,
+      name: 'PilotUP',
+      url: SITE_URL,
+      logo: `${SITE_URL}/Logo-full-black.png`,
+      description: 'Build your own AI employees to scale your business. PilotUP helps you automate workflows with an AI workforce that works 24/7.',
+      sameAs: [],
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'Customer Service',
+        availableLanguage: ['en']
+      }
+    },
+
+    // WebSite Schema - enables sitelinks search box
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: 'PilotUP',
+      publisher: { '@id': `${SITE_URL}/#organization` },
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: `${SITE_URL}/blog?search={search_term_string}`
+        },
+        'query-input': 'required name=search_term_string'
+      }
+    },
+
+    // SoftwareApplication Schema - existing, enhanced
+    {
+      '@type': 'SoftwareApplication',
+      '@id': `${SITE_URL}/#softwareapplication`,
+      name: 'PilotUP',
+      url: SITE_URL,
+      description: 'Build your own AI employees to scale your business. Automate workflows with an AI workforce.',
+      applicationCategory: 'BusinessApplication',
+      operatingSystem: 'Web',
+      offers: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'USD'
+      }
+    },
+
+    // FAQPage Schema - leverages existing FAQ content
+    {
+      '@type': 'FAQPage',
+      '@id': `${SITE_URL}/#faqpage`,
+      mainEntity: FAQS.map(faq => ({
+        '@type': 'Question',
+        name: faq.q,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.a
+        }
+      }))
+    }
+  ];
 
   return (
     <>
       <Seo
-        fullTitle="PilotUP: Build your own AI Employees to Scale your Business"
-        description="Build your own, AI employees to scale your business. PilotUP helps you automate workflows with an AI workforce."
+        fullTitle="PilotUP: Build Your Own AI Employees to Scale Your Business"
+        description="Build your own AI employees to scale your business. PilotUP helps you automate workflows with an AI workforce that works 24/7. Get started free and transform operations with autonomous AI agents."
         canonical="/"
         type="website"
-        schema={softwareApplicationSchema}
+        schema={homePageSchemas}
+        keywords={['AI employees', 'AI workforce', 'business automation', 'AI agents', 'workflow automation', 'autonomous AI', 'AI assistant', 'business scaling']}
+        twitterCard="summary_large_image"
+        ogImage={`${SITE_URL}/pilotup-landing.png`}
+        datePublished="2025-12-01T00:00:00Z"
+        dateModified={new Date().toISOString()}
       />
       <NavbarWrapper showAnnouncement={showAnnouncement} />
       <Hero />

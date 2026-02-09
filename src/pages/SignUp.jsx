@@ -5,7 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { validateInviteToken, markInviteAsUsed } from '../utils/inviteTokens';
 import { Mail, Lock, AlertCircle, CheckCircle, User, Loader2, ArrowRight, Eye, EyeOff } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Seo from '../components/SEO';
+import Seo, { SITE_URL } from '../components/SEO';
 
 const SignUp = () => {
     const [searchParams] = useSearchParams();
@@ -157,6 +157,20 @@ const SignUp = () => {
 
     // --- MAIN FORM ---
 
+    // WebPage schema for signup
+    const signupSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        name: 'Sign Up - PilotUP',
+        description: 'Create your PilotUP account to build AI employees',
+        url: `${SITE_URL}/signup`,
+        isPartOf: {
+            '@type': 'WebSite',
+            name: 'PilotUP',
+            url: SITE_URL
+        }
+    };
+
     return (
         <>
         <Seo
@@ -164,6 +178,8 @@ const SignUp = () => {
           description="Create your PilotUP account. Get early access to AI employees that scale your business."
           canonical="/signup"
           type="website"
+          schema={signupSchema}
+          robots="noindex,nofollow"
         />
         {/* 1. fixed inset-0: Locks the outer container to the viewport size.
            2. overflow-hidden: Strictly CUTS OFF the background blobs so no horizontal scroll.

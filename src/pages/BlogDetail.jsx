@@ -344,16 +344,50 @@ const BlogDetail = () => {
     const canonicalPath = `/blog/${blog.slug}`;
     const postUrl = `${SITE_URL}${canonicalPath}`;
     const blogImage = blog.cover_url || `${SITE_URL}/favicon.ico`;
-    const blogPostingSchema = {
-        '@context': 'https://schema.org',
-        '@type': 'BlogPosting',
-        headline: blog.title,
-        description: metaDescription,
-        url: postUrl,
-        image: blogImage,
-        author: { '@type': 'Organization', name: 'PilotUP', url: SITE_URL },
-        datePublished: blog.created_at,
-    };
+
+    // Enhanced multi-schema for blog posts
+    const blogDetailSchemas = [
+        {
+            '@type': 'BlogPosting',
+            headline: blog.title,
+            description: metaDescription,
+            url: postUrl,
+            image: {
+                '@type': 'ImageObject',
+                url: blogImage,
+                width: 1200,
+                height: 630
+            },
+            author: {
+                '@type': 'Organization',
+                name: 'PilotUP',
+                url: SITE_URL
+            },
+            publisher: {
+                '@type': 'Organization',
+                name: 'PilotUP',
+                logo: {
+                    '@type': 'ImageObject',
+                    url: `${SITE_URL}/Logo-full-black.png`
+                }
+            },
+            datePublished: blog.created_at,
+            dateModified: blog.updated_at || blog.created_at,
+            mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': postUrl
+            },
+            wordCount: blog.content.replace(/<[^>]+>/g, '').split(/\s+/).length
+        },
+        {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+                { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+                { '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE_URL}/blog` },
+                { '@type': 'ListItem', position: 3, name: blog.title, item: postUrl }
+            ]
+        }
+    ];
 
     return (
         <div className="bg-[#F9F9FB] min-h-screen selection:bg-[#E21339] selection:text-white pb-32">
@@ -363,7 +397,12 @@ const BlogDetail = () => {
                 canonical={canonicalPath}
                 ogImage={blog.cover_url || `${SITE_URL}/favicon.ico`}
                 type="article"
-                schema={blogPostingSchema}
+                schema={blogDetailSchemas}
+                twitterCard="summary_large_image"
+                twitterImage={blog.cover_url}
+                keywords={['AI', 'automation', 'business', 'AI workforce', 'technology']}
+                datePublished={blog.created_at}
+                dateModified={blog.updated_at || blog.created_at}
             />
             <style>
                 {`@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&display=swap');`}
