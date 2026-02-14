@@ -59,6 +59,37 @@ async function main() {
   const urls = [
     { loc: `${SITE_URL}/`, changefreq: 'weekly', priority: '1.0', lastmod: currentDate },
     { loc: `${SITE_URL}/blog`, changefreq: 'daily', priority: '0.9', lastmod: currentDate },
+
+    // Core pages
+    { loc: `${SITE_URL}/waitlist`, changefreq: 'monthly', priority: '0.9', lastmod: currentDate },
+    { loc: `${SITE_URL}/pricing`, changefreq: 'monthly', priority: '0.9', lastmod: currentDate },
+    { loc: `${SITE_URL}/how-it-works`, changefreq: 'monthly', priority: '0.8', lastmod: currentDate },
+    { loc: `${SITE_URL}/integrations`, changefreq: 'monthly', priority: '0.8', lastmod: currentDate },
+    { loc: `${SITE_URL}/features`, changefreq: 'monthly', priority: '0.8', lastmod: currentDate },
+
+    // Roles
+    { loc: `${SITE_URL}/roles`, changefreq: 'monthly', priority: '0.8', lastmod: currentDate },
+    { loc: `${SITE_URL}/roles/growth-content-lead`, changefreq: 'monthly', priority: '0.7', lastmod: currentDate },
+    { loc: `${SITE_URL}/roles/support-research-lead`, changefreq: 'monthly', priority: '0.7', lastmod: currentDate },
+    { loc: `${SITE_URL}/roles/operations-manager`, changefreq: 'monthly', priority: '0.7', lastmod: currentDate },
+
+    // Functions
+    { loc: `${SITE_URL}/functions`, changefreq: 'monthly', priority: '0.8', lastmod: currentDate },
+    { loc: `${SITE_URL}/functions/sales`, changefreq: 'monthly', priority: '0.7', lastmod: currentDate },
+    { loc: `${SITE_URL}/functions/marketing`, changefreq: 'monthly', priority: '0.7', lastmod: currentDate },
+    { loc: `${SITE_URL}/functions/support`, changefreq: 'monthly', priority: '0.7', lastmod: currentDate },
+    { loc: `${SITE_URL}/functions/operations`, changefreq: 'monthly', priority: '0.7', lastmod: currentDate },
+    { loc: `${SITE_URL}/functions/research`, changefreq: 'monthly', priority: '0.7', lastmod: currentDate },
+
+    // Features
+    { loc: `${SITE_URL}/features/one-click-employees`, changefreq: 'monthly', priority: '0.7', lastmod: currentDate },
+    { loc: `${SITE_URL}/features/no-onboarding`, changefreq: 'monthly', priority: '0.7', lastmod: currentDate },
+    { loc: `${SITE_URL}/features/multi-channel-communication`, changefreq: 'monthly', priority: '0.7', lastmod: currentDate },
+    { loc: `${SITE_URL}/features/tool-native-work`, changefreq: 'monthly', priority: '0.7', lastmod: currentDate },
+    { loc: `${SITE_URL}/features/human-in-the-loop-guardrails`, changefreq: 'monthly', priority: '0.7', lastmod: currentDate },
+    { loc: `${SITE_URL}/features/employee-collaboration`, changefreq: 'monthly', priority: '0.7', lastmod: currentDate },
+
+    // Blog posts
     ...slugs.map(({ slug, lastmod }) => ({
       loc: `${SITE_URL}/blog/${escapeXml(slug)}`,
       lastmod: lastmod || null,

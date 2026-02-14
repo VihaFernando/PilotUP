@@ -40,3 +40,28 @@
 .read-the-docs {
   color: #888;
 }
+
+
+.typing {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid #E63946;
+  font-family: monospace;
+
+  animation:
+    typing 4s steps(var(--chars), end) infinite,
+    blink 0.7s step-end infinite;
+}
+
+/* Typing + deleting */
+@keyframes typing {
+  0%   { width: 0 }
+  40%  { width: calc(var(--chars) * 1ch) }
+  60%  { width: calc(var(--chars) * 1ch) }
+  100% { width: 0 }
+}
+
+@keyframes blink {
+  50% { border-color: transparent }
+}
