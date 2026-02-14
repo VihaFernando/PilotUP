@@ -743,7 +743,7 @@ const StackCard = ({ card, index, totalCards }) => {
 
             {/* Outputs */}
             <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">What this AI Employee does</p>
-            <div className="flex items-center flex-wrap gap-4 mb-8">
+            <div className="flex items-center flex-wrap gap-2 sm:gap-4 mb-8">
               {card.outputs.map((o, j) => (
                 <div key={j} className="bg-[#e7e7e7] px-4 py-2 rounded-xl flex items-start gap-2.5 text-[14px] text-black leading-snug">
                   {o}
