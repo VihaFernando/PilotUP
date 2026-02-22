@@ -3,6 +3,14 @@
  * Keep content here so page components stay clean.
  */
 
+// Icon imports for dynamic rendering (matches App.jsx icons)
+import React from 'react';
+import {
+  TrendingUp, Sparkles, MessageCircle, Globe2, LayoutDashboard,
+  Zap, Target, Workflow, Shield, Handshake,
+  User, Building2, Bot, Link, Rocket
+} from 'lucide-react';
+
 // ────────────────────────────────────────────────────────
 // INTEGRATION DATA (shared across integrations page + role/function pages)
 // ────────────────────────────────────────────────────────
@@ -109,8 +117,8 @@ export const ROLES = [
       { title: 'Repurpose our case study into 5 Twitter threads', tag: 'Social' },
       { title: 'Update our content calendar for the next 2 weeks', tag: 'Planning' },
     ],
-    color: 'from-blue-500 to-indigo-600',
-    lightColor: 'bg-blue-50',
+    color: 'bg-blue-50',
+    iconBg: 'bg-blue-100 text-blue-600',
     textColor: 'text-blue-600',
     borderColor: 'border-blue-200',
     status: 'available',
@@ -146,8 +154,8 @@ export const ROLES = [
       { title: 'Draft an escalation summary for the engineering team', tag: 'Ops' },
       { title: 'Monitor social media for brand mentions today', tag: 'Monitoring' },
     ],
-    color: 'from-emerald-500 to-teal-600',
-    lightColor: 'bg-emerald-50',
+    color: 'bg-emerald-50',
+    iconBg: 'bg-emerald-100 text-emerald-600',
     textColor: 'text-emerald-600',
     borderColor: 'border-emerald-200',
     status: 'available',
@@ -183,8 +191,8 @@ export const ROLES = [
       { title: 'Audit current project statuses and flag blockers', tag: 'Ops' },
       { title: 'Set up recurring checklists for client onboarding', tag: 'Process' },
     ],
-    color: 'from-amber-500 to-orange-600',
-    lightColor: 'bg-amber-50',
+    color: 'bg-amber-50',
+    iconBg: 'bg-amber-100 text-amber-600',
     textColor: 'text-amber-600',
     borderColor: 'border-amber-200',
     status: 'available',
@@ -230,10 +238,11 @@ export const FUNCTIONS = [
       { time: 'Afternoon', activity: 'Drafts proposals based on call outcomes. Logs deal progress and flags stalled opportunities to your Slack.' },
       { time: 'End of day', activity: 'Sends daily pipeline summary. Queues next-day follow-ups. Updates forecasting spreadsheets.' },
     ],
-    icon: '💰',
-    color: 'from-green-500 to-emerald-600',
-    lightColor: 'bg-green-50',
-    textColor: 'text-green-600',
+    icon: 'TrendingUp',
+    color: 'bg-emerald-50',
+    iconBg: 'bg-emerald-100 text-emerald-600',
+    lightColor: 'bg-emerald-50',
+    textColor: 'text-emerald-600',
   },
   {
     slug: 'marketing',
@@ -263,10 +272,11 @@ export const FUNCTIONS = [
       { time: 'Afternoon', activity: 'Updates analytics dashboard. Monitors social engagement. Adjusts ad targeting based on performance data.' },
       { time: 'End of day', activity: 'Compiles daily marketing summary. Suggests content topics for the next day. Schedules next batch of posts.' },
     ],
-    icon: '📣',
-    color: 'from-purple-500 to-violet-600',
-    lightColor: 'bg-purple-50',
-    textColor: 'text-purple-600',
+    icon: 'Sparkles',
+    color: 'bg-violet-50',
+    iconBg: 'bg-violet-100 text-violet-600',
+    lightColor: 'bg-violet-50',
+    textColor: 'text-violet-600',
   },
   {
     slug: 'support',
@@ -296,10 +306,11 @@ export const FUNCTIONS = [
       { time: 'Afternoon', activity: 'Follows up on pending tickets. Updates FAQ articles based on common questions. Logs customer feedback.' },
       { time: 'End of day', activity: 'Sends daily support summary to Slack. Reports on SLA compliance. Flags recurring issues for product team.' },
     ],
-    icon: '🎧',
-    color: 'from-blue-500 to-cyan-600',
-    lightColor: 'bg-blue-50',
-    textColor: 'text-blue-600',
+    icon: 'MessageCircle',
+    color: 'bg-cyan-50',
+    iconBg: 'bg-cyan-100 text-cyan-600',
+    lightColor: 'bg-cyan-50',
+    textColor: 'text-cyan-600',
   },
   {
     slug: 'operations',
@@ -329,8 +340,9 @@ export const FUNCTIONS = [
       { time: 'Afternoon', activity: 'Audits current tasks and flags risks. Prepares status update for leadership. Documents new processes.' },
       { time: 'End of day', activity: "Compiles daily ops summary. Queues tomorrow's priorities. Updates the operational dashboard." },
     ],
-    icon: '⚙️',
-    color: 'from-amber-500 to-orange-600',
+    icon: 'LayoutDashboard',
+    color: 'bg-amber-50',
+    iconBg: 'bg-amber-100 text-amber-600',
     lightColor: 'bg-amber-50',
     textColor: 'text-amber-600',
   },
@@ -362,10 +374,11 @@ export const FUNCTIONS = [
       { time: 'Afternoon', activity: 'Delivers completed research to Slack/Notion. Starts next-priority research task. Updates competitor tracking spreadsheet.' },
       { time: 'End of day', activity: 'Sends research status update. Queues continuing research items for tomorrow. Logs all sources used.' },
     ],
-    icon: '🔬',
-    color: 'from-indigo-500 to-blue-600',
-    lightColor: 'bg-indigo-50',
-    textColor: 'text-indigo-600',
+    icon: 'Globe2',
+    color: 'bg-blue-50',
+    iconBg: 'bg-blue-100 text-blue-600',
+    lightColor: 'bg-blue-50',
+    textColor: 'text-blue-600',
   },
 ];
 
@@ -386,7 +399,7 @@ export const FEATURES = [
       { title: 'Rapid experimentation', description: 'Test a new function like outbound sales without committing to a full-time hire. Create an AI employee, run it for a week, measure results.' },
       { title: 'Founder mode', description: `You're a solo founder wearing 6 hats.Create AI employees for each hat and delegate immediately.` },
     ],
-    icon: '⚡',
+    icon: 'Zap',
     color: 'from-yellow-500 to-amber-600',
     lightColor: 'bg-yellow-50',
     textColor: 'text-yellow-600',
@@ -403,7 +416,7 @@ export const FEATURES = [
       { title: 'Consistent quality from day one', description: 'Your AI employee delivers professional-grade output immediately -- not after 3 months of coaching.' },
       { title: 'Adaptive learning', description: 'Every piece of feedback you give makes them better. They remember past corrections and apply them to future tasks.' },
     ],
-    icon: '🎯',
+    icon: 'Target',
     color: 'from-green-500 to-emerald-600',
     lightColor: 'bg-green-50',
     textColor: 'text-green-600',
@@ -420,7 +433,7 @@ export const FEATURES = [
       { title: 'Team coordination on Slack', description: 'Assign tasks by @mentioning your AI employee in a channel. They acknowledge, execute, and report back.' },
       { title: 'WhatsApp for fast decisions', description: `Get quick summaries, approve drafts, and make decisions via WhatsApp when you're away from your desk.` },
     ],
-    icon: '💬',
+    icon: 'MessageCircle',
     color: 'from-blue-500 to-indigo-600',
     lightColor: 'bg-blue-50',
     textColor: 'text-blue-600',
@@ -433,48 +446,48 @@ export const FEATURES = [
     heroSubtitle: 'Other AI tools generate output you have to copy-paste. PilotUP employees work directly inside the apps your team uses -- creating tasks, updating docs, and managing data in-place.',
     explanation: `PilotUP AI employees don't just draft content and hand it over.They log into your tools with their own credentials, create ClickUp tasks, update Notion databases, organize Google Drive folders, and manage Slack channels.The output lands exactly where it needs to be -- no copy- pasting, no manual transfers.`,
     useCases: [
-    { title: 'Project management', description: 'Your AI ops manager creates ClickUp tasks with proper assignees, due dates, and labels -- directly in your workspace.' },
-    { title: 'Document management', description: 'Research reports land in the right Google Drive folder, formatted and ready for review.' },
-    { title: 'Wiki maintenance', description: 'Your AI employee updates Notion docs as processes change -- no manual documentation debt.' },
-  ],
-  icon: '🔧',
-  color: 'from-violet-500 to-purple-600',
-  lightColor: 'bg-violet-50',
-  textColor: 'text-violet-600',
+      { title: 'Project management', description: 'Your AI ops manager creates ClickUp tasks with proper assignees, due dates, and labels -- directly in your workspace.' },
+      { title: 'Document management', description: 'Research reports land in the right Google Drive folder, formatted and ready for review.' },
+      { title: 'Wiki maintenance', description: 'Your AI employee updates Notion docs as processes change -- no manual documentation debt.' },
+    ],
+    icon: 'Workflow',
+    color: 'from-violet-500 to-purple-600',
+    lightColor: 'bg-violet-50',
+    textColor: 'text-violet-600',
   },
-{
-  slug: 'human-in-the-loop-guardrails',
+  {
+    slug: 'human-in-the-loop-guardrails',
     title: 'Human-in-the-Loop Guardrails',
-      shortTitle: 'Human Guardrails',
-        description: 'Stay in control. Set approval gates, review checkpoints, and escalation rules so nothing goes out without your sign-off.',
-          heroSubtitle: 'Full autonomy with full control. Set exactly when your AI employee should ask for approval, what they can publish independently, and when to escalate.',
-            explanation: "PilotUP gives you fine-grained control over your AI employee's autonomy. Define approval checkpoints for sensitive actions (publishing content, sending external emails, updating pricing). Set escalation rules for edge cases. Your AI employee operates independently within your guardrails and stops when human judgment is needed.",
-              useCases: [
-                { title: 'Content approval gates', description: '"Draft social posts independently, but get my approval before publishing anything about pricing or partnerships."' },
-                { title: 'Spend controls', description: '"Process refunds under $50 automatically. Escalate anything above to me with full context."' },
-                { title: 'Brand safety', description: '"Never respond to competitor comparisons publicly. Draft a response and send it to me for review."' },
-              ],
-                icon: '🛡️',
-                  color: 'from-red-500 to-rose-600',
-                    lightColor: 'bg-red-50',
-                      textColor: 'text-red-600',
+    shortTitle: 'Human Guardrails',
+    description: 'Stay in control. Set approval gates, review checkpoints, and escalation rules so nothing goes out without your sign-off.',
+    heroSubtitle: 'Full autonomy with full control. Set exactly when your AI employee should ask for approval, what they can publish independently, and when to escalate.',
+    explanation: "PilotUP gives you fine-grained control over your AI employee's autonomy. Define approval checkpoints for sensitive actions (publishing content, sending external emails, updating pricing). Set escalation rules for edge cases. Your AI employee operates independently within your guardrails and stops when human judgment is needed.",
+    useCases: [
+      { title: 'Content approval gates', description: '"Draft social posts independently, but get my approval before publishing anything about pricing or partnerships."' },
+      { title: 'Spend controls', description: '"Process refunds under $50 automatically. Escalate anything above to me with full context."' },
+      { title: 'Brand safety', description: '"Never respond to competitor comparisons publicly. Draft a response and send it to me for review."' },
+    ],
+    icon: 'Shield',
+    color: 'from-red-500 to-rose-600',
+    lightColor: 'bg-red-50',
+    textColor: 'text-red-600',
   },
-{
-  slug: 'employee-collaboration',
+  {
+    slug: 'employee-collaboration',
     title: 'AI Employee Collaboration',
-      shortTitle: 'Employee Collaboration',
-        description: 'Your AI employees work together. Your content lead hands off to your social manager, your researcher feeds your sales lead.',
-          heroSubtitle: 'Build a team, not a tool. PilotUP AI employees collaborate with each other -- handing off tasks, sharing context, and coordinating deliverables automatically.',
-            explanation: `When you have multiple AI employees, they don't work in silos.Your research employee can pass findings directly to your content lead who turns them into blog posts.Your support lead can flag product feedback to your ops manager.They share context, hand off tasks, and coordinate -- just like a real high - performing team.`,
-  useCases: [
-    { title: 'Research → Content pipeline', description: 'Your research employee delivers a competitor analysis. Your content lead automatically drafts a blog post based on the findings.' },
-    { title: 'Support → Product feedback loop', description: 'Your support lead identifies a recurring bug report. Your ops manager automatically creates a Jira ticket with aggregated customer feedback.' },
-    { title: 'Sales → Marketing alignment', description: 'Your sales AI identifies high-performing outreach angles. Your marketing AI incorporates them into the next email campaign.' },
-  ],
-    icon: '🤝',
-      color: 'from-teal-500 to-cyan-600',
-        lightColor: 'bg-teal-50',
-          textColor: 'text-teal-600',
+    shortTitle: 'Employee Collaboration',
+    description: 'Your AI employees work together. Your content lead hands off to your social manager, your researcher feeds your sales lead.',
+    heroSubtitle: 'Build a team, not a tool. PilotUP AI employees collaborate with each other -- handing off tasks, sharing context, and coordinating deliverables automatically.',
+    explanation: `When you have multiple AI employees, they don't work in silos.Your research employee can pass findings directly to your content lead who turns them into blog posts.Your support lead can flag product feedback to your ops manager.They share context, hand off tasks, and coordinate -- just like a real high - performing team.`,
+    useCases: [
+      { title: 'Research → Content pipeline', description: 'Your research employee delivers a competitor analysis. Your content lead automatically drafts a blog post based on the findings.' },
+      { title: 'Support → Product feedback loop', description: 'Your support lead identifies a recurring bug report. Your ops manager automatically creates a Jira ticket with aggregated customer feedback.' },
+      { title: 'Sales → Marketing alignment', description: 'Your sales AI identifies high-performing outreach angles. Your marketing AI incorporates them into the next email campaign.' },
+    ],
+    icon: 'Handshake',
+    color: 'from-teal-500 to-cyan-600',
+    lightColor: 'bg-teal-50',
+    textColor: 'text-teal-600',
   },
 ];
 
@@ -518,31 +531,31 @@ export const HOW_IT_WORKS_STEPS = [
     step: 1,
     title: 'Create an Account',
     description: 'Sign up in under 30 seconds. No credit card required. Start exploring the platform immediately.',
-    icon: '👤',
+    icon: 'User',
   },
   {
     step: 2,
     title: 'Create a Company Profile',
     description: 'Tell us about your business -- industry, size, and goals. This helps your AI employees understand your context from day one.',
-    icon: '🏢',
+    icon: 'Building2',
   },
   {
     step: 3,
     title: 'Build Your First AI Employee',
     description: 'Choose a role template or start from scratch. Set their name, responsibilities, and permissions. Task them to help build the rest of your company.',
-    icon: '🤖',
+    icon: 'Bot',
   },
   {
     step: 4,
     title: 'Invite Them to Your Apps',
     description: 'Connect Slack, Email, ClickUp, Notion, and more. Your AI employee gets their own access and starts working inside your existing tools.',
-    icon: '🔗',
+    icon: 'Link',
   },
   {
     step: 5,
     title: 'Assign Tasks and Start Working',
     description: 'Assign your first task -- just like you would with a human teammate. Watch them plan, execute, and report back. Scale from there.',
-    icon: '🚀',
+    icon: 'Rocket',
   },
 ];
 
@@ -562,3 +575,30 @@ export const PLAN_COMPARISON = [
   { feature: 'SSO / SAML', starter: '--', growth: '--', executive: '✓' },
   { feature: 'SLA', starter: '--', growth: '99.5%', executive: '99.9%' },
 ];
+
+// ────────────────────────────────────────────────────────
+// ICON COMPONENT MAPPING
+// ────────────────────────────────────────────────────────
+
+const ICON_MAP = {
+  'TrendingUp': TrendingUp,
+  'Sparkles': Sparkles,
+  'MessageCircle': MessageCircle,
+  'Globe2': Globe2,
+  'LayoutDashboard': LayoutDashboard,
+  'Zap': Zap,
+  'Target': Target,
+  'Workflow': Workflow,
+  'Shield': Shield,
+  'Handshake': Handshake,
+  'User': User,
+  'Building2': Building2,
+  'Bot': Bot,
+  'Link': Link,
+  'Rocket': Rocket,
+};
+
+export const getIconComponent = (iconName) => {
+  const IconComponent = ICON_MAP[iconName];
+  return IconComponent ? React.createElement(IconComponent, { className: 'w-5 h-5 sm:w-6 sm:h-6', strokeWidth: 2 }) : null;
+};

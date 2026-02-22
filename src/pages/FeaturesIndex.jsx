@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { getIconComponent } from '../data/pageData';
 import PageLayout from '../components/PageLayout';
 import WaitlistCTA from '../components/WaitlistCTA';
 import { FEATURES } from '../data/pageData';
@@ -24,7 +25,7 @@ const FeaturesIndex = () => {
 
                     <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6 tracking-tight leading-[1.1]">
                         Everything that makes PilotUP{' '}
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E21339] to-[#F0284A]">different</span>
+                        <span className="text-[#E21339]">different</span>
                     </motion.h1>
 
                     <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
@@ -41,8 +42,8 @@ const FeaturesIndex = () => {
                             <motion.div key={feature.slug} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
                                 <Link to={`/features/${feature.slug}`} className="group block h-full">
                                     <div className="relative h-full overflow-hidden rounded-[2rem] border border-gray-200 bg-white hover:shadow-lg transition-all duration-300 p-8">
-                                        <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-6 text-2xl shadow-md`}>
-                                            {feature.icon}
+                                        <div className={`w-14 h-14 rounded-2xl ${feature.lightColor} flex items-center justify-center mb-6 text-2xl ${feature.textColor} shadow-sm border border-black/[0.04]`}>
+                                            {getIconComponent(feature.icon)}
                                         </div>
                                         <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-[#E21339] transition-colors">{feature.shortTitle}</h3>
                                         <p className="text-sm text-gray-500 leading-relaxed mb-6">{feature.description}</p>

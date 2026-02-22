@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import PageLayout from '../components/PageLayout';
 import WaitlistCTA from '../components/WaitlistCTA';
-import { FUNCTIONS } from '../data/pageData';
+import { FUNCTIONS, getIconComponent } from '../data/pageData';
 
 const FunctionsIndex = () => {
     return (
@@ -41,7 +41,7 @@ const FunctionsIndex = () => {
                             <Link to={`/functions/${fn.slug}`} className="group block h-full">
                                 <div className="relative h-full overflow-hidden rounded-[2rem] border border-gray-200 bg-white hover:shadow-lg transition-all duration-300 p-8">
                                     <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${fn.color} flex items-center justify-center mb-6 text-2xl shadow-md`}>
-                                        {fn.icon}
+                                        {getIconComponent(fn.icon)}
                                     </div>
                                     <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#E21339] transition-colors">{fn.shortTitle}</h3>
                                     <p className="text-sm text-gray-500 leading-relaxed mb-6">{fn.description}</p>

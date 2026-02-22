@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Sparkles, Search, Settings } from 'lucide-react';
 import PageLayout from '../components/PageLayout';
 import WaitlistCTA from '../components/WaitlistCTA';
 import { ROLES, PLANNED_ROLES } from '../data/pageData';
@@ -14,81 +14,151 @@ const RolesIndex = () => {
             canonical: '/roles',
             keywords: ['AI employee roles', 'AI content lead', 'AI operations manager', 'AI support researcher', 'build AI team'],
         }}>
-            {/* Hero */}
-            <section className="relative py-16 sm:py-24 px-6 bg-[#fdfffc]">
-                <div className="max-w-4xl mx-auto text-center">
-                    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gray-100 border border-gray-200 mb-6">
-                        <span className="w-1.5 h-1.5 rounded-full bg-gray-900" />
-                        <span className="text-xs font-semibold text-gray-600 uppercase tracking-wider">Roles</span>
-                    </motion.div>
+            <div className="relative bg-[#fdfffc] min-h-screen overflow-hidden">
 
-                    <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6 tracking-tight leading-[1.1]">
-                        Build the team you need —{' '}
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E21339] to-[#F0284A]">one role at a time</span>
-                    </motion.h1>
+                {/* Hero Section */}
+                <section className="relative z-10 pt-24 sm:pt-32 pb-16 sm:pb-20 px-4 sm:px-6">
+                    <div className="max-w-4xl mx-auto text-center">
+                        <motion.div
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5 }}
+                            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/60 backdrop-blur-md border border-gray-200/60 shadow-sm mb-8"
+                        >
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#E21339] shadow-[0_0_8px_rgba(226,19,57,0.6)]" />
+                            <span className="text-[11px] font-bold text-gray-600 uppercase tracking-widest">Roles</span>
+                        </motion.div>
 
-                    <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
-                        Each PilotUP AI employee is built for a specific role with deep domain expertise. Choose a role, customize it, and watch them deliver.
-                    </motion.p>
-                </div>
-            </section>
+                        <motion.h1
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.1, duration: 0.6 }}
+                            className="text-4xl sm:text-6xl md:text-7xl font-bold text-gray-900 mb-6 tracking-tight leading-[1.05]"
+                        >
+                            Build the team you need — <br className="hidden sm:block" />
+                            <span className="text-[#E21339]">one role at a time</span>
+                        </motion.h1>
 
-            {/* Available Roles */}
-            <section className="py-12 sm:py-16 px-6 bg-[#fdfffc]">
-                <div className="max-w-6xl mx-auto">
-                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Available Roles</h2>
-                    <p className="text-gray-500 text-sm mb-10">Build and deploy these AI employees today.</p>
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.15, duration: 0.6 }}
+                            className="text-[17px] sm:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium"
+                        >
+                            Each PilotUP AI employee is built for a specific role with deep domain expertise. Choose a role, customize it, and watch them deliver.
+                        </motion.p>
+                    </div>
+                </section>
 
-                    <div className="grid md:grid-cols-3 gap-8">
-                        {ROLES.map((role, i) => (
-                            <motion.div key={role.slug} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
-                                <Link to={`/roles/${role.slug}`} className="group block h-full">
-                                    <div className={`relative h-full overflow-hidden rounded-[2rem] border ${role.borderColor} bg-white hover:shadow-lg transition-all duration-300 p-8`}>
-                                        <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${role.color} flex items-center justify-center mb-6 text-white text-xl shadow-md`}>
-                                            {role.slug === 'growth-content-lead' ? '📝' : role.slug === 'support-research-lead' ? '🔍' : '⚙️'}
+                {/* Available Roles Grid */}
+                <section className="relative z-10 pb-16 px-4 sm:px-6">
+                    <div className="max-w-[1200px] mx-auto">
+                        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10 text-center sm:text-left">
+                            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 tracking-tight">Available Roles</h2>
+                            <p className="text-gray-500 text-[15px] font-medium">Build and deploy these AI employees today.</p>
+                        </motion.div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
+                            {ROLES.map((role, i) => (
+                                <motion.div
+                                    key={role.slug}
+                                    initial={{ opacity: 0, y: 30 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true, margin: "-50px" }}
+                                    transition={{ delay: i * 0.1, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+                                    className="h-full"
+                                >
+                                    <Link to={`/roles/${role.slug}`} className="group block h-full outline-none">
+                                        <div className="relative overflow-hidden flex flex-col rounded-[1.5rem] sm:rounded-[2.5rem] bg-white/95 backdrop-blur-2xl border border-gray-200/60 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05),0_0_0_1px_rgba(255,255,255,0.5)_inset] hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.08),0_0_0_1px_rgba(255,255,255,0.5)_inset] transition-all duration-500 p-6 sm:p-8 lg:p-12 h-full">
+
+                                            {/* Icon Wrapper */}
+                                            <div className="mb-8 group-hover:scale-105 transition-transform duration-500 origin-bottom-left">
+                                                <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl ${role.iconBg} flex items-center justify-center shadow-sm border border-black/[0.04]`}>
+                                                    {role.slug === 'growth-content-lead' ? (
+                                                        <Sparkles className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2} />
+                                                    ) : role.slug === 'support-research-lead' ? (
+                                                        <Search className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2} />
+                                                    ) : (
+                                                        <Settings className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2} />
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 mb-3 tracking-tight">
+                                                {role.shortTitle}
+                                            </h3>
+
+                                            <p className="text-[15px] sm:text-[17px] text-gray-600 leading-relaxed mb-6 sm:mb-8 flex-1">
+                                                {role.description}
+                                            </p>
+
+                                            <Link
+                                                to={`/roles/${role.slug}`}
+                                                className="group inline-flex items-center gap-1.5 sm:gap-2 px-4 sm:px-5 py-2.5 sm:py-3 bg-gray-900 text-white rounded-full text-[13px] sm:text-[14px] font-semibold hover:bg-black transition-all shadow-[0_4px_14px_0_rgba(0,0,0,0.2)] hover:-translate-y-0.5 active:scale-95"
+                                            >
+                                                Learn more
+                                                <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 opacity-70 group-hover:translate-x-1 transition-transform" />
+                                            </Link>
+                                            {/* Optional Subtle Background Decoration based on role color */}
+                                            <div className={`absolute -top-20 -right-20 sm:-top-40 sm:-right-40 w-64 h-64 sm:w-96 sm:h-96 ${role.color} rounded-full blur-[80px] sm:blur-[100px] opacity-40 pointer-events-none`} />
                                         </div>
-                                        <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#E21339] transition-colors">{role.shortTitle}</h3>
-                                        <p className="text-sm text-gray-500 leading-relaxed mb-6">{role.description}</p>
-                                        <div className="flex items-center gap-2 text-sm font-semibold text-[#E21339]">
-                                            Learn more <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                        </div>
+                                    </Link>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* Planned Roles Section */}
+                <section className="relative z-10 pb-20 sm:pb-24 px-4 sm:px-6">
+                    <div className="max-w-[1200px] mx-auto">
+                        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10 text-center sm:text-left pt-8 border-t border-gray-200/60">
+                            <h2 className="text-2xl sm:text-3xl font-bold text-gray-400 mb-2 tracking-tight">Coming Soon</h2>
+                            <p className="text-gray-400 text-[15px] font-medium">These roles are in development and will be available soon.</p>
+                        </motion.div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+                            {PLANNED_ROLES.map((role, i) => (
+                                <motion.div
+                                    key={i}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true, margin: "-50px" }}
+                                    transition={{ delay: i * 0.05, duration: 0.5 }}
+                                    className="p-6 sm:p-8 rounded-[2rem] bg-white border border-gray-200 shadow-[0_2px_15px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_25px_rgba(0,0,0,0.06)] transition-all flex flex-col h-full opacity-60"
+                                >
+                                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${role.color} opacity-30 flex items-center justify-center mb-5 text-gray-800 shadow-sm border border-white/50`}>
+                                        <Sparkles className="w-5 h-5 opacity-70" />
                                     </div>
-                                </Link>
-                            </motion.div>
-                        ))}
+                                    <h3 className="text-lg font-bold text-gray-700 mb-2">{role.shortTitle}</h3>
+                                    <p className="text-[14px] text-gray-400 leading-relaxed flex-1">{role.description}</p>
+
+                                    <div className="mt-6">
+                                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-gray-100/80 border border-gray-200/50 text-[11px] font-bold text-gray-500 uppercase tracking-widest shadow-sm">
+                                            In Development
+                                        </span>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            {/* Planned Roles */}
-            <section className="py-12 sm:py-16 px-6 bg-[#fdfffc]">
-                <div className="max-w-6xl mx-auto">
-                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Coming Soon</h2>
-                    <p className="text-gray-500 text-sm mb-10">These roles are in development and will be available soon.</p>
-
-                    <div className="grid md:grid-cols-3 gap-6">
-                        {PLANNED_ROLES.map((role, i) => (
-                            <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }} className="p-6 rounded-2xl bg-gray-50 border border-gray-200 border-dashed">
-                                <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${role.color} opacity-50 flex items-center justify-center mb-4 text-white text-lg`}>
-                                    ✦
-                                </div>
-                                <h3 className="text-base font-bold text-gray-700 mb-1">{role.shortTitle}</h3>
-                                <p className="text-sm text-gray-400 leading-relaxed">{role.description}</p>
-                                <span className="inline-block mt-3 px-2 py-0.5 rounded-full bg-gray-200 text-gray-500 text-[10px] font-bold uppercase">Coming soon</span>
-                            </motion.div>
-                        ))}
+                {/* Cross-links */}
+                <section className="relative z-10 pb-24 px-4 sm:px-6">
+                    <div className="max-w-4xl mx-auto flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+                        <Link to="/functions" className="group px-5 py-2.5 rounded-full bg-white/60 backdrop-blur-md border border-gray-200/60 shadow-sm text-[14px] font-semibold text-gray-600 hover:text-[#E21339] hover:bg-white hover:shadow-md hover:-translate-y-0.5 flex items-center gap-1.5 transition-all">
+                            Explore by function <ArrowUpRight className="w-3.5 h-3.5 opacity-70 group-hover:opacity-100" />
+                        </Link>
+                        <Link to="/features" className="group px-5 py-2.5 rounded-full bg-white/60 backdrop-blur-md border border-gray-200/60 shadow-sm text-[14px] font-semibold text-gray-600 hover:text-[#E21339] hover:bg-white hover:shadow-md hover:-translate-y-0.5 flex items-center gap-1.5 transition-all">
+                            View all features <ArrowUpRight className="w-3.5 h-3.5 opacity-70 group-hover:opacity-100" />
+                        </Link>
+                        <Link to="/pricing" className="group px-5 py-2.5 rounded-full bg-white/60 backdrop-blur-md border border-gray-200/60 shadow-sm text-[14px] font-semibold text-gray-600 hover:text-[#E21339] hover:bg-white hover:shadow-md hover:-translate-y-0.5 flex items-center gap-1.5 transition-all">
+                            See pricing <ArrowUpRight className="w-3.5 h-3.5 opacity-70 group-hover:opacity-100" />
+                        </Link>
                     </div>
-                </div>
-            </section>
-
-            {/* Links */}
-            <section className="py-12 px-6 bg-[#fdfffc]">
-                <div className="max-w-4xl mx-auto flex flex-wrap items-center justify-center gap-6">
-                    <Link to="/functions" className="text-sm font-semibold text-gray-600 hover:text-gray-900 flex items-center gap-1 transition-colors">Explore by function <ArrowUpRight className="w-3.5 h-3.5" /></Link>
-                    <Link to="/features" className="text-sm font-semibold text-gray-600 hover:text-gray-900 flex items-center gap-1 transition-colors">View all features <ArrowUpRight className="w-3.5 h-3.5" /></Link>
-                    <Link to="/pricing" className="text-sm font-semibold text-gray-600 hover:text-gray-900 flex items-center gap-1 transition-colors">See pricing <ArrowUpRight className="w-3.5 h-3.5" /></Link>
-                </div>
-            </section>
+                </section>
+            </div>
 
             <WaitlistCTA heading="Build the perfect team" subtitle="Hire AI employees for every role. Join the waitlist and start scaling." />
         </PageLayout>

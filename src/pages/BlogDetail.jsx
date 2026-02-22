@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { formatDate, extractTextFromHTML } from '../utils/helpers';
-import { Calendar, ArrowLeft, Share2, Clock, Check, Bookmark } from 'lucide-react';
+import { Calendar, ArrowLeft, Share2, Clock, Check, Copy } from 'lucide-react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import DOMPurify from 'dompurify';
 import Navbar from '../components/Navbar';
@@ -20,6 +20,7 @@ const BlogDetail = () => {
     const [loading, setLoading] = useState(true);
     const [scrolled, setScrolled] = useState(false);
     const [linkCopied, setLinkCopied] = useState(false);
+    const [bookmarkCopied, setBookmarkCopied] = useState(false);
 
     const [copiedStates, setCopiedStates] = useState({});
     const { scrollYProgress } = useScroll();
@@ -136,6 +137,13 @@ const BlogDetail = () => {
         }
     };
 
+    const handleCopyLink = () => {
+        navigator.clipboard.writeText(window.location.href);
+        setBookmarkCopied(true);
+        setTimeout(() => setBookmarkCopied(false), 2000);
+    };
+
+
     // ✅ Don't return a blank page while loading — prerender bots will snapshot that
     if (loading) {
         return (
@@ -192,10 +200,10 @@ const BlogDetail = () => {
 
                                     <button
                                         className="w-12 h-12 flex items-center justify-center rounded-full bg-white border border-gray-200 text-gray-400 transition-all shadow-sm"
-                                        title="Save for later"
+                                        title="Copy link"
                                         disabled
                                     >
-                                        <Bookmark className="w-5 h-5" />
+                                        <Copy className="w-5 h-5" />
                                     </button>
                                 </div>
 
@@ -491,10 +499,11 @@ const BlogDetail = () => {
                                 </button>
 
                                 <button
+                                    onClick={handleCopyLink}
                                     className="w-12 h-12 flex items-center justify-center rounded-full bg-white border border-gray-200 text-gray-500 hover:text-[#E21339] hover:border-[#E21339]/30 hover:bg-red-50 transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5 duration-300"
-                                    title="Save for later"
+                                    title="Copy link"
                                 >
-                                    <Bookmark className="w-5 h-5" />
+                                    {bookmarkCopied ? <Check className="w-5 h-5 text-green-500" /> : <Copy className="w-5 h-5" />}
                                 </button>
                             </div>
 
