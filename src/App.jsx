@@ -744,19 +744,19 @@ const StackCard = ({ card, index, totalCards }) => {
         `}
       >
         <div className="flex flex-col lg:flex-row lg:items-start lg:gap-12 relative z-10">
-          
+
           {/* LEFT — Identity + Description */}
           <div className="w-full">
             {/* Header with Icon */}
             <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
-               <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center ${card.iconBg} shadow-sm border border-black/[0.04]`}>
+              <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center ${card.iconBg} shadow-sm border border-black/[0.04]`}>
                 <IconComp className="w-5 h-5 sm:w-6 h-6" strokeWidth={2} />
               </div>
-               <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 tracking-tight">
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 tracking-tight">
                 {card.title}
               </h3>
             </div>
-            
+
             <p className="text-gray-600 leading-relaxed text-[15px] sm:text-[17px] lg:text-lg mb-6 sm:mb-8 max-w-3xl">
               {card.what}
             </p>
@@ -767,8 +767,8 @@ const StackCard = ({ card, index, totalCards }) => {
             </p>
             <div className="flex items-center flex-wrap gap-2 sm:gap-2.5 mb-8 sm:mb-10">
               {card.outputs.map((o, j) => (
-                <div 
-                  key={j} 
+                <div
+                  key={j}
                   className="bg-gray-50/80 border border-gray-200/80 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-[12px] sm:text-[14px] font-medium text-gray-700 leading-snug shadow-sm"
                 >
                   {o}
@@ -2947,6 +2947,15 @@ function WaitlistScrollFromQuery() {
   return null
 }
 
+function ScrollToTop() {
+  const location = useLocation()
+  useEffect(() => {
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+  }, [location.pathname])
+  return null
+}
+
 export default function App() {
   // Restrict entire site: show countdown page until target date (skip in development)
   const isDev = import.meta.env.VITE_PUBLIC_ENVIRONMENT === 'development';
@@ -2962,6 +2971,7 @@ export default function App() {
             <PostHogPageView />
             <GoogleAnalyticsPageView />
             <WaitlistScrollFromQuery />
+            <ScrollToTop />
             <WaitlistBanner />
             <Routes>
               {/* Home Page */}
